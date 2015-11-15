@@ -2,7 +2,6 @@
 
 #include <stdio.h>
 
-
 void setScore(player playerId) {
     // player 구조체에 점수 세팅
 }
@@ -24,6 +23,11 @@ int getMoney(player playerId) {
     int money;
 
     return money;
+}
+
+
+void setPlayerInfo() {
+    // 게임 시작하기 전에 player 정보 setting
 }
 
 
