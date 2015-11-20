@@ -19,6 +19,11 @@ const char cardMatrix[CardMAX][10] = {
 void cardInitialize() {
     int i;
     card **initialCard = (card **)malloc(sizeof(card)*CardMAX);
+    card *dummpyCard = (card *)malloc(sizeof(card));
+    card *blanketCard = (card *)malloc(sizeof(card));
+    card *playerOneCard = (card *)malloc(sizeof(card));
+    card *playerTwoCard = (card *)malloc(sizeof(card));
+    card *playerThreeCard = (card *)malloc(sizeof(card));
    
     for(i=0; i < CardMAX; ++i) { // initialize card 
         initialCard[i]->data = i; 
@@ -27,7 +32,33 @@ void cardInitialize() {
 
     cardShuffle(initialCard);
 
-    // TODO: shuffle한 거 player 3명한테 나눠주고, card 순서대로 정렬, 나머지는 더미 
+    playerOneCard = initialCard[0];
+    for(i=1; i < 7; ++i) {
+        playerOneCard->next = initialCard[i];
+    }
+    players[0]->holding_card = playerOneCard;
+
+    playerTwoCard = initialCard[7];
+    for(i=8; i < 14; ++i) {
+        playerTwoCard->next = initialCard[i];
+    }
+    players[1]->holding_card = playerTwoCard;
+
+    playerThreeCard = initialCard[14];
+    for(i=14; i < 20; ++i) {
+        playerThreeCard->next = initialCard[i];
+    }
+    players[2]->holding_card = playerThreeCard;
+
+    blanketCard = initialCard[20]; 
+    for(i=20; i < 25; ++i) {
+        blanketCard->next = initialCard[i];
+    }
+
+    dummyCard = initialCard[25];
+    for(i=25; i < CardMAX; ++i) {
+        dummyCard->next = initialCard[i];
+    }
 }
 
 
