@@ -1,3 +1,8 @@
+#include "card.h"
+
+#ifndef _PLAYER_H_
+#define _PLAYER_H_
+
 #define MAX_NUMBER_OF_PLAYER    3
 #define INITIAL_MONEY   100000
 #define NOT_PLAY    0 // play 한 적 없음
@@ -17,8 +22,11 @@ typedef struct _player {
     int played;// 이전에 play했는지 체크
     int money; // player가 갖고 있는 돈
     int turn;
-    // TODO: 갖고 있는 패, card에 대한 정보
+    struct _card holding_card;
+    struct _card eating_card;
 
 } player;
 
 player players[MAX_NUMBER_OF_PLAYER];
+
+#endif

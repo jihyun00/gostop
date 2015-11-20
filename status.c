@@ -47,5 +47,6 @@ void drawInterface(char *command) {
     switch(num) {
         case 0:
             // blah blah... 
+            break;
     }
 }
