@@ -36,19 +36,19 @@ void cardInitialize() {
     for(i=1; i < 7; ++i) {
         playerOneCard->next = initialCard[i];
     }
-    players[0]->holding_card = playerOneCard;
+    players[0]->holding_card = orderCard(playerOneCard);
 
     playerTwoCard = initialCard[7];
     for(i=8; i < 14; ++i) {
         playerTwoCard->next = initialCard[i];
     }
-    players[1]->holding_card = playerTwoCard;
+    players[1]->holding_card = orderCard(playerTwoCard);
 
     playerThreeCard = initialCard[14];
     for(i=14; i < 20; ++i) {
         playerThreeCard->next = initialCard[i];
     }
-    players[2]->holding_card = playerThreeCard;
+    players[2]->holding_card = orderCard(playerThreeCard);
 
     blanketCard = initialCard[20]; 
     for(i=20; i < 25; ++i) {
@@ -79,8 +79,24 @@ void cardShuffle(card **card_list) {
 }
 
 
-card *orderCard(card **card_list) {
-    // bubble sort 써서 정렬?     
+card *orderCard(card *card_list) {
+    card *q;
+    card *r;
+    int temp;
+
+    if(card_list == NULL) {
+        return NULL;
+    }
+    
+    for(q=card_list; q->next != NULL; q=q->next) {
+        for(r=card_list; r->next != NULL; r=r->next) {
+            if(r->data > r->next->data) {
+                temp = r->data;
+                r->data = r->next->data;
+                r->next->data = temp;
+            }
+        }
+    }
 }
 
 

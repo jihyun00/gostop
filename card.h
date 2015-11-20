@@ -19,8 +19,8 @@ card *blanketCard; // 깔린 패
 // 든 패, 먹은 패, 화투 더미, 깔린 패
 
 void cardInitialize();
-void cardShuffle(card **card_list); // shuffle 하면서 나눠주기
-card *orderCard(card **card_list);
+void cardShuffle(card **card_list);
+card *orderCard(card *card_list);
 card *getCard(card *card_list, int data);
 void cardInsert(card *card_list, int data);
 void cardDelete(card *card_list, int data);
