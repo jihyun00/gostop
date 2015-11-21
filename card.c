@@ -1,70 +1,77 @@
 #include "card.h"
 #include "player.h"
 
-const char cardMatrix[CardMAX][10] = {
-    "1광","1오","1피","1피",
-    "2십","2오","2피","2피",
-    "3광","3오","3피","3피",
-    "4십","4오","4피","4피",
-    "5십","5오","5피", "5피",
-    "6십","6오","6피","6피",
-    "7십","7오","7피","7피",
-    "8광","8십","8피","8피",
-    "9십","9오","9피","9피",
-    "10십","10오","10피","10피",
-    "11광","11쌍피","11피","11피",
-    "12광","12십","12띠","12쌍피" 
-};
-
 void cardInitialize() {
     int i;
-    card **initialCard = (card **)malloc(sizeof(card)*CardMAX);
-    card *dummpyCard = (card *)malloc(sizeof(card));
-    card *blanketCard = (card *)malloc(sizeof(card));
-    card *playerOneCard = (card *)malloc(sizeof(card));
-    card *playerTwoCard = (card *)malloc(sizeof(card));
-    card *playerThreeCard = (card *)malloc(sizeof(card));
+    card *initialCard = (card *)malloc(sizeof(card)*CardMAX);
+    card *playersCard = (card *)malloc(sizeof(card)*MAX_NUMBER_OF_PLAYER);
    
     for(i=0; i < CardMAX; ++i) { // initialize card 
-        initialCard[i]->data = i; 
-        initialCard[i]->next = NULL;
+        initialCard[i].data = i; 
+        initialCard[i].next = NULL;
     }
 
     cardShuffle(initialCard);
 
-    playerOneCard = initialCard[0];
+    divideCard(initialCard, playersCard);
+}
+
+
+void divideCard(card *card_list, card *players_card) {
+    card *head = NULL;
+    int i;
+
+    players_card[0] = card_list[0];
     for(i=1; i < 7; ++i) {
-        playerOneCard->next = initialCard[i];
+        players_card[0].next = &card_list[i];
+        if(i == 6) {
+            players_card[0].next = NULL;
+        }
     }
-    players[0]->holding_card = orderCard(playerOneCard);
+    orderCard(&players_card[0]);
+    players[0].holding_card = players_card[0];
 
-    playerTwoCard = initialCard[7];
+    players_card[1] = card_list[7];
     for(i=8; i < 14; ++i) {
-        playerTwoCard->next = initialCard[i];
+        players_card[1].next = &card_list[i];
+        if(i == 13) {
+            players_card[1].next = NULL;
+        }
     }
-    players[1]->holding_card = orderCard(playerTwoCard);
+    orderCard(&players_card[1]);
+    players[1].holding_card = players_card[1];
 
-    playerThreeCard = initialCard[14];
+    players_card[2] = card_list[14];
     for(i=14; i < 20; ++i) {
-        playerThreeCard->next = initialCard[i];
+        players_card[2].next = &card_list[i];
+        if(i == 19) {
+            players_card[2].next = NULL;
+        }
     }
-    players[2]->holding_card = orderCard(playerThreeCard);
+    orderCard(&players_card[2]);
+    players[2].holding_card = players_card[2];
 
-    blanketCard = initialCard[20]; 
+    blanketCard = card_list[20]; 
     for(i=20; i < 25; ++i) {
-        blanketCard->next = initialCard[i];
+        blanketCard.next = &card_list[i];
+        if(i == 24) {
+            blanketCard.next = NULL;
+        }
     }
 
-    dummyCard = initialCard[25];
+    dummyCard = card_list[25];
     for(i=25; i < CardMAX; ++i) {
-        dummyCard->next = initialCard[i];
+        dummyCard.next = &card_list[i];
+        if(i == CardMAX-1) {
+            dummyCard.next = NULL;
+        }
     }
 }
 
 
-void cardShuffle(card **card_list) {
+void cardShuffle(card *card_list) {
     int i;
-    bool duplicated_check[CardMAX] = { 0, };
+    int duplicated_check[CardMAX] = { 0, };
 
     srand((unsigned)time(NULL));
 
@@ -73,19 +80,22 @@ void cardShuffle(card **card_list) {
 
         if(duplicated_check[value] == false) {
             duplicated_check[value] = true;
-            card_list[i]->data = value;
+            card_list[i].data = value;
+
+        } else {
+            i--;
         }
     }
 }
 
 
-card *orderCard(card *card_list) {
+void orderCard(card *card_list) {
     card *q;
     card *r;
     int temp;
 
     if(card_list == NULL) {
-        return NULL;
+        return;
     }
     
     for(q=card_list; q->next != NULL; q=q->next) {

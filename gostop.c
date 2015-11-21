@@ -5,7 +5,9 @@
 #include <stdio.h>
 
 int main(void) {
+    setPlayerInfo();
 
+    drawScreen();
 
     return 0;
 }

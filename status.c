@@ -28,14 +28,46 @@ int getMoney(player playerId) {
 
 void setPlayerInfo() {
     // 게임 시작하기 전에 player 정보 setting
+    int i;
+    for(i=0; i<3; ++i) {
+        players[i].score = 0;
+        players[i].played = 0;
+        players[i].money = 100000;
+        players[i].turn = 0;
+    }
+
+    cardInitialize();
 }
 
 
 void drawScreen() {
     // status 변할 때마다 화면에 값 그려주기
     // 플레이어 차례, 점수, 갖고 있는 패 등
-    system("cls");
+    //system("clear");
+    card *head = NULL;
 
+    printf("A   : 패) \n");
+    head = &players[0].holding_card;
+    /*while(head != NULL) {
+        printf("%d ", head->data);
+        head->next = head;
+    }*/
+    
+    printf("(점수: %d) 딴 화투\n\n", players[0].score);
+
+    printf("B   : 패) \n");
+    printf("(점수: %d) 딴 화투\n\n", players[1].score);
+
+    printf("C   : 패) \n");
+    printf("(점수: %d) 딴 화투\n\n", players[2].score);
+
+    printf("깔린 패) \n");
+    /*head = &blanketCard;
+    while(head != NULL) {
+        printf("%d ", head->data);
+        head->next = head;
+    }*/
+    printf("명령 : ");
 }
 
 

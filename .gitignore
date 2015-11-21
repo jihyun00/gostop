@@ -1,3 +1,4 @@
 *.swp
 gostop
 a.out
+*.dsYM/
