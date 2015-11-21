@@ -51,7 +51,7 @@ void drawScreen() {
     printf("A   : 패) ");
     head = players[0].holding_card;
     while(head != NULL) {
-        printf("%d ", head->data);
+        printf("%s ", cardMatrix[head->data]);
         head = head->next;
     }
     printf("\n");
@@ -60,7 +60,7 @@ void drawScreen() {
     printf("B   : 패) ");
     head = players[1].holding_card;
     while(head != NULL) {
-        printf("%d ", head->data);
+        printf("%s ", cardMatrix[head->data]);
         head = head->next;
     }
     printf("\n");
@@ -69,7 +69,7 @@ void drawScreen() {
     printf("C   : 패) ");
     head = players[2].holding_card;
     while(head != NULL) {
-        printf("%d ", head->data);
+        printf("%s ", cardMatrix[head->data]);
         head = head->next;
     }
     printf("\n");
@@ -78,7 +78,7 @@ void drawScreen() {
     printf("깔린 패) ");
     head = &blanketCard;
     while(head != NULL) {
-        printf("%d ", head->data);
+        printf("%s ", cardMatrix[head->data]);
         head = head->next;
     }
     printf("\n\n");
