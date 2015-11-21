@@ -18,54 +18,84 @@ void cardInitialize() {
 
 
 void divideCard(card *card_list, card *players_card) {
-    card *head = NULL;
     int i;
+    card *head = NULL;
 
-    players_card[0] = card_list[0];
-    for(i=1; i < 7; ++i) {
-        players_card[0].next = &card_list[i];
-        if(i == 6) {
-            players_card[0].next = NULL;
+    head = &players_card[0];
+    for(i=0; i < 7; ++i) {
+        head->data = card_list[i].data;
+        if(i != 6) {
+            head->next = &card_list[i+1];
+
+        } else {
+            head->next = NULL;    
         }
+
+        head = head->next; 
     }
+
     orderCard(&players_card[0]);
-    players[0].holding_card = players_card[0];
+    players[0].holding_card = &players_card[0];
 
-    players_card[1] = card_list[7];
-    for(i=8; i < 14; ++i) {
-        players_card[1].next = &card_list[i];
-        if(i == 13) {
-            players_card[1].next = NULL;
+    head = &players_card[1];
+    for(i=7; i < 14; ++i) {
+        head->data = card_list[i].data;
+        if(i != 13) {
+            head->next = &card_list[i+1];
+
+        } else {
+            head->next = NULL;    
         }
+
+        head = head->next; 
     }
+
     orderCard(&players_card[1]);
-    players[1].holding_card = players_card[1];
+    players[1].holding_card = &players_card[1];
 
-    players_card[2] = card_list[14];
-    for(i=14; i < 20; ++i) {
-        players_card[2].next = &card_list[i];
-        if(i == 19) {
-            players_card[2].next = NULL;
+    head = &players_card[2];
+    for(i=14; i < 21; ++i) {
+        head->data = card_list[i].data;
+        if(i != 20) {
+            head->next = &card_list[i+1];
+
+        } else {
+            head->next = NULL;    
         }
+
+        head = head->next; 
     }
+
     orderCard(&players_card[2]);
-    players[2].holding_card = players_card[2];
+    players[2].holding_card = &players_card[2];
+    
+    head = &blanketCard;
+    for(i=21; i < 27; ++i) {
+        head->data = card_list[i].data;
+        if(i != 26) {
+            head->next = &card_list[i+1];
 
-    blanketCard = card_list[20]; 
-    for(i=20; i < 25; ++i) {
-        blanketCard.next = &card_list[i];
-        if(i == 24) {
-            blanketCard.next = NULL;
+        } else {
+            head->next = NULL;    
         }
-    }
 
-    dummyCard = card_list[25];
-    for(i=25; i < CardMAX; ++i) {
-        dummyCard.next = &card_list[i];
-        if(i == CardMAX-1) {
-            dummyCard.next = NULL;
-        }
+        head = head->next; 
     }
+    orderCard(&blanketCard);
+
+    head = &dummyCard;
+    for(i=27; i < CardMAX; ++i) {
+        head->data = card_list[i].data;
+        if(i != CardMAX-1) {
+            head->next = &card_list[i+1];
+
+        } else {
+            head->next = NULL;    
+        }
+
+        head = head->next; 
+    }
+    orderCard(&dummyCard);
 }
 
 

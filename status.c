@@ -43,31 +43,47 @@ void setPlayerInfo() {
 void drawScreen() {
     // status 변할 때마다 화면에 값 그려주기
     // 플레이어 차례, 점수, 갖고 있는 패 등
-    //system("clear");
+    char command[256];
+
+    system("clear");
     card *head = NULL;
 
-    printf("A   : 패) \n");
-    head = &players[0].holding_card;
-    /*while(head != NULL) {
+    printf("A   : 패) ");
+    head = players[0].holding_card;
+    while(head != NULL) {
         printf("%d ", head->data);
-        head->next = head;
-    }*/
-    
+        head = head->next;
+    }
+    printf("\n");
     printf("(점수: %d) 딴 화투\n\n", players[0].score);
 
-    printf("B   : 패) \n");
+    printf("B   : 패) ");
+    head = players[1].holding_card;
+    while(head != NULL) {
+        printf("%d ", head->data);
+        head = head->next;
+    }
+    printf("\n");
     printf("(점수: %d) 딴 화투\n\n", players[1].score);
 
-    printf("C   : 패) \n");
+    printf("C   : 패) ");
+    head = players[2].holding_card;
+    while(head != NULL) {
+        printf("%d ", head->data);
+        head = head->next;
+    }
+    printf("\n");
     printf("(점수: %d) 딴 화투\n\n", players[2].score);
 
     printf("깔린 패) \n");
-    /*head = &blanketCard;
+    head = &blanketCard;
     while(head != NULL) {
         printf("%d ", head->data);
-        head->next = head;
-    }*/
+        head = head->next;
+    }
+    printf("\n");
     printf("명령 : ");
+    scanf("%s", command);
 }
 
 
