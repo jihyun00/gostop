@@ -75,13 +75,13 @@ void drawScreen() {
     printf("\n");
     printf("(점수: %d) 딴 화투\n\n", players[2].score);
 
-    printf("깔린 패) \n");
+    printf("깔린 패) ");
     head = &blanketCard;
     while(head != NULL) {
         printf("%d ", head->data);
         head = head->next;
     }
-    printf("\n");
+    printf("\n\n");
     printf("명령 : ");
     scanf("%s", command);
 }
