@@ -18,7 +18,7 @@ const char cardMatrix[CardMAX][10] = {
 
 void cardInitialize() {
     int i;
-    card **initialCard = (card **)malloc(sizeof(card)*CardMAX); //이부분 sizeof(card)로하면 낭비 아니에여? card구조체의 포인터는 4byte니까.
+    card **initialCard = (card **)malloc(sizeof(card)*CardMAX); //이부분 sizeof(card)로하면 낭비 아니에여? card구조체의 포인터는 4byte니까. 고치실꺼 아는데 저도 그냥 이해나 해볼겸 찝어봅니다. 
     card *dummpyCard = (card *)malloc(sizeof(card));
     card *blanketCard = (card *)malloc(sizeof(card));
     card *playerOneCard = (card *)malloc(sizeof(card));
