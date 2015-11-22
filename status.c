@@ -3,8 +3,109 @@
 #include <stdio.h>
 
 void setScore(player playerId) {
-    // player 구조체에 점수 세팅
+
+
+
+	player* tmp;
+
+	int i = 0;
+
+	int gwang = 0, bigwang = 0, pi = 0, ssangpi = 0, 
+		oh = 0, chodan = 0, hongdan = 0, chungdan = 0,
+		sip = 0, gukjin = 0, godori = 0;
+
+	for(i=0 ; playerId->eating_card[i]->next != NULL ; i++){
+		if(((playerId->eating_card[i]->data)%4 == (2||3))
+			&& ((playerId->eating_card[i]->data) != (46||47))){
+			pi++;}
+		if((playerId->eating_card[i]->data) == (41||47)){
+			ssangpi++;}
+
+
+		if((playerId->eating_card[i]->data) == (0||8||32||40)){
+			gwang++;}
+		if((playerId->eating_card[i]->data) == 44){
+			gwang++, bigwang++;}
+
+
+		if(((playerId->eating_card[i]->data)%4 == 1)
+			&& ((playerId->eating_card[i]->data) != (29||41||45))
+			&&(playerId->eating_card[i]->data == 46)){
+			oh++;}
+		if((playerId->eating_card[i]->data) == (1||5||9)){
+			hongdan++;}
+		if((playerId->eating_card[i]->data) == (13||17||23)){
+			chodan++;}
+		if((playerId->eating_card[i]->data) == (21||33||37)){
+			chungdan++;}
+
+
+		if((playerId->eating_card[i]->data) == (4||12||16||20||24
+			||29||36||45)){
+			sip++;}
+		if((playerId->eating_card[i]->data) == (4||12||33)){
+			godori++;}
+
+
+		if((playerId->eating_card[i]->data) == 32){
+			gukjin++;}
+	}
+	if(ssangpi == 1){
+		pi = pi+2}
+	if(ssangpi == 2){
+		pi = pi+4}
+	if(gukjin == 1){
+		pi = pi+2} // 국진을 대비해서.
+	if( pi >= 10){
+		tmp->score = tmp->score + pi-9}
+
+
+	if(gwang == 3){
+		tmp->score = tmp->score + 3;
+	}
+	if((gwang == 3) &&(bigwang ==1 ))
+	{
+		tmp->score = tmp->score -1;}
+	if(gwang == 4){
+		tmp->score = tmp->score +1 ;}
+	if((gwang == 4) &&(bigwang ==1))
+	{
+		tmp->score = tmp->score +1;}
+	if(gwang ==5){
+		tmp->score = tmp->score +11;}
+
+
+	if(oh >= 5){
+		tmp->score = tmp->score + oh-4;}
+	if(hongdan=3){
+		tmp->score = tmp->score + 3;}
+	if(chodan=3){
+		tmp->score = tmp->score + 3;}
+	if(chungdan=3){
+		tmp->score = tmp->score + 3;}
+
+
+	if(sip >= ){
+		tmp->score = tmp->score + sip-4;}
+	if(godori=3){
+		tmp->score = tmp->score + 5;}
+
+	playerId->score = tmp->score;
+
+
+	
+
+
+
+
+
 }
+
+		
+
+
+    // player 구조체에 점수 세팅
+
 
 
 int getScore(player playerId) {
