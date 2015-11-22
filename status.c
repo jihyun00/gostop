@@ -162,7 +162,8 @@ void setMoney(player *playerId) {
 			&& ((head->eating_card->next->data) != (46||47))){
 			pi++;}
 		if((head->eating_card->next->data) == (41||47)){
-			ssangpi++;}}
+			ssangpi++;}
+		head->eating_card->next = head->eating_card->next->next;}
 // 피박(해결)  고박(진사람들 쪽을 조사해야함)- (4,5번할때) 
 // 쓰리고, 포고, 흔들기, 멍텅구리(이와같은 것을 하고 이 긴사람 점수를 두배해주는 식으로 해결하면 됨)- (4,5번 할때)
 											   
