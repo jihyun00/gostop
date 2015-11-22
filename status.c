@@ -2,7 +2,6 @@
 
 #include <stdio.h>
 
-
 // player 구조체에 점수 세팅
 void setScore(player *playerId) {
 	player* tmp = NULL;
@@ -121,19 +120,6 @@ int getScore(player *playerId) {
 }
 
 
-player* setWinner(){
-	if((players[0].score) > (players[1].score)){
-		if((players[0].score) > (players[2].score)){
-			return &players[0]; }}
-	if((players[1].score) > (players[0].score)){
-		if((players[1].score) > (players[2].score)){
-			return &players[1]; }}
-	if((players[2].score) > (players[1].score)){
-		if((players[2].score) > (players[0].score)){
-			return &players[2]; }}
-} // 새로 만든 함수. 이긴사람이 누군지 알기 위해.
-
-
 void setMoney(player *playerId) {
 	int i= 0;
 
@@ -162,7 +148,7 @@ void setMoney(player *playerId) {
 // 피박(해결)  고박(진사람들 쪽을 조사해야함)- (4,5번할때) 
 // 쓰리고, 포고, 흔들기, 멍텅구리(이와같은 것을 하고 이 긴사람 점수를 두배해주는 식으로 해결하면 됨)- (4,5번 할때)
 											   
-	if(playerId->data == tmp->data)
+	if(playerId->id == tmp->id)
 	{
 		playerId->money = INITIAL_MONEY + (tmp->score)*100*2;
 	}
@@ -176,15 +162,26 @@ void setMoney(player *playerId) {
 }
 
 
-    // player 구조체에 돈 세팅 
-
-
+// player 구조체에 돈 세팅 
 int getMoney(player *playerId) {
     int money;
 
 	money = playerId->money;
 
     return money;
+}
+
+
+player* setWinner(){
+    if((players[0].score > players[1].score) && (players[0].score > players[2].score)) {
+        return &players[0]; 
+        
+    } else if((players[1].score > players[0].score) && (players[1].score > players[2].score)) {
+        return &players[1];
+
+    } else {
+        return &players[2];
+    }
 }
 
 
@@ -197,7 +194,7 @@ void setPlayerInfo() {
         players[i].money = 100000;
         players[i].turn = 0;
 
-		players[i].data = i;
+		players[i].id = i;
     }
 
     cardInitialize();
