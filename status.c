@@ -8,7 +8,7 @@ void setScore(player playerId) {
 
 	player* tmp;
 
-	tmp = (player*)malloc(sizeof(player))
+	tmp = (player*)malloc(sizeof(player));
 
 	int i = 0;
 
@@ -53,13 +53,13 @@ void setScore(player playerId) {
 			gukjin++;}
 	}
 	if(ssangpi == 1){
-		pi = pi+2}
+		pi = pi+2;}
 	if(ssangpi == 2){
-		pi = pi+4}
+		pi = pi+4;}
 	if(gukjin == 1){
-		pi = pi+2} // 국진을 대비해서.
+		pi = pi+2;} // 국진을 대비해서.
 	if( pi >= 10){
-		tmp->score = tmp->score + pi-9}
+		tmp->score = tmp->score + pi-9;}
 
 
 	if(gwang == 3){
@@ -111,15 +111,56 @@ int getScore(player playerId) {
 }
 
 
+player* setWinner(){
+	
+	if((players[0]->score) > (players[1]->score)){
+		if((players[0]->score) > (players[2]->score)){
+			return players[0]; }}
+	if((players[1]->score) > (players[0]->score)){
+		if((players[1]->score) > (players[2]->score)){
+			return players[1]; }}
+	if((players[2]->score) > (players[1]->score)){
+		if((players[2]->score) > (players[0]->score)){
+			return players[2]; }}
+} // 새로 만든 함수. 이긴사람이 누군지 알기 위해.
+
+
+
+
+
 void setMoney(player playerId) {
 
-	player* tmp
+	player* tmp;
 
+	tmp = setWinner();
+	
+	int gwang = 0, bigwang = 0, pi = 0, ssangpi = 0, 
+		oh = 0, chodan = 0, hongdan = 0, chungdan = 0,
+		sip = 0, gukjin = 0, godori = 0;
 
-
-	playerId->money = INITIAL_MONEY -  
-
+	for(i=0 ; playerId->eating_card[i]->next != NULL ; i++){
+		if(((playerId->eating_card[i]->data)%4 == (2||3))
+			&& ((playerId->eating_card[i]->data) != (46||47))){
+			pi++;}
+		if((playerId->eating_card[i]->data) == (41||47)){
+			ssangpi++;}}
+// 피박(해결)  고박(진사람들 쪽을 조사해야함)- (4,5번할때) 
+// 쓰리고, 포고, 흔들기, 멍텅구리(이와같은 것을 하고 이 긴사람 점수를 두배해주는 식으로 해결하면 됨)- (4,5번 할때)
+											   
+	if(playerId->data == tmp->data)
+	{
+		playerId->money = INITIAL_MONEY + (tmp->score)*100*2;
+	}
+	else{
+	if(pi<7){
+		playerId->money = INITIAL_MONEY - (tmp->score)*100*2;       //피박문제 해결한줄. 
+		tmp->money = (tmp->money) + (tmp->score)*100;}				//피박문제 해결한줄.
+	else
+		playerId->money = INITIAL_MONEY - (tmp->score)*100;
+	}
 }
+
+
     // player 구조체에 돈 세팅 
 
 
@@ -140,6 +181,8 @@ void setPlayerInfo() {
         players[i].played = 0;
         players[i].money = 100000;
         players[i].turn = 0;
+
+		players[i].data = i;
     }
 
     cardInitialize();
