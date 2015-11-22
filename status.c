@@ -21,35 +21,48 @@ void setScore(player *playerId) {
 	head = playerId;
 
 	for(i=0 ; head->eating_card->next != NULL ; i++){
-		if(((head->eating_card->next->data)%4 == (2||3))
-			&& ((head->eating_card->next->data) != (46||47))){
+		if((((head->eating_card->next->data)%4 == 2)||((head->eating_card->next->data)%4 == 3))
+			&& (((head->eating_card->next->data) != 46)||((head->eating_card->next->data) != 47))){
 			pi++;}
-		if((head->eating_card->next->data) == (41||47)){
+		if(((head->eating_card->next->data) == 41)||((head->eating_card->next->data) == 47)){
 			ssangpi++;}
 
 
-		if((head->eating_card->next->data) == (0||8||32||40)){
+		if(((head->eating_card->next->data) == 0)||((head->eating_card->next->data)==8)
+		     || ((head->eating_card->next->data)==32)||((head->eating_card->next->data)==40)){
 			gwang++;}
 		if((head->eating_card->next->data) == 44){
 			gwang++, bigwang++;}
 
 
-		if(((head->eating_card->next->data)%4 == 1)
-			&& ((head->eating_card->next->data) != (29||41||45))
-			&&(head->eating_card->next->data == 46)){
+		if((((head->eating_card->next->data)%4 == 1)
+			&& (((head->eating_card->next->data) != 29)||((head->eating_card->next->data)!=41)
+			|| ((head->eating_card->next->data) != 45)))
+			||(head->eating_card->next->data == 46)){
 			oh++;}
-		if((head->eating_card->next->data) == (1||5||9)){
+		if(((head->eating_card->next->data) == 1)||((head->eating_card->next->data)==5)||
+				((head->eating_card->next->data)==9)){
 			hongdan++;}
-		if((head->eating_card->next->data) == (13||17||23)){
+		if(((head->eating_card->next->data) == 13)||((head->eating_card->next->data)==17)||
+				((head->eating_card->next->data)==23)){
 			chodan++;}
-		if((head->eating_card->next->data) == (21||33||37)){
+		if(((head->eating_card->next->data) == 21)||((head->eating_card->next->data)==33)||
+					((head->eating_card->next->data)==37)){
 			chungdan++;}
 
 
-		if((head->eating_card->next->data) == (4||12||16||20||24
-			||29||36||45)){
+		if(((head->eating_card->next->data) == 4)||
+		((head->eating_card->next->data)==12)||
+		((head->eating_card->next->data)==16)||
+		 ((head->eating_card->next->data)==20)||
+		  ((head->eating_card->next->data)==24)||
+			((head->eating_card->next->data)==29)||
+			((head->eating_card->next->data)==36)||
+			((head->eating_card->next->data)==45)){
 			sip++;}
-		if((head->eating_card->next->data) == (4||12||33)){
+		if(((head->eating_card->next->data) == 4)||
+				((head->eating_card->next->data)==12)||
+				((head->eating_card->next->data)==33)){
 			godori++;}
 
 
@@ -139,12 +152,13 @@ void setMoney(player *playerId) {
 	head = playerId;
 
 	for(i=0 ; head->eating_card->next != NULL ; i++){
-		if(((head->eating_card->next->data)%4 == (2||3))
-			&& ((head->eating_card->next->data) != (46||47))){
+		if((((head->eating_card->next->data)%4 == 2)||((head->eating_card->next->data)%4 == 3))
+			&& (((head->eating_card->next->data) != 46)||((head->eating_card->next->data) != 47))){
 			pi++;}
-		if((head->eating_card->next->data) == (41||47)){
-			pi = pi+2;}
+		if(((head->eating_card->next->data) == 41)||((head->eating_card->next->data) == 47)){
+			pi =pi+2;}
 		head->eating_card->next = head->eating_card->next->next;}
+
 // 피박(해결)  고박(진사람들 쪽을 조사해야함)- (4,5번할때) 
 // 쓰리고, 포고, 흔들기, 멍텅구리(이와같은 것을 하고 이 긴사람 점수를 두배해주는 식으로 해결하면 됨)- (4,5번 할때)
 											   
