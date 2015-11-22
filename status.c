@@ -85,7 +85,7 @@ void setScore(player playerId) {
 		tmp->score = tmp->score + 3;}
 
 
-	if(sip >= ){
+	if(sip >= 5){
 		tmp->score = tmp->score + sip-4;}
 	if(godori=3){
 		tmp->score = tmp->score + 5;}
