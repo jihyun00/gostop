@@ -2,10 +2,9 @@
 
 #include <stdio.h>
 
+
+// player 구조체에 점수 세팅
 void setScore(player *playerId) {
-
-
-
 	player* tmp = NULL;
 
 	tmp = (player*)malloc(sizeof(player));
@@ -19,12 +18,7 @@ void setScore(player *playerId) {
 	player * head = NULL;
 	head = (player*)malloc(sizeof(player));
 
-
 	head = playerId;
-
-
-
-
 
 	for(i=0 ; head->eating_card->next != NULL ; i++){
 		if(((head->eating_card->next->data)%4 == (2||3))
@@ -87,7 +81,6 @@ void setScore(player *playerId) {
 	if(gwang ==5){
 		tmp->score = tmp->score +11;}
 
-
 	if(oh >= 5){
 		tmp->score = tmp->score + oh-4;}
 	if(hongdan=3){
@@ -97,7 +90,6 @@ void setScore(player *playerId) {
 	if(chungdan=3){
 		tmp->score = tmp->score + 3;}
 
-
 	if(sip >= 5){
 		tmp->score = tmp->score + sip-4;}
 	if(godori=3){
@@ -105,12 +97,6 @@ void setScore(player *playerId) {
 
 	playerId->score = tmp->score;
 }
-
-		
-
-
-    // player 구조체에 점수 세팅
-
 
 
 int getScore(player *playerId) {
@@ -123,7 +109,6 @@ int getScore(player *playerId) {
 
 
 player* setWinner(){
-	
 	if((players[0].score) > (players[1].score)){
 		if((players[0].score) > (players[2].score)){
 			return &players[0]; }}
@@ -136,11 +121,7 @@ player* setWinner(){
 } // 새로 만든 함수. 이긴사람이 누군지 알기 위해.
 
 
-
-
-
 void setMoney(player *playerId) {
-
 	int i= 0;
 
 	player* tmp=NULL;
