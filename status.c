@@ -2,11 +2,11 @@
 
 #include <stdio.h>
 
-void setScore(player playerId) {
+void setScore(player *playerId) {
 
 
 
-	player* tmp;
+	player* tmp = NULL;
 
 	tmp = (player*)malloc(sizeof(player));
 
@@ -16,41 +16,52 @@ void setScore(player playerId) {
 		oh = 0, chodan = 0, hongdan = 0, chungdan = 0,
 		sip = 0, gukjin = 0, godori = 0;
 
-	for(i=0 ; playerId->eating_card[i]->next != NULL ; i++){
-		if(((playerId->eating_card[i]->data)%4 == (2||3))
-			&& ((playerId->eating_card[i]->data) != (46||47))){
+	player * head = NULL;
+	head = (player*)malloc(sizeof(player));
+
+
+	head = playerId;
+
+
+
+
+
+	for(i=0 ; head->eating_card->next != NULL ; i++){
+		if(((head->eating_card->next->data)%4 == (2||3))
+			&& ((head->eating_card->next->data) != (46||47))){
 			pi++;}
-		if((playerId->eating_card[i]->data) == (41||47)){
+		if((head->eating_card->next->data) == (41||47)){
 			ssangpi++;}
 
 
-		if((playerId->eating_card[i]->data) == (0||8||32||40)){
+		if((head->eating_card->next->data) == (0||8||32||40)){
 			gwang++;}
-		if((playerId->eating_card[i]->data) == 44){
+		if((head->eating_card->next->data) == 44){
 			gwang++, bigwang++;}
 
 
-		if(((playerId->eating_card[i]->data)%4 == 1)
-			&& ((playerId->eating_card[i]->data) != (29||41||45))
-			&&(playerId->eating_card[i]->data == 46)){
+		if(((head->eating_card->next->data)%4 == 1)
+			&& ((head->eating_card->next->data) != (29||41||45))
+			&&(head->eating_card->next->data == 46)){
 			oh++;}
-		if((playerId->eating_card[i]->data) == (1||5||9)){
+		if((head->eating_card->next->data) == (1||5||9)){
 			hongdan++;}
-		if((playerId->eating_card[i]->data) == (13||17||23)){
+		if((head->eating_card->next->data) == (13||17||23)){
 			chodan++;}
-		if((playerId->eating_card[i]->data) == (21||33||37)){
+		if((head->eating_card->next->data) == (21||33||37)){
 			chungdan++;}
 
 
-		if((playerId->eating_card[i]->data) == (4||12||16||20||24
+		if((head->eating_card->next->data) == (4||12||16||20||24
 			||29||36||45)){
 			sip++;}
-		if((playerId->eating_card[i]->data) == (4||12||33)){
+		if((head->eating_card->next->data) == (4||12||33)){
 			godori++;}
 
 
-		if((playerId->eating_card[i]->data) == 32){
+		if((head->eating_card->next->data) == 32){
 			gukjin++;}
+		head->eating_card->next = head->eating_card->next->next;
 	}
 	if(ssangpi == 1){
 		pi = pi+2;}
@@ -102,7 +113,7 @@ void setScore(player playerId) {
 
 
 
-int getScore(player playerId) {
+int getScore(player *playerId) {
     int score;
 
 	score = playerId->score; 
@@ -113,24 +124,28 @@ int getScore(player playerId) {
 
 player* setWinner(){
 	
-	if((players[0]->score) > (players[1]->score)){
-		if((players[0]->score) > (players[2]->score)){
-			return players[0]; }}
-	if((players[1]->score) > (players[0]->score)){
-		if((players[1]->score) > (players[2]->score)){
-			return players[1]; }}
-	if((players[2]->score) > (players[1]->score)){
-		if((players[2]->score) > (players[0]->score)){
-			return players[2]; }}
+	if((players[0].score) > (players[1].score)){
+		if((players[0].score) > (players[2].score)){
+			return &players[0]; }}
+	if((players[1].score) > (players[0].score)){
+		if((players[1].score) > (players[2].score)){
+			return &players[1]; }}
+	if((players[2].score) > (players[1].score)){
+		if((players[2].score) > (players[0].score)){
+			return &players[2]; }}
 } // 새로 만든 함수. 이긴사람이 누군지 알기 위해.
 
 
 
 
 
-void setMoney(player playerId) {
+void setMoney(player *playerId) {
 
-	player* tmp;
+	int i= 0;
+
+	player* tmp=NULL;
+
+	tmp = (player*)malloc(sizeof(player));
 
 	tmp = setWinner();
 	
@@ -138,11 +153,15 @@ void setMoney(player playerId) {
 		oh = 0, chodan = 0, hongdan = 0, chungdan = 0,
 		sip = 0, gukjin = 0, godori = 0;
 
-	for(i=0 ; playerId->eating_card[i]->next != NULL ; i++){
-		if(((playerId->eating_card[i]->data)%4 == (2||3))
-			&& ((playerId->eating_card[i]->data) != (46||47))){
+	player* head = NULL;
+	head = (player*)malloc(sizeof(player));
+	head = playerId;
+
+	for(i=0 ; head->eating_card->next != NULL ; i++){
+		if(((head->eating_card->next->data)%4 == (2||3))
+			&& ((head->eating_card->next->data) != (46||47))){
 			pi++;}
-		if((playerId->eating_card[i]->data) == (41||47)){
+		if((head->eating_card->next->data) == (41||47)){
 			ssangpi++;}}
 // 피박(해결)  고박(진사람들 쪽을 조사해야함)- (4,5번할때) 
 // 쓰리고, 포고, 흔들기, 멍텅구리(이와같은 것을 하고 이 긴사람 점수를 두배해주는 식으로 해결하면 됨)- (4,5번 할때)
@@ -164,7 +183,7 @@ void setMoney(player playerId) {
     // player 구조체에 돈 세팅 
 
 
-int getMoney(player playerId) {
+int getMoney(player *playerId) {
     int money;
 
 	money = playerId->money;
