@@ -90,17 +90,17 @@ void setScore(player *playerId) {
 
 	if(oh >= 5){
 		tmp->score = tmp->score + oh-4;}
-	if(hongdan=3){
+	if(hongdan ==3){
 		tmp->score = tmp->score + 3;}
-	if(chodan=3){
+	if(chodan==3){
 		tmp->score = tmp->score + 3;}
-	if(chungdan=3){
+	if(chungdan==3){
 		tmp->score = tmp->score + 3;}
 
 
 	if(sip >= 5){
 		tmp->score = tmp->score + sip-4;}
-	if(godori=3){
+	if(godori==3){
 		tmp->score = tmp->score + 5;}
 
 	playerId->score = tmp->score;
