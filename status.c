@@ -8,6 +8,8 @@ void setScore(player playerId) {
 
 	player* tmp;
 
+	tmp = (player*)malloc(sizeof(player))
+
 	int i = 0;
 
 	int gwang = 0, bigwang = 0, pi = 0, ssangpi = 0, 
@@ -91,14 +93,6 @@ void setScore(player playerId) {
 		tmp->score = tmp->score + 5;}
 
 	playerId->score = tmp->score;
-
-
-	
-
-
-
-
-
 }
 
 		
@@ -110,18 +104,29 @@ void setScore(player playerId) {
 
 int getScore(player playerId) {
     int score;
+
+	score = playerId->score; 
     
     return score;
 }
 
 
 void setMoney(player playerId) {
-    // player 구조체에 돈 세팅 
+
+	player* tmp
+
+
+
+	playerId->money = INITIAL_MONEY -  
+
 }
+    // player 구조체에 돈 세팅 
 
 
 int getMoney(player playerId) {
     int money;
+
+	money = playerId->money;
 
     return money;
 }
