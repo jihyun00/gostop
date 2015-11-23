@@ -20,6 +20,8 @@ void cardInitialize() {
     int i;
     card *initialCard = (card *)malloc(sizeof(card)*CardMAX);
     card *playersCard = (card *)malloc(sizeof(card)*MAX_NUMBER_OF_PLAYER);
+    dummyCard = (card *)malloc(sizeof(card));
+    blanketCard = (card *)malloc(sizeof(card));
    
     for(i=0; i < CardMAX; ++i) { // initialize card 
         initialCard[i].data = i; 
@@ -84,7 +86,7 @@ void divideCard(card *card_list, card *players_card) {
     orderCard(&players_card[2]);
     players[2].holding_card = &players_card[2];
     
-    head = &blanketCard;
+    head = blanketCard;
     for(i=21; i < 27; ++i) {
         head->data = card_list[i].data;
         if(i != 26) {
@@ -96,9 +98,9 @@ void divideCard(card *card_list, card *players_card) {
 
         head = head->next; 
     }
-    orderCard(&blanketCard);
+    orderCard(blanketCard);
 
-    head = &dummyCard;
+    head = dummyCard;
     for(i=27; i < CardMAX; ++i) {
         head->data = card_list[i].data;
         if(i != CardMAX-1) {
@@ -110,7 +112,7 @@ void divideCard(card *card_list, card *players_card) {
 
         head = head->next; 
     }
-    orderCard(&dummyCard);
+    orderCard(dummyCard);
 }
 
 

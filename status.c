@@ -237,7 +237,7 @@ void drawScreen() {
     printf("(점수: %d) 딴 화투\n\n", players[2].score);
 
     printf("깔린 패) ");
-    head = &blanketCard;
+    head = blanketCard;
     while(head != NULL) {
         printf("%s ", cardMatrix[head->data]);
         head = head->next;
