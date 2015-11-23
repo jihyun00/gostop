@@ -204,9 +204,9 @@ void setPlayerInfo() {
 void setTurn() {
     int i;
     for(i=0; i < MAX_NUMBER_OF_PLAYER; ++i) {
-        if(player[i].turn == GAME_TURN_NOW) {
-            player[i].turn = GAME_TURN_NOT_NOW;
-            player[(i+1) % MAX_NUMBER_OF_PLAYER].turn == GAME_TURN_NOW;
+        if(players[i].turn == GAME_TURN_NOW) {
+            players[i].turn = GAME_TURN_NOT_NOW;
+            players[(i+1) % MAX_NUMBER_OF_PLAYER].turn = GAME_TURN_NOW;
         }
     }
 }
