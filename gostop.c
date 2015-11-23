@@ -7,7 +7,9 @@
 int main(void) {
     setPlayerInfo();
 
-    drawScreen();
+    while(1) {
+        drawScreen();
+    }
 
     return 0;
 }

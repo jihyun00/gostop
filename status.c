@@ -245,6 +245,8 @@ void drawScreen() {
     printf("\n\n");
     printf("명령 : ");
     scanf("%s", command);
+
+    drawInterface(command);
 }
 
 
