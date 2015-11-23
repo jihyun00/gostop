@@ -201,6 +201,30 @@ void setPlayerInfo() {
 }
 
 
+void setTurn() {
+    int i;
+    for(i=0; i < MAX_NUMBER_OF_PLAYER; ++i) {
+        if(player[i].turn == GAME_TURN_NOW) {
+            player[i].turn = GAME_TURN_NOT_NOW;
+            player[(i+1) % MAX_NUMBER_OF_PLAYER].turn == GAME_TURN_NOW;
+        }
+    }
+}
+
+
+// player turn return
+int getTurn() {
+    int i;
+    for(i=0; i < MAX_NUMBER_OF_PLAYER; ++i) {
+        if(players[i].turn == GAME_TURN_NOW) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+
 void drawScreen() {
     // status 변할 때마다 화면에 값 그려주기
     // 플레이어 차례, 점수, 갖고 있는 패 등
