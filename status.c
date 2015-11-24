@@ -192,10 +192,12 @@ void setPlayerInfo() {
         players[i].score = 0;
         players[i].played = 0;
         players[i].money = 100000;
-        players[i].turn = 0;
+        players[i].turn = GAME_TURN_NOT_NOW;
 
 		players[i].id = i;
     }
+
+    players[0].turn = GAME_TURN_NOW; 
 
     cardInitialize();
 }
