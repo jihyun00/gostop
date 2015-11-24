@@ -1,7 +1,7 @@
 #include "status.h"
-
+#include <string.h>
+#include <ctype.h>
 #include <stdio.h>
-
 // player 구조체에 점수 세팅
 void setScore(player *playerId) {
 	player* tmp = NULL;
@@ -275,14 +275,64 @@ void drawScreen() {
 
 
 void drawInterface(char *command) {
-    int num; 
-
+    int num=-1;
+   	int index,turn;
+	card *holding=NULL;
+	card *eating=NULL;
+	card target;
+	if(isdigit(command[0])) num = 6;
+	else if(command[0] == 'g') num=1;			
+	else if(command[0] == 's' && command[1] == 'a') num=9;
+	else if(command[0] == 's' && command[1] != 'a') num=2;			
+	else if(command[0] == 'e') num=3;			
+	else if(command[0] == 'b') num=4;			
+	else if(command[0] == 'h') num=5;			
+	else if(command[0] == 'l') num=10;			
     // command로 받은 거 문자일 경우 숫자로 변환해주고,
     // switch - case 로 해당 동작 처리
 
     switch(num) {
-        case 0:
+		
+        case 1:printf("go 함수\n");
             // blah blah... 
             break;
+		case 2: printf("stop 함수\n");
+			break;
+		case 3: printf("게임을 종료합니다\n");
+				exit(0);
+			break;
+		case 4: printf("-------게이머의 잔고---------\n");
+				printf("A의 잔고 : %d 원\n", getMoney(players));
+				printf("B의 잔고 : %d 원\n", getMoney(players+1));
+				printf("C의 잔고 : %d 원\n", getMoney(players+2));
+			break;
+		case 5: printf("--------- 도움말 ------------\n");
+				printf("1. g(o) : 고 (자기 turn에 점수가 났고 3점이상");
+				printf("2. s(top) : 스톱(자기 turn에 점수가 났고 3점 이상일 떄, 이번 판을 끝냄\n");
+				printf("3.e(xit) : exit 프로그램 끝내기\n");
+				printf("4. b(alance) : 게이머의 잔고 보기\n");
+				printf("5. h(elp) : 각 키에 대한 설명 보기\n");
+				printf("6. 1~7 : 낼 화투 선택\n");
+				printf("7. 1~2 : 화투를 냈는데 깔린 화투 중 무늬는 같지만 다른 것이 있을 때 선택\n");
+				printf("8. 9 : 9 십을 피로 또는 십으로 이동(토글), 디폴트로는 피로 함, 각 판에서 한번만 할 수 있음\n");
+				printf("9. save : 현재 상태를 파일에 저장(단, 확인 가능하도록 텍스트 형태로 저장해야함\n");
+				printf("10. load : 파일에 저장된 상태를 읽어서 계속 게임 진행\n");
+			break;
+		case 6:
+		turn = getTurn();	
+		index = command[0] - '0';
+		printf("%d번쨰 턴이고, %d 번째 카드를 선택하셨습니다\n",turn,index);
+		holding = players[turn].holding_card;
+		eating = players[turn].eating_card;
+		target = holding[index];
+		if(getCard(holding,target.data) != NULL)
+		if(getCard(dummyCard,target.data)!= NULL)
+		{
+		printf("%d 번쨰 카드를 선택하셨습니다.\n",index);	
+		cardInsert(eating,target.data);
+		cardDelete(holding,target.data);
+		cardDelete(dummyCard,target.data);
+		}
+						
     }
 }
