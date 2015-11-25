@@ -1,4 +1,4 @@
-#include "card.h"
+﻿#include "card.h"
 #include "player.h"
 
 const char cardMatrix[CardMAX][10] = {
@@ -212,3 +212,42 @@ void cardDelete(card *card_list, int data) {
         }
     }
 }
+
+card *getSecondCard(card *card_list, int data) {  
+    card *head = card_list;
+    card *ans=NULL;
+    if(head == NULL) {
+        return NULL;
+    }
+
+    while(head != NULL) { // 노드가 끝일 때까지
+        if((head->data)/4 == (head->data)/4) {
+            ans=head;
+
+        } else {
+            head = head->next;
+        }
+    }
+
+    return ans;
+}
+
+int getSame(card *card_list, int data) {  
+    card *head = card_list;
+    int cnt=0;
+    if(head == NULL) {
+        return NULL;
+    }
+
+    while(head != NULL) { // 노드가 끝일 때까지
+        if((head->data)/4 == (head->data)/4) {
+            cnt++;
+
+        } else {
+            head = head->next;
+        }
+    }
+
+    return cnt;
+}
+

@@ -1,4 +1,4 @@
-#ifndef _CARD_H_
+﻿#ifndef _CARD_H_
 #define _CARD_H_
 
 #include <stdio.h>
@@ -26,5 +26,7 @@ void orderCard(card *card_list);
 card *getCard(card *card_list, int data);
 void cardInsert(card *card_list, int data);
 void cardDelete(card *card_list, int data);
+card *getSecondCard(card *card_list, int data);
+int getSame(card *card_list, int data);
 
 #endif

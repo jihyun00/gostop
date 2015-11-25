@@ -1,4 +1,4 @@
-#include "status.h"
+﻿#include "status.h"
 #include <string.h>
 #include <ctype.h>
 #include <stdio.h>
@@ -232,7 +232,6 @@ void drawScreen() {
     // 플레이어 차례, 점수, 갖고 있는 패 등
     char command[256];
 
-    system("clear");
     card *head = NULL;
 
     printf("A   : 패) ");
@@ -279,10 +278,14 @@ void drawScreen() {
 void drawInterface(char *command) {
     int num=-1;
    	int index,turn;
-	card *holding=NULL;
 	card *eating=NULL;
+	card *holding=NULL;
 	card target;
-	if(isdigit(command[0])) num = 6;
+	if(isdigit(command[0]))
+	{if(command[0] == '9') num = 8;
+	 else 
+		num = 6;
+	}
 	else if(command[0] == 'g') num=1;			
 	else if(command[0] == 's' && command[1] == 'a') num=9;
 	else if(command[0] == 's' && command[1] != 'a') num=2;			
@@ -292,66 +295,170 @@ void drawInterface(char *command) {
 	else if(command[0] == 'l') num=10;			
     // command로 받은 거 문자일 경우 숫자로 변환해주고,
     // switch - case 로 해당 동작 처리
-	if(isdigit(command[0])) {
-		// command[0] -> digit
-		switch(num) {
-			case 1:
-
 				
-		}
-
-	} else {
-		switch(command[0]) {
-			case 'g':
-				
-		}
-
-	}
-
-	
-
     switch(num) {
-		
-        case 1:printf("go 함수\n");
+        case 1:
+		    system("clear");				
+
+            printf("go 함수\n");
             // blah blah... 
+
             break;
-		case 2: printf("stop 함수\n");
+		case 2: 
+		    system("clear");				
+
+            printf("stop 함수\n");
+            
 			break;
-		case 3: printf("게임을 종료합니다\n");
-				exit(0);
+		case 3: 
+            printf("게임을 종료합니다\n");
+			exit(0);
+
 			break;
-		case 4: printf("-------게이머의 잔고---------\n");
-				printf("A의 잔고 : %d 원\n", getMoney(players));
-				printf("B의 잔고 : %d 원\n", getMoney(players+1));
-				printf("C의 잔고 : %d 원\n", getMoney(players+2));
+		case 4: 
+            printf("-------게이머의 잔고---------\n");
+            printf("A의 잔고 : %d 원\n", getMoney(players));
+            printf("B의 잔고 : %d 원\n", getMoney(players+1));
+            printf("C의 잔고 : %d 원\n", getMoney(players+2));
+
 			break;
-		case 5: printf("--------- 도움말 ------------\n");
-				printf("1. g(o) : 고 (자기 turn에 점수가 났고 3점이상");
-				printf("2. s(top) : 스톱(자기 turn에 점수가 났고 3점 이상일 떄, 이번 판을 끝냄\n");
-				printf("3.e(xit) : exit 프로그램 끝내기\n");
-				printf("4. b(alance) : 게이머의 잔고 보기\n");
-				printf("5. h(elp) : 각 키에 대한 설명 보기\n");
-				printf("6. 1~7 : 낼 화투 선택\n");
-				printf("7. 1~2 : 화투를 냈는데 깔린 화투 중 무늬는 같지만 다른 것이 있을 때 선택\n");
-				printf("8. 9 : 9 십을 피로 또는 십으로 이동(토글), 디폴트로는 피로 함, 각 판에서 한번만 할 수 있음\n");
-				printf("9. save : 현재 상태를 파일에 저장(단, 확인 가능하도록 텍스트 형태로 저장해야함\n");
-				printf("10. load : 파일에 저장된 상태를 읽어서 계속 게임 진행\n");
+		case 5: 
+            printf("--------- 도움말 ------------\n");
+            printf("1. g(o) : 고 (자기 turn에 점수가 났고 3점이상");
+            printf("2. s(top) : 스톱(자기 turn에 점수가 났고 3점 이상일 떄, 이번 판을 끝냄\n");
+            printf("3.e(xit) : exit 프로그램 끝내기\n");
+            printf("4. b(alance) : 게이머의 잔고 보기\n");
+            printf("5. h(elp) : 각 키에 대한 설명 보기\n");
+            printf("6. 1~7 : 낼 화투 선택\n");
+            printf("7. 1~2 : 화투를 냈는데 깔린 화투 중 무늬는 같지만 다른 것이 있을 때 선택\n");
+            printf("8. 9 : 9 십을 피로 또는 십으로 이동(토글), 디폴트로는 피로 함, 각 판에서 한번만 할 수 있음\n");
+            printf("9. save : 현재 상태를 파일에 저장(단, 확인 가능하도록 텍스트 형태로 저장해야함\n");
+            printf("10. load : 파일에 저장된 상태를 읽어서 계속 게임 진행\n");
+
 			break;
 		case 6:
-			turn = getTurn();	
-			index = command[0] - '0';
+            index = command[0]-'0';
+			turn = getTurn();
 			printf("%d번쨰 턴이고, %d 번째 카드를 선택하셨습니다\n",turn,index);
-			holding = players[turn].holding_card;
-			eating = players[turn].eating_card;
-			target = holding[index];
-			if(getCard(holding,target.data) != NULL)
-			if(getCard(dummyCard,target.data)!= NULL)
-			{
-				printf("%d 번쨰 카드를 선택하셨습니다.\n",index);	
-				cardInsert(eating,target.data);
-				cardDelete(holding,target.data);
-				cardDelete(dummyCard,target.data);
-			}
-						
+            holding = players[turn].holding_card;
+            eating = players[turn].eating_card;
+            target = holding[index];
+            if(getSame(blanketCard,target.data)!=0)
+            {
+				if(getSame(blanketCard,target.data)>1) // 7번 구현
+				{
+					printf("1,2번쨰 중 어느것을 선택하시겠습니까?");
+					int same=0;
+					scanf("%d",&same);
+					if(same==1)
+					{
+						cardInsert(eating,target.data);
+						cardDelete(holding,target.data);
+                		cardDelete(blanketCard,target.data);
+					}
+					else if(same==2)
+					{
+					cardInsert(eating,getSecondCard(blanketCard,target.data)->data);
+					cardDelete(holding,target.data);
+          			cardDelete(dummyCard,getSecondCard(blanketCard,target.data)->data);
+					}
+					else
+					printf("잘못된 선택입니다");
+				 	}
+                cardInsert(eating,target.data);
+                cardDelete(holding,target.data);
+                cardDelete(blanketCard,target.data);
+            }
+	break;
+	case 8: printf("9십을 십으로 이동합니다(default : 십->피)\n");
+			if(getCard(eating,32)!=NULL)
+			getCard(eating,32)->data = 34;
+			break;
+	case 9: save();
+		break;	
+		
+
     }
 }
+
+void save()
+{	
+	card *blank = blanketCard;
+	FILE *ofp1;
+	ofp1 = fopen("blank.txt","w");
+	while(blank!=NULL)
+{
+	fprintf(ofp1,"%d ",blank->data);
+	blank = blank -> next;
+}
+
+	FILE *ofp20; // 플레이어0 의 정보
+	ofp20 = fopen("player0.txt","w");
+	fprintf(ofp20,"%d %d %d %d %d %p %p",players[0].id, players[0].score,players[0].played,players[0].money,players[0].turn);	
+	
+	FILE *ofp21,*ofp22;
+	card *aeat,*ahold;
+	ofp21 = fopen("player0eat.txt","w");
+	aeat = players[0].eating_card;
+	while(aeat != NULL)
+	{
+	fprintf(ofp21,"%d ",aeat->data);
+	aeat = aeat -> next;
+	}
+	
+	ofp22 = fopen("player0hold.txt","w");
+	ahold = players[0].holding_card;
+	while(ahold != NULL)
+	{
+	fprintf(ofp21,"%d ",ahold->data);
+	ahold = ahold -> next;
+	}
+	
+	FILE *ofp30; // 플레이어1 의 정보
+	ofp30 = fopen("player1.txt","w");
+	fprintf(ofp30,"%d %d %d %d %d %p %p",players[1].id, players[1].score,players[1].played,players[1].money,players[1].turn);	
+	
+	FILE *ofp31,*ofp32;
+	card *beat,*bhold;
+	ofp31 = fopen("player1eat.txt","w");
+	beat = players[1].eating_card;
+	while(beat != NULL)
+	{
+	fprintf(ofp31,"%d ",beat->data);
+	beat = beat -> next;
+	}
+	
+	ofp32 = fopen("player1hold.txt","w");
+	bhold = players[1].holding_card;
+	while(bhold != NULL)
+	{
+	fprintf(ofp31,"%d ",bhold->data);
+	bhold = bhold -> next;
+	}
+
+	FILE *ofp40; // 플레이어2 의 정보
+	ofp40 = fopen("player2.txt","w");
+	fprintf(ofp40,"%d %d %d %d %d %p %p",players[2].id, players[2].score,players[2].played,players[2].money,players[2].turn);	
+	
+	FILE *ofp41,*ofp42;
+	card *ceat,*chold;
+	ofp41 = fopen("player2eat.txt","w");
+	ceat = players[2].eating_card;
+	while(ceat != NULL)
+	{
+	fprintf(ofp41,"%d ",ceat->data);
+	ceat = ceat -> next;
+	}
+	
+	ofp42 = fopen("player2hold.txt","w");
+	chold = players[2].holding_card;
+	while(chold != NULL)
+	{
+	fprintf(ofp41,"%d ",chold->data);
+	chold = chold -> next;
+	}
+}
+	
+
+
+
