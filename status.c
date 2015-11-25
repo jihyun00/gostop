@@ -292,6 +292,23 @@ void drawInterface(char *command) {
 	else if(command[0] == 'l') num=10;			
     // command로 받은 거 문자일 경우 숫자로 변환해주고,
     // switch - case 로 해당 동작 처리
+	if(isdigit(command[0])) {
+		// command[0] -> digit
+		switch(num) {
+			case 1:
+
+				
+		}
+
+	} else {
+		switch(command[0]) {
+			case 'g':
+				
+		}
+
+	}
+
+	
 
     switch(num) {
 		
@@ -321,20 +338,20 @@ void drawInterface(char *command) {
 				printf("10. load : 파일에 저장된 상태를 읽어서 계속 게임 진행\n");
 			break;
 		case 6:
-		turn = getTurn();	
-		index = command[0] - '0';
-		printf("%d번쨰 턴이고, %d 번째 카드를 선택하셨습니다\n",turn,index);
-		holding = players[turn].holding_card;
-		eating = players[turn].eating_card;
-		target = holding[index];
-		if(getCard(holding,target.data) != NULL)
-		if(getCard(dummyCard,target.data)!= NULL)
-		{
-		printf("%d 번쨰 카드를 선택하셨습니다.\n",index);	
-		cardInsert(eating,target.data);
-		cardDelete(holding,target.data);
-		cardDelete(dummyCard,target.data);
-		}
+			turn = getTurn();	
+			index = command[0] - '0';
+			printf("%d번쨰 턴이고, %d 번째 카드를 선택하셨습니다\n",turn,index);
+			holding = players[turn].holding_card;
+			eating = players[turn].eating_card;
+			target = holding[index];
+			if(getCard(holding,target.data) != NULL)
+			if(getCard(dummyCard,target.data)!= NULL)
+			{
+				printf("%d 번쨰 카드를 선택하셨습니다.\n",index);	
+				cardInsert(eating,target.data);
+				cardDelete(holding,target.data);
+				cardDelete(dummyCard,target.data);
+			}
 						
     }
 }
