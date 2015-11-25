@@ -29,7 +29,7 @@ void setScore(player *playerId) {
 
 
 		if(((head->eating_card->next->data) == 0)||((head->eating_card->next->data)==8)
-		     || ((head->eating_card->next->data)==32)||((head->eating_card->next->data)==40)){
+		     || ((head->eating_card->next->data)==28)||((head->eating_card->next->data)==40)){
 			gwang++;}
 		if((head->eating_card->next->data) == 44){
 			gwang++, bigwang++;}
@@ -67,15 +67,19 @@ void setScore(player *playerId) {
 
 
 		if((head->eating_card->next->data) == 32){
+<<<<<<< HEAD
 			pi=pi+2;}   // 구십(32)가 피로 쓰였을때
+=======
+			pi = pi+2;}
+>>>>>>> a0101b4182472f19142e0d8261a24eff4f8b7ca9
 		head->eating_card->next = head->eating_card->next->next;
 	}
 	if(ssangpi == 1){
 		pi = pi+2;}
 	if(ssangpi == 2){
 		pi = pi+4;}
-	if(gukjin == 1){
-		pi = pi+2;} // 국진을 대비해서.
+	//if(gukjin == 1){
+	//	pi = pi+2;} // 국진을 대비해서. (통합 과정에서 필요없어짐.)
 	if( pi >= 10){
 		tmp->score = tmp->score + pi-9;}
 
