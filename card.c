@@ -236,7 +236,7 @@ int getSame(card *card_list, int data) {
     card *head = card_list;
     int cnt=0;
     if(head == NULL) {
-        return NULL;
+        return 0;
     }
 
     while(head != NULL) { // 노드가 끝일 때까지
