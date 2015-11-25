@@ -240,7 +240,7 @@ int getSame(card *card_list, int data) {
     }
 
     while(head != NULL) { // 노드가 끝일 때까지
-        if((head->data)/4 == (head->data)/4) {
+        if((head->data)/4 == ((head->next)->data)/4) {
             cnt++;
 
         } else {
