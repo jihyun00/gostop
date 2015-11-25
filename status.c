@@ -232,7 +232,6 @@ void drawScreen() {
     // 플레이어 차례, 점수, 갖고 있는 패 등
     char command[256];
 
-    system("clear");
     card *head = NULL;
 
     printf("A   : 패) ");
@@ -294,47 +293,61 @@ void drawInterface(char *command) {
     // switch - case 로 해당 동작 처리
 
     switch(num) {
-		
-        case 1:printf("go 함수\n");
+        case 1:
+		    system("clear");				
+
+            printf("go 함수\n");
             // blah blah... 
+
             break;
-		case 2: printf("stop 함수\n");
+		case 2: 
+		    system("clear");				
+
+            printf("stop 함수\n");
+            
 			break;
-		case 3: printf("게임을 종료합니다\n");
-				exit(0);
+		case 3: 
+            printf("게임을 종료합니다\n");
+			exit(0);
+
 			break;
-		case 4: printf("-------게이머의 잔고---------\n");
-				printf("A의 잔고 : %d 원\n", getMoney(players));
-				printf("B의 잔고 : %d 원\n", getMoney(players+1));
-				printf("C의 잔고 : %d 원\n", getMoney(players+2));
+		case 4: 
+            printf("-------게이머의 잔고---------\n");
+            printf("A의 잔고 : %d 원\n", getMoney(players));
+            printf("B의 잔고 : %d 원\n", getMoney(players+1));
+            printf("C의 잔고 : %d 원\n", getMoney(players+2));
+
 			break;
-		case 5: printf("--------- 도움말 ------------\n");
-				printf("1. g(o) : 고 (자기 turn에 점수가 났고 3점이상");
-				printf("2. s(top) : 스톱(자기 turn에 점수가 났고 3점 이상일 떄, 이번 판을 끝냄\n");
-				printf("3.e(xit) : exit 프로그램 끝내기\n");
-				printf("4. b(alance) : 게이머의 잔고 보기\n");
-				printf("5. h(elp) : 각 키에 대한 설명 보기\n");
-				printf("6. 1~7 : 낼 화투 선택\n");
-				printf("7. 1~2 : 화투를 냈는데 깔린 화투 중 무늬는 같지만 다른 것이 있을 때 선택\n");
-				printf("8. 9 : 9 십을 피로 또는 십으로 이동(토글), 디폴트로는 피로 함, 각 판에서 한번만 할 수 있음\n");
-				printf("9. save : 현재 상태를 파일에 저장(단, 확인 가능하도록 텍스트 형태로 저장해야함\n");
-				printf("10. load : 파일에 저장된 상태를 읽어서 계속 게임 진행\n");
+		case 5: 
+            printf("--------- 도움말 ------------\n");
+            printf("1. g(o) : 고 (자기 turn에 점수가 났고 3점이상");
+            printf("2. s(top) : 스톱(자기 turn에 점수가 났고 3점 이상일 떄, 이번 판을 끝냄\n");
+            printf("3.e(xit) : exit 프로그램 끝내기\n");
+            printf("4. b(alance) : 게이머의 잔고 보기\n");
+            printf("5. h(elp) : 각 키에 대한 설명 보기\n");
+            printf("6. 1~7 : 낼 화투 선택\n");
+            printf("7. 1~2 : 화투를 냈는데 깔린 화투 중 무늬는 같지만 다른 것이 있을 때 선택\n");
+            printf("8. 9 : 9 십을 피로 또는 십으로 이동(토글), 디폴트로는 피로 함, 각 판에서 한번만 할 수 있음\n");
+            printf("9. save : 현재 상태를 파일에 저장(단, 확인 가능하도록 텍스트 형태로 저장해야함\n");
+            printf("10. load : 파일에 저장된 상태를 읽어서 계속 게임 진행\n");
+
 			break;
 		case 6:
-		turn = getTurn();	
-		index = command[0] - '0';
-		printf("%d번쨰 턴이고, %d 번째 카드를 선택하셨습니다\n",turn,index);
-		holding = players[turn].holding_card;
-		eating = players[turn].eating_card;
-		target = holding[index];
-		if(getCard(holding,target.data) != NULL)
-		if(getCard(dummyCard,target.data)!= NULL)
-		{
-		printf("%d 번쨰 카드를 선택하셨습니다.\n",index);	
-		cardInsert(eating,target.data);
-		cardDelete(holding,target.data);
-		cardDelete(dummyCard,target.data);
-		}
-						
+		    system("clear");				
+
+            turn = getTurn();	
+            index = command[0] - '0';
+            printf("%d번쨰 턴이고, %d 번째 카드를 선택하셨습니다\n",turn,index);
+            holding = players[turn].holding_card;
+            eating = players[turn].eating_card;
+            target = holding[index];
+            if(getCard(holding,target.data) != NULL)
+            if(getCard(dummyCard,target.data)!= NULL)
+            {
+                printf("%d 번쨰 카드를 선택하셨습니다.\n",index);	
+                cardInsert(eating,target.data);
+                cardDelete(holding,target.data);
+                cardDelete(dummyCard,target.data);
+            }
     }
 }
