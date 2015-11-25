@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <stdio.h>
 // player 구조체에 점수 세팅
+int gusip=0;
 void setScore(player *playerId) {
 	player* tmp = NULL;
 
@@ -57,8 +58,8 @@ void setScore(player *playerId) {
 		  ((head->eating_card->next->data)==24)||
 			((head->eating_card->next->data)==29)||
 			((head->eating_card->next->data)==36)||
-			((head->eating_card->next->data)==45)){
-			sip++;}
+			((head->eating_card->next->data)==45)||(((head->eating_card->next->data)==32)&&gusip==1)){
+			sip++;} // 구십(32)가 십으로 쓰일 때
 		if(((head->eating_card->next->data) == 4)||
 				((head->eating_card->next->data)==12)||
 				((head->eating_card->next->data)==33)){
@@ -66,7 +67,7 @@ void setScore(player *playerId) {
 
 
 		if((head->eating_card->next->data) == 32){
-			gukjin++;}
+			pi=pi+2;}   // 구십(32)가 피로 쓰였을때
 		head->eating_card->next = head->eating_card->next->next;
 	}
 	if(ssangpi == 1){
@@ -368,14 +369,14 @@ void drawInterface(char *command) {
                 cardInsert(eating,target.data);
                 cardDelete(holding,target.data);
                 cardDelete(blanketCard,target.data);
-            }
-	break;
+        	    }
+				break;
 	case 8: printf("9십을 십으로 이동합니다(default : 십->피)\n");
-			if(getCard(eating,32)!=NULL)
-			getCard(eating,32)->data = 34;
+			if(getCard(eating,32)!=NULL && gusip==0)
+			gusip=1;
 			break;
 	case 9: save();
-		break;	
+			break;	
 		
 
     }
