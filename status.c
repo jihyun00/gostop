@@ -68,7 +68,8 @@ void setScore(player *playerId) {
 
 		if((head->eating_card->next->data) == 32){
 			pi=pi+2;}   // 구십(32)가 피로 쓰였을때
-	}
+	head->eating_card->next = head->eating_card->next->next;}
+
 	if(ssangpi == 1){
 		pi = pi+2;}
 	if(ssangpi == 2){
