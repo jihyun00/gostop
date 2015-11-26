@@ -26,6 +26,7 @@ void orderCard(card *card_list);
 card *getCard(card *card_list, int data);
 void cardInsert(card *card_list, int data);
 void cardDelete(card *card_list, int data);
+int getCardSize(card *card_list);
 card *getSecondCard(card *card_list, int data);
 int getSame(card *card_list, int data);
 

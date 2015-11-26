@@ -251,6 +251,8 @@ void drawScreen() {
     // 플레이어 차례, 점수, 갖고 있는 패 등
     char command[256];
 
+    system("clear");
+
     card *head = NULL;
 
     printf("A   : 패) ");
@@ -303,8 +305,7 @@ void drawInterface(char *command) {
 	if(isdigit(command[0])) {
         if(command[0] == '9') {
             num = 8;
-        }
-	    else {
+        } else {
 		    num = 6;
         }
 	}
@@ -368,7 +369,7 @@ void drawInterface(char *command) {
 		case 6:
             index = command[0]-'0';
 			turn = getTurn();
-			printf("%d번쨰 턴이고, %d 번째 카드를 선택하셨습니다\n",turn,index);
+			printf("%d번째 턴이고, %d 번째 카드를 선택하셨습니다\n",turn,index);
             holding = players[turn].holding_card;
             eating = players[turn].eating_card;
             target = holding[index];

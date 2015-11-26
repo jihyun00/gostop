@@ -179,39 +179,92 @@ card *getCard(card *card_list, int data) {
 
 void cardInsert(card *card_list, int data) { 
     card *head = card_list;
-    card *target = (card *)malloc(sizeof(card)); 
+    card *prev = NULL;
+    card *temp = (card *)malloc(sizeof(card));
 
-    while(head->next != NULL) {
+    card *target = (card *)malloc(sizeof(card));
+    target->data = data;
+    target->next = NULL;
+    
+    // 첫 번째 카드에 넣기 
+    while(head != NULL) {
         if(head->data > data) {
-            target->next = head->next;
-            head->next = target;
+            if(prev == NULL) {
+                temp->data = head->data;
+                head->data = target->data;
+                target->data = temp->data;
+
+                prev = head;
+                head = head->next;
+            }
+                
+            prev->next = target;
+            target->next = head;
 
             return;
-
-        } else {
-            head = head->next;
         }
-    }
 
-    head->next = target;
+        // data가 list의 맨 마지막에 들어가는 경우
+        if(head->next == NULL) {
+            head->next = target; 
+            
+            return;
+        }
+
+        prev = head;
+        head = head->next;
+    }
 }
 
 
 void cardDelete(card *card_list, int data) {  
     card *head = card_list;
+    card *temp = (card *)malloc(sizeof(card));
     card *prev = NULL;
+    int i;
+    int size = getCardSize(card_list);
+
+    //첫 번째 카드 지우기
+    if(head != NULL && head->data == data) { 
+        for(i=0; i < size-1; ++i) {
+           head->data = head->next->data; 
+           prev = head;
+           head = head->next;
+        }
+        
+        prev->next = head->next;
+        head->next = head;
+        
+        return;
+    }
 
     while(head != NULL) {
         if(head->data == data) {
             prev->next = head->next;
             head->next = head;
-            
+
+            return;
+
         } else {
             prev = head;
             head = head->next;
         }
     }
 }
+
+
+int getCardSize(card *card_list) {
+    int size = 0;
+    card *head = card_list;
+
+    while(head != NULL) {
+        size++;
+        head = head->next;
+    }
+
+    return size;
+}
+
 
 card *getSecondCard(card *card_list, int data) {  
     card *head = card_list;
@@ -234,18 +287,18 @@ card *getSecondCard(card *card_list, int data) {
 
 int getSame(card *card_list, int data) {  
     card *head = card_list;
-    int cnt=0;
+    int cnt = 0;
+
     if(head == NULL) {
         return 0;
     }
 
     while(head != NULL) { // 노드가 끝일 때까지
-        if((head->data)/4 == ((head->next)->data)/4) {
+        if((head->data) / 4 == ((head->next)->data)/4) {
             cnt++;
-
-        } else {
-            head = head->next;
         }
+
+        head = head->next;
     }
 
     return cnt;
