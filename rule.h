@@ -29,6 +29,4 @@ void setChongtong(player *players, rule *rules, int i);
 void setNagari(card *dummyCard, player *players, rule *rules, int i);
 
 
-
-
 #endif
