@@ -306,7 +306,10 @@ void drawInterface(char *command) {
 
             break;
 		case 2: 
-		    system("clear");				
+		    if(players[getTurn()].turn == GAME_TURN_NOW && players[getTurn()].score>=3)
+			{printf("STOP 합니다, 게임을 종료합니다.\n");
+			 exit(0);
+			}		
 
             printf("stop 함수\n");
             
@@ -392,11 +395,12 @@ void save()
 	fprintf(ofp1,"%d ",blank->data);
 	blank = blank -> next;
 }
+fclose(ofp1);
 
 	FILE *ofp20; // 플레이어0 의 정보
 	ofp20 = fopen("player0.txt","w");
 	fprintf(ofp20,"%d %d %d %d %d %p %p",players[0].id, players[0].score,players[0].played,players[0].money,players[0].turn);	
-	
+	fclose(ofp20);
 	FILE *ofp21,*ofp22;
 	card *aeat,*ahold;
 	ofp21 = fopen("player0eat.txt","w");
@@ -406,7 +410,7 @@ void save()
 	fprintf(ofp21,"%d ",aeat->data);
 	aeat = aeat -> next;
 	}
-	
+	fclose(ofp21);
 	ofp22 = fopen("player0hold.txt","w");
 	ahold = players[0].holding_card;
 	while(ahold != NULL)
@@ -414,11 +418,13 @@ void save()
 	fprintf(ofp21,"%d ",ahold->data);
 	ahold = ahold -> next;
 	}
-	
+	fclose(ofp22);
+
 	FILE *ofp30; // 플레이어1 의 정보
 	ofp30 = fopen("player1.txt","w");
 	fprintf(ofp30,"%d %d %d %d %d %p %p",players[1].id, players[1].score,players[1].played,players[1].money,players[1].turn);	
-	
+	fclose(ofp30);
+
 	FILE *ofp31,*ofp32;
 	card *beat,*bhold;
 	ofp31 = fopen("player1eat.txt","w");
@@ -428,7 +434,8 @@ void save()
 	fprintf(ofp31,"%d ",beat->data);
 	beat = beat -> next;
 	}
-	
+	fclose(ofp31);
+
 	ofp32 = fopen("player1hold.txt","w");
 	bhold = players[1].holding_card;
 	while(bhold != NULL)
@@ -436,11 +443,13 @@ void save()
 	fprintf(ofp31,"%d ",bhold->data);
 	bhold = bhold -> next;
 	}
+	fclose(ofp32);
 
 	FILE *ofp40; // 플레이어2 의 정보
 	ofp40 = fopen("player2.txt","w");
 	fprintf(ofp40,"%d %d %d %d %d %p %p",players[2].id, players[2].score,players[2].played,players[2].money,players[2].turn);	
-	
+	fclose(ofp40);
+
 	FILE *ofp41,*ofp42;
 	card *ceat,*chold;
 	ofp41 = fopen("player2eat.txt","w");
@@ -450,7 +459,8 @@ void save()
 	fprintf(ofp41,"%d ",ceat->data);
 	ceat = ceat -> next;
 	}
-	
+	fclose(ofp41);
+
 	ofp42 = fopen("player2hold.txt","w");
 	chold = players[2].holding_card;
 	while(chold != NULL)
@@ -458,6 +468,7 @@ void save()
 	fprintf(ofp41,"%d ",chold->data);
 	chold = chold -> next;
 	}
+	fclose(ofp42);
 }
 	
 
