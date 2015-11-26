@@ -21,7 +21,7 @@ void setShake(player *players, rule *rules, int i){
 		c=0;
 		head = players[i].holding_card;
     	if(head != NULL) {
-    		if(((int)players[i].holding_card/4)==j){
+    		if((players[i].holding_card->data / 4)==j){
 				c++;
 			}
 	        head = head->next;
@@ -56,7 +56,7 @@ void setChongtong(player *players, rule *rules, int i){
 		c=0;
 		head = players[i].holding_card;
     	if(head != NULL) {
-    		if(((int)players[i].holding_card/4)==j){
+    		if((players[i].holding_card->data / 4)==j){
 				c++;
 			}
 	        head = head->next;
@@ -83,13 +83,13 @@ void setSulsa(player *players, card *blanketCard, rule *rules, int i){
 		c=0;
 		head = players[i].holding_card;
     	if(head != NULL) {
-    		if(((int)players[i].holding_card/4)==j){
+    		if((players[i].holding_card->data / 4)==j){
 				c++;
 			}
 			head = head->next;
 		}
 		if(head2 !=NULL){
-			if(((int)(blanketCard[j].data)/4)==j){
+			if(((blanketCard[j].data)/4)==j){
 				c++;
 			}
 			head2 = head2->next;
