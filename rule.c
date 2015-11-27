@@ -21,7 +21,7 @@ void setShake(player *players, rule *rules, int i){
 		c=0;
 		head = players[i].holding_card;
     	if(head != NULL) {
-    		if((players[i].holding_card->data/4)==j){
+    		if((players[i].holding_card->data/4)==j){ // TODO: bug
 				c++;
 			}
 	        head = head->next;

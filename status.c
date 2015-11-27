@@ -296,12 +296,14 @@ void drawScreen() {
 }
 
 
+// TODO: 완전 수정
 void drawInterface(char *command) {
     int num=-1;
    	int index,turn;
-	card *eating=NULL;
-	card *holding=NULL;
-	card target;
+	card *eating = NULL;
+	card *holding = NULL;
+	card *target = NULL;
+    int selected_data = -1;
 	if(isdigit(command[0])) {
         if(command[0] == '9') {
             num = 8;
@@ -367,41 +369,43 @@ void drawInterface(char *command) {
 			break;
 
 		case 6:
+            // TODO: 함수로 구현
             index = command[0]-'0';
 			turn = getTurn();
 			printf("%d번째 턴이고, %d 번째 카드를 선택하셨습니다\n",turn,index);
+
+            int hasPair = 0;
+            int hasDummyPair = 0;
+
             holding = players[turn].holding_card;
             eating = players[turn].eating_card;
-            target = holding[index];
-            if(getSame(blanketCard,target.data)!=0)
-            {
-				if(getSame(blanketCard,target.data)>1) // 7번 구현
-				{
-					printf("1,2번쨰 중 어느것을 선택하시겠습니까?");
-					int same=0;
-					scanf("%d",&same);
-					if(same==1)
-					{
-						cardInsert(eating,target.data);
-						cardDelete(holding,target.data);
-                		cardDelete(blanketCard,target.data);
-					}
-					else if(same==2)
-					{
-                        cardInsert(eating,getSecondCard(blanketCard,target.data)->data);
-                        cardDelete(holding,target.data);
-                        cardDelete(dummyCard,getSecondCard(blanketCard,target.data)->data);
-					}
-					else
-					    printf("잘못된 선택입니다");
-				}
 
-                cardInsert(eating,target.data);
-                cardDelete(holding,target.data);
-                cardDelete(blanketCard,target.data);
-        	}
+            target = getCard(holding, index);
+            if(target == NULL) {
+                // TODO: Error Handling
 
-			break;
+            } else {
+                hasPair = getSame(blanketCard, index);
+                if(hasPair != 0) { // 담요에 짝이 존재할 경우
+                    // 흔들기, 설사 등 테스트
+
+                } else { // 담요에 짝이 존재하지 않을 경우
+                    cardInsert(blanketCard, index); 
+                    cardDelete(holding, index);
+                    selected_data = selectCard(dummyCard);
+                    cardDelete(dummyCard, selected_data);
+                    
+                    hasDummyPair = getSame(blanketCard, selected_data);
+                    if(hasDummyPair != 0) {
+                        // 흔들기, 설사 등 테스트
+
+                    } else {
+                        cardInsert(blanketCard, selected_data);
+                    }
+                }
+            }
+
+            break;
             
         case 8: 
             printf("9십을 십으로 이동합니다(default : 십->피)\n");

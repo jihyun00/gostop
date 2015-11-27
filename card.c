@@ -177,6 +177,17 @@ card *getCard(card *card_list, int data) {
 }
 
 
+int selectCard(card *card_list) {
+    card *head = card_list;
+    
+    if(head == NULL) {
+        return -1;
+    }
+
+    return head->data; 
+}
+
+
 void cardInsert(card *card_list, int data) { 
     card *head = card_list;
     card *prev = NULL;
@@ -266,27 +277,9 @@ int getCardSize(card *card_list) {
 }
 
 
-card *getSecondCard(card *card_list, int data) {  
-    card *head = card_list;
-    card *ans=NULL;
-    if(head == NULL) {
-        return NULL;
-    }
-
-    while(head != NULL) { // 노드가 끝일 때까지
-        if((head->data)/4 == (head->data)/4) {
-            ans=head;
-
-        } else {
-            head = head->next;
-        }
-    }
-
-    return ans;
-}
-
 int getSame(card *card_list, int data) {  
     card *head = card_list;
+    int divider = 0;
     int cnt = 0;
 
     if(head == NULL) {
@@ -294,7 +287,14 @@ int getSame(card *card_list, int data) {
     }
 
     while(head != NULL) { // 노드가 끝일 때까지
-        if((head->data) / 4 == ((head->next)->data)/4) {
+        if((head->data / 4) == 0) {
+            divider = 0; 
+
+        } else {
+            divider = (head->data / 4);
+        }
+
+        if(divider == (head->next->data/4)) {
             cnt++;
         }
 
@@ -303,4 +303,3 @@ int getSame(card *card_list, int data) {
 
     return cnt;
 }
-

@@ -24,10 +24,10 @@ void divideCard(card *card_list, card *players_card);
 void cardShuffle(card *card_list);
 void orderCard(card *card_list);
 card *getCard(card *card_list, int data);
+int selectCard(card *card_list);
 void cardInsert(card *card_list, int data);
 void cardDelete(card *card_list, int data);
 int getCardSize(card *card_list);
-card *getSecondCard(card *card_list, int data);
 int getSame(card *card_list, int data);
 
 #endif
