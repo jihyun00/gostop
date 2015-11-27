@@ -279,22 +279,14 @@ int getCardSize(card *card_list) {
 
 int getSame(card *card_list, int data) {  
     card *head = card_list;
-    int divider = 0;
     int cnt = 0;
 
     if(head == NULL) {
-        return 0;
+        return -1;
     }
 
     while(head != NULL) { // 노드가 끝일 때까지
-        if((head->data / 4) == 0) {
-            divider = 0; 
-
-        } else {
-            divider = (head->data / 4);
-        }
-
-        if(divider == (head->next->data/4)) {
+        if((head->data/4) == data/4) {
             cnt++;
         }
 
