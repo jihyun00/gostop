@@ -507,8 +507,6 @@ void save() {
                                      players[2].rules->go,
                                      players[2].rules->nagari);
     fprintf(fp, "\n");
-    
-
 
     fclose(fp);
 
@@ -518,15 +516,200 @@ void save() {
 void load() {
     FILE *fp;
     fp = fopen("save.txt", "r");
+    char line[512];
+    card *head = (card *)malloc(sizeof(card)*CardMAX); // TODO: malloc으로 할당한 거 다 0으로 초기화되나?
+    int i = 0;
+    int j;
 
     if(fp == NULL) {
-        // TODO: Error Handling
         fprintf(stderr, "파일 open을 실패하였습니다.\n");
 
         return;
     }
 
-    
+    while(fgets(line, 512, fp) != NULL) {
+        if(strstr(line, "dummyCard :")) {
+            sscanf(line, "dummyCard: %d", &head[i++].data);
+
+            while(line[0] == '\n') {
+                sscanf(line, " %d", &head[i++].data);
+            }
+
+            for(j=0; j < i; ++j) {
+                head[j].next = &head[j+1];
+            }
+
+            dummyCard = &head[0];
+            i = 0;
+        }
+
+        // TODO: head 초기화
+        if(strstr(line, "blanketCard :")) {
+            sscanf(line, "blanketCard: %d", &head[i++].data);
+
+            while(line[0] == '\n') {
+                sscanf(line, " %d", &head[i++].data);
+            }
+
+            for(j=0; j < i; ++j) {
+                head[j].next = &head[j+1];
+            }
+
+            blanketCard = &head[0];
+            i = 0;
+        }
+        if(strstr(line, "player1 id :")) {
+            sscanf(line, "player1 id : %d", &players[0].id);
+        }
+        if(strstr(line, "player1 score :")) {
+            sscanf(line, "player1 score : %d", &players[0].score);
+        }
+        if(strstr(line, "player1 money :")) {
+            sscanf(line, "player1 money : %d", &players[0].money);
+        }
+        if(strstr(line, "player1 turn :")) {
+            sscanf(line, "player1 turn : %d", &players[0].turn);
+        }
+
+        // TODO: head 초기화
+        if(strstr(line, "players1 holding card :")) {
+            sscanf(line, "players1 holding card : %d", &head[i++].data);
+
+            while(line[0] == '\n') {
+                sscanf(line, " %d", &head[i++].data);
+            }
+
+            for(j=0; j < i; ++j) {
+                head[j].next = &head[j+1];
+            }
+
+            players[0].holding_card = &head[0];
+            i = 0;
+        }
+        
+        // TODO: head 초기화
+        if(strstr(line, "players1 eating card :")) {
+            sscanf(line, "players1 eating card : %d", &head[i++].data);
+
+            while(line[0] == '\n') {
+                sscanf(line, " %d", &head[i++].data);
+            }
+
+            for(j=0; j < i; ++j) {
+                head[j].next = &head[j+1];
+            }
+
+            players[0].eating_card = &head[0];
+            i = 0;
+        }
+        if(strstr(line, "player1 rule :")) {
+            sscanf(line, "player1 rule : %d %d %d %d %d %d", &players[0].rules->shake, 
+                                                             &players[0].rules->sulsa, 
+                                                             &players[0].rules->clear_board,
+                                                             &players[0].rules->chongtong,
+                                                             &players[0].rules->go,
+                                                             &players[0].rules->nagari);
+        }
+        if(strstr(line, "player2 id :")) {
+            sscanf(line, "player2 id : %d", &players[1].id);
+        }
+        if(strstr(line, "player2 score :")) {
+            sscanf(line, "player2 score : %d", &players[1].score);
+        }
+        if(strstr(line, "player2 money :")) {
+            sscanf(line, "player2 money : %d", &players[1].money);
+        }
+        if(strstr(line, "player2 turn :")) {
+            sscanf(line, "player2 turn : %d", &players[1].turn);
+        }
+        // TODO: head 초기화
+        if(strstr(line, "players2 holding card :")) {
+            sscanf(line, "players2 holding card : %d", &head[i++].data);
+
+            while(line[0] == '\n') {
+                sscanf(line, " %d", &head[i++].data);
+            }
+
+            for(j=0; j < i; ++j) {
+                head[j].next = &head[j+1];
+            }
+
+            players[1].holding_card = &head[0];
+            i = 0;
+        }
+        // TODO: head 초기화
+        if(strstr(line, "players2 eating card :")) {
+            sscanf(line, "players2 eating card : %d", &head[i++].data);
+
+            while(line[0] == '\n') {
+                sscanf(line, " %d", &head[i++].data);
+            }
+
+            for(j=0; j < i; ++j) {
+                head[j].next = &head[j+1];
+            }
+
+            players[1].eating_card = &head[0];
+            i = 0;
+        }
+        if(strstr(line, "player2 rule :")) {
+            sscanf(line, "player2 rule : %d %d %d %d %d %d", &players[1].rules->shake, 
+                                                             &players[1].rules->sulsa, 
+                                                             &players[1].rules->clear_board,
+                                                             &players[1].rules->chongtong,
+                                                             &players[1].rules->go,
+                                                             &players[1].rules->nagari);
+        }
+        if(strstr(line, "player3 id :")) {
+            sscanf(line, "player3 id : %d", &players[2].id);
+        }
+        if(strstr(line, "player3 score :")) {
+            sscanf(line, "player3 score : %d", &players[2].score);
+        }
+        if(strstr(line, "player3 money :")) {
+            sscanf(line, "player3 money : %d", &players[2].money);
+        }
+        if(strstr(line, "player3 turn :")) {
+            sscanf(line, "player3 turn : %d", &players[2].turn);
+        }
+        // TODO: head 초기화
+        if(strstr(line, "players3 holding card :")) {
+            sscanf(line, "players3 holding card : %d", &head[i++].data);
+
+            while(line[0] == '\n') {
+                sscanf(line, " %d", &head[i++].data);
+            }
+
+            for(j=0; j < i; ++j) {
+                head[j].next = &head[j+1];
+            }
+
+            players[2].holding_card = &head[0];
+            i = 0;
+        }
+        // TODO: head 초기화
+        if(strstr(line, "players3 eating card :")) {
+            sscanf(line, "players3 eating card : %d", &head[i++].data);
+
+            while(line[0] == '\n') {
+                sscanf(line, " %d", &head[i++].data);
+            }
+
+            for(j=0; j < i; ++j) {
+                head[j].next = &head[j+1];
+            }
+
+            players[2].eating_card = &head[0];
+        }
+        if(strstr(line, "player3 rule :")) {
+            sscanf(line, "player3 rule : %d %d %d %d %d %d", &players[2].rules->shake, 
+                                                             &players[2].rules->sulsa, 
+                                                             &players[2].rules->clear_board,
+                                                             &players[2].rules->chongtong,
+                                                             &players[2].rules->go,
+                                                             &players[2].rules->nagari);
+        }
+    }
 
 
     fclose(fp);
