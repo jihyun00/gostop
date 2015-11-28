@@ -295,3 +295,55 @@ int getSame(card *card_list, int data) {
 
     return cnt;
 }
+
+
+void putCard(int num) {
+    int hasPair = -1;
+    int hasDummyPair = -1;
+    int turn;
+    int selected_data;
+    int index;
+    int i;
+
+    card *holding = NULL;
+    card *eating = NULL;
+    card *head = NULL;
+
+    turn = getTurn();
+
+    holding = players[turn].holding_card;
+    eating = players[turn].eating_card;
+
+    head = holding;
+
+    // 사용자 인터페이스에서 1~7 사이의 값으로 입력받은 걸
+    // 카드 데이터로 변경
+    for(i=0; i < num; ++i) {
+        index = head->data; 
+
+        head = head->next;
+    }
+
+    hasPair = getSame(blanketCard, index);
+
+    if(hasPair != 0) { // 담요에 짝이 존재할 경우
+        // 흔들기, 설사 등 테스트
+        // 딴 화투
+
+    } else { // 담요에 짝이 존재하지 않을 경우
+        cardInsert(blanketCard, index); 
+        cardDelete(holding, index);
+        selected_data = selectCard(dummyCard);
+        cardDelete(dummyCard, selected_data);
+        
+        hasDummyPair = getSame(blanketCard, selected_data);
+
+        if(hasDummyPair != 0) { // 담요에 짝이 존재할 경우
+            // 흔들기, 설사 등 테스트
+            // 딴 화투
+
+        } else { // 담요에 짝이 존재하지 않을 경우
+            cardInsert(blanketCard, selected_data);
+        }
+    }
+}

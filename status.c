@@ -1,7 +1,11 @@
-﻿#include "status.h"
+﻿#include "card.h"
+#include "player.h"
+#include "status.h"
+
 #include <string.h>
 #include <ctype.h>
 #include <stdio.h>
+
 // player 구조체에 점수 세팅
 void setScore(player *playerId) {
 	player* tmp = NULL;
@@ -222,30 +226,6 @@ void setPlayerInfo() {
 }
 
 
-void setTurn() {
-    int i;
-    for(i=0; i < MAX_NUMBER_OF_PLAYER; ++i) {
-        if(players[i].turn == GAME_TURN_NOW) {
-            players[i].turn = GAME_TURN_NOT_NOW;
-            players[(i+1) % MAX_NUMBER_OF_PLAYER].turn = GAME_TURN_NOW;
-        }
-    }
-}
-
-
-// player turn return
-int getTurn() {
-    int i;
-    for(i=0; i < MAX_NUMBER_OF_PLAYER; ++i) {
-        if(players[i].turn == GAME_TURN_NOW) {
-            return i;
-        }
-    }
-
-    return -1;
-}
-
-
 void drawScreen() {
     // status 변할 때마다 화면에 값 그려주기
     // 플레이어 차례, 점수, 갖고 있는 패 등
@@ -299,7 +279,29 @@ void drawScreen() {
 void drawInterface(char *command) {
     // 숫자일 경우
     if(isdigit(command[0])) {
-        // TODO: switch - case
+        int num;
+        int turn;
+
+        num = atoi(command);
+
+        if(num < 8 && num > 0) {
+            turn = getTurn();
+            printf("%d번째 턴이고, %d 번째 카드를 선택하셨습니다\n",turn, num);
+
+            putCard(num);
+
+        } else if(num == 9) {
+            printf("9십을 십으로 이동합니다(default : 십->피)\n");
+
+            /*if(getCard(eating,32)!=NULL && gusip==0) {
+                gusip=1;
+            }*/
+
+        } else {
+            // TODO: Error Hanlding
+            printf("Invalid command\n");
+        }
+        
         
     } else { // 문자일 경우
         if((strcmp(command, "g") == 0) || (strcmp(command, "go") == 0)) {
@@ -378,42 +380,6 @@ void drawInterface(char *command) {
 
 		case 6:
             // TODO: 함수로 구현
-            index = command[0]-'0';
-			turn = getTurn();
-			printf("%d번째 턴이고, %d 번째 카드를 선택하셨습니다\n",turn,index);
-
-            int hasPair = 0;
-            int hasDummyPair = 0;
-
-            holding = players[turn].holding_card;
-            eating = players[turn].eating_card;
-
-            target = getCard(holding, index);
-            if(target == NULL) {
-                // TODO: Error Handling
-
-            } else {
-                hasPair = getSame(blanketCard, index);
-                if(hasPair != 0) { // 담요에 짝이 존재할 경우
-                    // 흔들기, 설사 등 테스트
-                    // 딴 화투
-
-                } else { // 담요에 짝이 존재하지 않을 경우
-                    cardInsert(blanketCard, index); 
-                    cardDelete(holding, index);
-                    selected_data = selectCard(dummyCard);
-                    cardDelete(dummyCard, selected_data);
-                    
-                    hasDummyPair = getSame(blanketCard, selected_data);
-                    if(hasDummyPair != 0) {
-                        // 흔들기, 설사 등 테스트
-                        // 딴 화투
-
-                    } else {
-                        cardInsert(blanketCard, selected_data);
-                    }
-                }
-            }
 
             break;
             
@@ -431,3 +397,6 @@ void drawInterface(char *command) {
             break;	
     }*/
 }
+
+
+

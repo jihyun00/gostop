@@ -9,8 +9,8 @@
 #define CardMAX 48
 
 typedef struct _card{
-        int data;
-        struct _card * next;
+    int data;
+    struct _card *next;
 } card;
 
 card *dummyCard; // 화투 더미
@@ -29,5 +29,6 @@ void cardInsert(card *card_list, int data);
 void cardDelete(card *card_list, int data);
 int getCardSize(card *card_list);
 int getSame(card *card_list, int data);
+void putCard(int num);
 
 #endif

@@ -28,4 +28,7 @@ typedef struct _player {
 
 player players[MAX_NUMBER_OF_PLAYER];
 
+int getTurn();
+void setTurn();
+
 #endif
