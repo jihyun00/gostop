@@ -30,5 +30,6 @@ void cardDelete(card *card_list, int data);
 int getCardSize(card *card_list);
 int getSame(card *card_list, int data);
 void putCard(int num);
+void toggle();
 
 #endif

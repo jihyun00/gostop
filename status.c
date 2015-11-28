@@ -284,18 +284,16 @@ void drawInterface(char *command) {
 
         num = atoi(command);
 
-        if(num < 8 && num > 0) {
+        if(num < 10 && num > 0) {
+            if(num == 9) {
+                printf("9십을 십으로 이동합니다(default : 십->피)\n");
+
+            } else {
+                printf("%d번째 턴이고, %d 번째 카드를 선택하셨습니다\n",turn, num);
+            }
+                
             turn = getTurn();
-            printf("%d번째 턴이고, %d 번째 카드를 선택하셨습니다\n",turn, num);
-
             putCard(num);
-
-        } else if(num == 9) {
-            printf("9십을 십으로 이동합니다(default : 십->피)\n");
-
-            /*if(getCard(eating,32)!=NULL && gusip==0) {
-                gusip=1;
-            }*/
 
         } else {
             // TODO: Error Hanlding

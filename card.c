@@ -316,6 +316,14 @@ void putCard(int num) {
 
     head = holding;
 
+    if(num == 9) {
+        toggle();
+
+        printf("카드를 선택해주세요.\n");
+
+        scanf("%d", &num);
+    }
+
     // 사용자 인터페이스에서 1~7 사이의 값으로 입력받은 걸
     // 카드 데이터로 변경
     for(i=0; i < num; ++i) {
@@ -327,8 +335,11 @@ void putCard(int num) {
     hasPair = getSame(blanketCard, index);
 
     if(hasPair != 0) { // 담요에 짝이 존재할 경우
+        // TODO:
         // 흔들기, 설사 등 테스트
         // 딴 화투
+        // eating 카드 구현
+        
 
     } else { // 담요에 짝이 존재하지 않을 경우
         cardInsert(blanketCard, index); 
@@ -339,11 +350,25 @@ void putCard(int num) {
         hasDummyPair = getSame(blanketCard, selected_data);
 
         if(hasDummyPair != 0) { // 담요에 짝이 존재할 경우
+            // TODO: 
             // 흔들기, 설사 등 테스트
             // 딴 화투
 
         } else { // 담요에 짝이 존재하지 않을 경우
             cardInsert(blanketCard, selected_data);
         }
+    }
+}
+
+
+void toggle() {
+    card *eating = players[turn].eating_card;
+
+    if(getCard(eating, 32) != NULL && gusip == 0) {
+        gusip = 1;
+
+    } else {
+        // TODO: Error Handling
+        printf("Invalid Option\n");
     }
 }
