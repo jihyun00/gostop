@@ -296,8 +296,60 @@ void drawScreen() {
 }
 
 
-// TODO: 완전 수정
 void drawInterface(char *command) {
+    // 숫자일 경우
+    if(isdigit(command[0])) {
+        // TODO: switch - case
+        
+    } else { // 문자일 경우
+        if((strcmp(command, "g") == 0) || (strcmp(command, "go") == 0)) {
+                printf("go 함수\n");
+                // blah blah... 
+
+        } else if((strcmp(command, "s") == 0) || (strcmp(command, "stop") == 0)) {
+                if(players[getTurn()].turn == GAME_TURN_NOW && players[getTurn()].score>=3) {
+                    printf("STOP 합니다, 게임을 종료합니다.\n");
+                    exit(0);
+                }	
+
+            printf("stop \n");
+
+        } else if((strcmp(command, "e") == 0) || (strcmp(command, "exit") == 0)) {
+                printf("게임을 종료합니다\n");
+                exit(0);
+
+        } else if((strcmp(command, "b") == 0) || (strcmp(command, "balance") == 0)) {
+                printf("-------게이머의 잔고---------\n");
+                printf("A의 잔고 : %d 원\n", getMoney(players));
+                printf("B의 잔고 : %d 원\n", getMoney(players+1));
+                printf("C의 잔고 : %d 원\n", getMoney(players+2));
+
+        } else if((strcmp(command, "h") == 0) || (strcmp(command, "help") == 0)) { 
+                printf("--------- 도움말 ------------\n");
+                printf("1. g(o) : 고 (자기 turn에 점수가 났고 3점이상");
+                printf("2. s(top) : 스톱(자기 turn에 점수가 났고 3점 이상일 떄, 이번 판을 끝냄\n");
+                printf("3.e(xit) : exit 프로그램 끝내기\n");
+                printf("4. b(alance) : 게이머의 잔고 보기\n");
+                printf("5. h(elp) : 각 키에 대한 설명 보기\n");
+                printf("6. 1~7 : 낼 화투 선택\n");
+                printf("7. 1~2 : 화투를 냈는데 깔린 화투 중 무늬는 같지만 다른 것이 있을 때 선택\n");
+                printf("8. 9 : 9 십을 피로 또는 십으로 이동(토글), 디폴트로는 피로 함, 각 판에서 한번만 할 수 있음\n");
+                printf("9. save : 현재 상태를 파일에 저장(단, 확인 가능하도록 텍스트 형태로 저장해야함\n");
+                printf("10. load : 파일에 저장된 상태를 읽어서 계속 게임 진행\n");
+
+        } else if(strcmp(command, "save") == 0) {
+                printf("save\n");
+
+        } else if(strcmp(command, "load") == 0) {
+            printf("load\n");
+
+        } else {
+            // TODO : Error Handling
+            printf("Invalid command\n");
+        }
+
+    }
+/*
     int num=-1;
    	int index,turn;
 	card *eating = NULL;
@@ -323,50 +375,6 @@ void drawInterface(char *command) {
     // switch - case 로 해당 동작 처리
 				
     switch(num) {
-        case 1:
-            printf("go 함수\n");
-            // blah blah... 
-
-            break;
-
-		case 2: 
-		    if(players[getTurn()].turn == GAME_TURN_NOW && players[getTurn()].score>=3) {
-                printf("STOP 합니다, 게임을 종료합니다.\n");
-			    exit(0);
-			}		
-
-            printf("stop 함수\n");
-            
-			break;
-
-		case 3: 
-            printf("게임을 종료합니다\n");
-			exit(0);
-
-			break;
-
-		case 4: 
-            printf("-------게이머의 잔고---------\n");
-            printf("A의 잔고 : %d 원\n", getMoney(players));
-            printf("B의 잔고 : %d 원\n", getMoney(players+1));
-            printf("C의 잔고 : %d 원\n", getMoney(players+2));
-
-			break;
-
-		case 5: 
-            printf("--------- 도움말 ------------\n");
-            printf("1. g(o) : 고 (자기 turn에 점수가 났고 3점이상");
-            printf("2. s(top) : 스톱(자기 turn에 점수가 났고 3점 이상일 떄, 이번 판을 끝냄\n");
-            printf("3.e(xit) : exit 프로그램 끝내기\n");
-            printf("4. b(alance) : 게이머의 잔고 보기\n");
-            printf("5. h(elp) : 각 키에 대한 설명 보기\n");
-            printf("6. 1~7 : 낼 화투 선택\n");
-            printf("7. 1~2 : 화투를 냈는데 깔린 화투 중 무늬는 같지만 다른 것이 있을 때 선택\n");
-            printf("8. 9 : 9 십을 피로 또는 십으로 이동(토글), 디폴트로는 피로 함, 각 판에서 한번만 할 수 있음\n");
-            printf("9. save : 현재 상태를 파일에 저장(단, 확인 가능하도록 텍스트 형태로 저장해야함\n");
-            printf("10. load : 파일에 저장된 상태를 읽어서 계속 게임 진행\n");
-
-			break;
 
 		case 6:
             // TODO: 함수로 구현
@@ -388,6 +396,7 @@ void drawInterface(char *command) {
                 hasPair = getSame(blanketCard, index);
                 if(hasPair != 0) { // 담요에 짝이 존재할 경우
                     // 흔들기, 설사 등 테스트
+                    // 딴 화투
 
                 } else { // 담요에 짝이 존재하지 않을 경우
                     cardInsert(blanketCard, index); 
@@ -398,6 +407,7 @@ void drawInterface(char *command) {
                     hasDummyPair = getSame(blanketCard, selected_data);
                     if(hasDummyPair != 0) {
                         // 흔들기, 설사 등 테스트
+                        // 딴 화투
 
                     } else {
                         cardInsert(blanketCard, selected_data);
@@ -419,108 +429,5 @@ void drawInterface(char *command) {
             save();
 
             break;	
-    }
-}
-
-void save() {	
-	card *blank = blanketCard;
-	FILE *ofp1;
-
-	ofp1 = fopen("blank.txt","w");
-
-	while(blank!=NULL) {
-        fprintf(ofp1,"%d ",blank->data);
-        blank = blank -> next;
-    }
-
-    fclose(ofp1);
-
-	FILE *ofp20; // 플레이어0 의 정보
-
-	ofp20 = fopen("player0.txt","w");
-	fprintf(ofp20,"%d %d %d %d %d %p %p",players[0].id, players[0].score,players[0].played,players[0].money,players[0].turn);	
-
-	fclose(ofp20);
-
-	FILE *ofp21,*ofp22;
-	card *aeat,*ahold;
-
-	ofp21 = fopen("player0eat.txt","w");
-	aeat = players[0].eating_card;
-
-	while(aeat != NULL) {
-        fprintf(ofp21,"%d ",aeat->data);
-        aeat = aeat -> next;
-	}
-
-	fclose(ofp21);
-
-	ofp22 = fopen("player0hold.txt","w");
-	ahold = players[0].holding_card;
-
-	while(ahold != NULL) {
-        fprintf(ofp21,"%d ",ahold->data);
-        ahold = ahold -> next;
-	}
-
-	fclose(ofp22);
-
-	FILE *ofp30; // 플레이어1 의 정보
-
-	ofp30 = fopen("player1.txt","w");
-	fprintf(ofp30,"%d %d %d %d %d %p %p",players[1].id, players[1].score,players[1].played,players[1].money,players[1].turn);	
-
-	fclose(ofp30);
-
-	FILE *ofp31,*ofp32;
-	card *beat,*bhold;
-
-	ofp31 = fopen("player1eat.txt","w");
-	beat = players[1].eating_card;
-
-	while(beat != NULL) {
-        fprintf(ofp31,"%d ",beat->data);
-        beat = beat -> next;
-	}
-
-	fclose(ofp31);
-
-	ofp32 = fopen("player1hold.txt","w");
-	bhold = players[1].holding_card;
-
-	while(bhold != NULL) {
-        fprintf(ofp31,"%d ",bhold->data);
-        bhold = bhold -> next;
-	}
-
-	fclose(ofp32);
-
-	FILE *ofp40; // 플레이어2 의 정보
-
-	ofp40 = fopen("player2.txt","w");
-	fprintf(ofp40,"%d %d %d %d %d %p %p",players[2].id, players[2].score,players[2].played,players[2].money,players[2].turn);	
-	fclose(ofp40);
-
-	FILE *ofp41,*ofp42;
-	card *ceat,*chold;
-
-	ofp41 = fopen("player2eat.txt","w");
-	ceat = players[2].eating_card;
-
-	while(ceat != NULL) {
-        fprintf(ofp41,"%d ",ceat->data);
-        ceat = ceat -> next;
-	}
-
-	fclose(ofp41);
-
-	ofp42 = fopen("player2hold.txt","w");
-	chold = players[2].holding_card;
-
-	while(chold != NULL) {
-        fprintf(ofp41,"%d ",chold->data);
-        chold = chold -> next;
-	}
-
-	fclose(ofp42);
+    }*/
 }
