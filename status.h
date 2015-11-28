@@ -23,8 +23,6 @@ typedef struct _game_status {
 
 } game_status;
 
-int gusip;
-
 void setScore(player *playerId);
 int getScore(player *playerId);
 void setMoney(player *playerId);

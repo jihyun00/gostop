@@ -1,4 +1,5 @@
 #include "card.h"
+#include "rule.h"
 
 #ifndef _PLAYER_H_
 #define _PLAYER_H_
@@ -23,6 +24,7 @@ typedef struct _player {
     int turn;
     card *holding_card; // 갖고 있는 패
     card *eating_card; // 먹은 패
+    rule *rules;
 
 } player;
 

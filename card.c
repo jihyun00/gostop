@@ -335,6 +335,8 @@ void putCard(int num) {
     hasPair = getSame(blanketCard, index);
 
     if(hasPair != 0) { // 담요에 짝이 존재할 경우
+        // 자기 패에서 값을 내고
+        // 짝이 맞으면 먹고, 
         // TODO:
         // 흔들기, 설사 등 테스트
         // 딴 화투
@@ -362,6 +364,8 @@ void putCard(int num) {
 
 
 void toggle() {
+    int turn = getTurn();
+
     card *eating = players[turn].eating_card;
 
     if(getCard(eating, 32) != NULL && gusip == 0) {

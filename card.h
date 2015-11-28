@@ -16,6 +16,8 @@ typedef struct _card{
 card *dummyCard; // 화투 더미
 card *blanketCard; // 깔린 패
 
+int gusip;
+
 // 든 패, 먹은 패, 화투 더미, 깔린 패
 const char cardMatrix[CardMAX][10];
 
