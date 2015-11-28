@@ -5,6 +5,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdio.h>
+#include <unistd.h>
 
 // player 구조체에 점수 세팅
 void setScore(player *playerId) {
@@ -218,6 +219,8 @@ void setPlayerInfo() {
         players[i].turn = GAME_TURN_NOT_NOW;
 
 		players[i].id = i;
+
+        initializeRule(i);
     }
 
     players[0].turn = GAME_TURN_NOW; 
@@ -361,11 +364,19 @@ void save() {
     // dummyCard, blanketCard
     FILE *fp;
     card *head = NULL;
+    int exist = -1;
+
+    // 파일이 존재하는지 체크, 존재할 경우 파일 삭제 후 다시 생성
+    exist = access("save.txt", F_OK);
+    if(exist == 0) {
+        unlink("save.txt");
+    }
 
     fp = fopen("save.txt", "w");
 
     if(fp == NULL) {
-        // TODO: Error Handling
+        fprintf(stderr, "파일 open을 실패하였습니다.\n");
+
         return;
     }
 
@@ -510,8 +521,12 @@ void load() {
 
     if(fp == NULL) {
         // TODO: Error Handling
+        fprintf(stderr, "파일 open을 실패하였습니다.\n");
+
         return;
     }
+
+    
 
 
     fclose(fp);

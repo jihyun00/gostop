@@ -2,17 +2,18 @@
 #define _RULE_H_
 
 typedef struct _rule{
-    unsigned short shake;
-    unsigned short sulsa;
-    unsigned short clear_board;
-    unsigned short chongtong;
-    unsigned short go;
-    unsigned short nagari;
+    int shake;
+    int sulsa;
+    int clear_board;
+    int chongtong;
+    int go;
+    int nagari;
+
 } rule;
 
-void setrule();
+void initializeRule(int index);
 void setShake();
-void setClear_board();
+void setClearBoard();
 void setGo();
 void setChongtong();
 void setNagari();

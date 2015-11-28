@@ -1,15 +1,15 @@
 #include "rule.h"
 #include "player.h"
 
-void setrule(){
-	int i;
-	for(i=0;i<MAX_NUMBER_OF_PLAYER;i++){
-        players[i].rules->shake = 0;
-        players[i].rules->sulsa = 0;
-        players[i].rules->clear_board = 0;
-        players[i].rules->go = 0;
-        players[i].rules->nagari = 0;
-	}
+void initializeRule(int index) {
+    players[index].rules = (rule *)malloc(sizeof(rule)); 
+
+    players[index].rules->shake = 0;
+    players[index].rules->sulsa = 0;
+    players[index].rules->clear_board = 0;
+    players[index].rules->chongtong = 0;
+    players[index].rules->go = 0;
+    players[index].rules->nagari = 0;
 }
 
 void setShake() {
@@ -37,7 +37,7 @@ void setShake() {
 }
 
 
-void setClear_board(){
+void setClearBoard(){
     int turn = getTurn();
 
 	if(blanketCard == NULL) {
