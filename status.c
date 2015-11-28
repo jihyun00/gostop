@@ -242,7 +242,7 @@ void drawScreen() {
         head = head->next;
     }
     printf("\n");
-    printf("(점수: %d) 딴 화투\n\n", players[0].score);
+    printf("(점수: %d) 딴 화투)\n\n", players[0].score);
 
     printf("B   : 패) ");
     head = players[1].holding_card;
@@ -251,7 +251,7 @@ void drawScreen() {
         head = head->next;
     }
     printf("\n");
-    printf("(점수: %d) 딴 화투\n\n", players[1].score);
+    printf("(점수: %d) 딴 화투)\n\n", players[1].score);
 
     printf("C   : 패) ");
     head = players[2].holding_card;
@@ -260,7 +260,7 @@ void drawScreen() {
         head = head->next;
     }
     printf("\n");
-    printf("(점수: %d) 딴 화투\n\n", players[2].score);
+    printf("(점수: %d) 딴 화투)\n\n", players[2].score);
 
     printf("깔린 패) ");
     head = blanketCard;
@@ -338,10 +338,14 @@ void drawInterface(char *command) {
                 printf("10. load : 파일에 저장된 상태를 읽어서 계속 게임 진행\n");
 
         } else if(strcmp(command, "save") == 0) {
-                printf("save\n");
+                printf("게임을 저장합니다.\n");
+
+                save();
 
         } else if(strcmp(command, "load") == 0) {
-            printf("load\n");
+            printf("게임을 로드합니다.\n");
+
+            load();
 
         } else {
             // TODO : Error Handling
@@ -349,52 +353,166 @@ void drawInterface(char *command) {
         }
 
     }
-/*
-    int num=-1;
-   	int index,turn;
-	card *eating = NULL;
-	card *holding = NULL;
-	card *target = NULL;
-    int selected_data = -1;
-	if(isdigit(command[0])) {
-        if(command[0] == '9') {
-            num = 8;
-        } else {
-		    num = 6;
-        }
-	}
-
-	else if(command[0] == 'g') num=1;			
-	else if(command[0] == 's' && command[1] == 'a') num=9;
-	else if(command[0] == 's' && command[1] != 'a') num=2;			
-	else if(command[0] == 'e') num=3;			
-	else if(command[0] == 'b') num=4;			
-	else if(command[0] == 'h') num=5;			
-	else if(command[0] == 'l') num=10;			
-    // command로 받은 거 문자일 경우 숫자로 변환해주고,
-    // switch - case 로 해당 동작 처리
-				
-    switch(num) {
-
-		case 6:
-            // TODO: 함수로 구현
-
-            break;
-            
-        case 8: 
-            printf("9십을 십으로 이동합니다(default : 십->피)\n");
-            if(getCard(eating,32)!=NULL && gusip==0) {
-                gusip=1;
-            }
-
-            break;
-
-        case 9: 
-            save();
-
-            break;	
-    }*/
 }
 
 
+void save() {
+    // player 구조체 모든 정보
+    // dummyCard, blanketCard
+    FILE *fp;
+    card *head = NULL;
 
+    fp = fopen("save.txt", "w");
+
+    if(fp == NULL) {
+        // TODO: Error Handling
+        return;
+    }
+
+
+    head = dummyCard;
+
+    // dummyCard 정보 저장
+    fprintf(fp, "dummyCard : ");
+    while(head != NULL) {
+        fprintf(fp, "%d ", head->data); 
+
+        head = head->next;
+    }
+    fprintf(fp, "\n");
+    
+    head = blanketCard;
+
+    // blanketCard 정보 저장
+    fprintf(fp, "blanketCard : ");
+    while(head != NULL) {
+        fprintf(fp, "%d ", head->data); 
+
+        head = head->next;
+    }
+    fprintf(fp, "\n");
+
+    fprintf(fp, "player1 id : %d\n", players[0].id);    
+    fprintf(fp, "player1 score : %d\n", players[0].score); 
+    fprintf(fp, "player1 played : %d\n", players[0].played);    
+    fprintf(fp, "player1 money : %d\n", players[0].money);    
+    fprintf(fp, "player1 turn : %d\n", players[0].turn);    
+    
+    head = players[0].holding_card;
+
+    fprintf(fp, "player1 holding card : ");
+    while(head != NULL) {
+        fprintf(fp, "%d ", head->data);
+
+        head = head->next;
+    }
+    fprintf(fp, "\n");
+
+    head = players[0].eating_card;
+
+    fprintf(fp, "player1 eating card : ");
+    while(head != NULL) {
+        fprintf(fp, "%d ", head->data);
+
+        head = head->next;
+    }
+    fprintf(fp, "\n");
+
+    fprintf(fp, "player1 rule : ");
+    fprintf(fp, "%d %d %d %d %d %d", players[0].rules->shake,
+                                     players[0].rules->sulsa,
+                                     players[0].rules->clear_board,
+                                     players[0].rules->chongtong,
+                                     players[0].rules->go,
+                                     players[0].rules->nagari);
+    fprintf(fp, "\n");
+    
+    fprintf(fp, "player2 id : %d\n", players[1].id);    
+    fprintf(fp, "player2 score : %d\n", players[1].score); 
+    fprintf(fp, "player2 played : %d\n", players[1].played);    
+    fprintf(fp, "player2 money : %d\n", players[1].money);    
+    fprintf(fp, "player2 turn : %d\n", players[1].turn);    
+    
+    head = players[1].holding_card;
+
+    fprintf(fp, "player2 holding card : ");
+    while(head != NULL) {
+        fprintf(fp, "%d ", head->data);
+
+        head = head->next;
+    }
+    fprintf(fp, "\n");
+
+    head = players[1].eating_card;
+
+    fprintf(fp, "player2 eating card : ");
+    while(head != NULL) {
+        fprintf(fp, "%d ", head->data);
+
+        head = head->next;
+    }
+    fprintf(fp, "\n");
+
+    fprintf(fp, "player2 rule : ");
+    fprintf(fp, "%d %d %d %d %d %d", players[1].rules->shake,
+                                     players[1].rules->sulsa,
+                                     players[1].rules->clear_board,
+                                     players[1].rules->chongtong,
+                                     players[1].rules->go,
+                                     players[1].rules->nagari);
+    fprintf(fp, "\n");
+    
+    fprintf(fp, "player3 id : %d\n", players[2].id);    
+    fprintf(fp, "player3 score : %d\n", players[2].score); 
+    fprintf(fp, "player3 played : %d\n", players[2].played);    
+    fprintf(fp, "player3 money : %d\n", players[2].money);    
+    fprintf(fp, "player3 turn : %d\n", players[2].turn);    
+    
+    head = players[2].holding_card;
+
+    fprintf(fp, "player3 holding card : ");
+    while(head != NULL) {
+        fprintf(fp, "%d ", head->data);
+
+        head = head->next;
+    }
+    fprintf(fp, "\n");
+
+    head = players[2].eating_card;
+
+    fprintf(fp, "player3 eating card : ");
+    while(head != NULL) {
+        fprintf(fp, "%d ", head->data);
+
+        head = head->next;
+    }
+    fprintf(fp, "\n");
+
+    fprintf(fp, "player3 rule : ");
+    fprintf(fp, "%d %d %d %d %d %d", players[2].rules->shake,
+                                     players[2].rules->sulsa,
+                                     players[2].rules->clear_board,
+                                     players[2].rules->chongtong,
+                                     players[2].rules->go,
+                                     players[2].rules->nagari);
+    fprintf(fp, "\n");
+    
+
+
+    fclose(fp);
+
+}
+
+
+void load() {
+    FILE *fp;
+    fp = fopen("save.txt", "r");
+
+    if(fp == NULL) {
+        // TODO: Error Handling
+        return;
+    }
+
+
+    fclose(fp);
+}

@@ -341,7 +341,9 @@ void putCard(int num) {
         // 흔들기, 설사 등 테스트
         // 딴 화투
         // eating 카드 구현
-        
+        cardDelete(holding, index);
+        cardInsert(eating, index);
+        //cardInsert(eating, ); // 짝이 맞는 카드 먹어야 함
 
     } else { // 담요에 짝이 존재하지 않을 경우
         cardInsert(blanketCard, index); 
@@ -355,6 +357,9 @@ void putCard(int num) {
             // TODO: 
             // 흔들기, 설사 등 테스트
             // 딴 화투
+            cardDelete(holding, index);
+            cardInsert(eating, index);
+            //cardInsert(eating, ); // 짝이 맞는 카드 먹어야 함
 
         } else { // 담요에 짝이 존재하지 않을 경우
             cardInsert(blanketCard, selected_data);
