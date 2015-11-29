@@ -209,26 +209,6 @@ player* setWinner(){
 }
 
 
-void setPlayerInfo() {
-    // 게임 시작하기 전에 player 정보 setting
-    int i;
-    for(i=0; i<3; ++i) {
-        players[i].score = 0;
-        players[i].played = 0;
-        players[i].money = 100000;
-        players[i].turn = GAME_TURN_NOT_NOW;
-
-		players[i].id = i;
-
-        initializeRule(i);
-    }
-
-    players[0].turn = GAME_TURN_NOW; 
-
-    cardInitialize();
-}
-
-
 void drawScreen() {
     // status 변할 때마다 화면에 값 그려주기
     // 플레이어 차례, 점수, 갖고 있는 패 등

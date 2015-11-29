@@ -299,6 +299,7 @@ int getCardSize(card *card_list) {
 
 int* getSame(card *card_list, int data, int *size) {  
     int i = 0;
+    *size = 0;
     int *res = (int *)malloc(sizeof(int)*3);
     card *head = card_list;
 
@@ -361,45 +362,90 @@ void putCard(int num) {
     }
 
     res = getSame(blanketCard, index, &hasPair);
+    selected_data = selectCard(dummyCard);
+    cardDelete(dummyCard, selected_data);
 
-    printf("hasPair : %d\n", hasPair);
-
-    if(hasPair > 0) { // 담요에 짝이 존재할 경우
-        // TODO: 흔들기, 설사 등 테스트
-        cardDelete(holding, index);
-        cardInsert(eating, index);
-
-        if(hasPair > 1) {
-            printf("짝이 맞는 두 개의 카드 중 어느 카드를 고르시겠습니까?\n");
-            scanf("%d", &selected);
-
-            if(selected == 1) {
-                cardDelete(blanketCard, res[0]);
-                cardInsert(eating, res[0]); 
-            } else {
-                cardDelete(blanketCard, res[1]);
-                cardInsert(eating, res[1]);
-            }
+    if(hasPair > 0) {
+        if((selected_data/4) == (index/4)) { // 설사
+            printf("설사\n");        
 
         } else {
-            cardDelete(blanketCard, res[0]);
-            cardInsert(eating, res[0]);
-        }
-
-    } else { // 담요에 짝이 존재하지 않을 경우
-        cardInsert(blanketCard, index); 
-        cardDelete(holding, index);
-        selected_data = selectCard(dummyCard);
-        cardDelete(dummyCard, selected_data);
-        
-        dummyRes = getSame(blanketCard, selected_data, &hasDummyPair);
-
-        if(hasDummyPair > 0) { // 담요에 짝이 존재할 경우
-            // TODO: 흔들기, 설사 등 테스트
-            cardInsert(eating, selected_data);
+            cardDelete(holding, index);
+            cardInsert(eating, index);
 
             if(hasPair > 1) {
-                printf("짝이 맞는 두 개의 카드 중 어느 카드를 고르시겠습니까?\n");
+                printf("짝이 맞는 두 개의 카드 중 어느 카드를 고르시겠습니까? (1, 2 중 하나 입력)\n");
+                for(i=0; i < hasPair; ++i) {
+                    printf("%s ", cardMatrix[res[i]]); 
+                }
+                printf("\n");
+
+                scanf("%d", &dummySelected);
+
+                if(dummySelected == 1) {
+                    cardDelete(blanketCard, res[0]);
+                    cardInsert(eating, res[0]); 
+                } else {
+                    cardDelete(blanketCard, res[1]);
+                    cardInsert(eating, res[1]);
+                }
+
+            } else {
+                cardDelete(blanketCard, res[0]);
+                cardInsert(eating, res[0]);
+            }
+
+            dummyRes = getSame(blanketCard, selected_data, &hasDummyPair);
+
+            if(hasDummyPair > 0) {
+                cardInsert(eating, selected_data);
+
+                if(hasDummyPair > 1) {
+                    printf("짝이 맞는 두 개의 카드 중 어느 카드를 고르시겠습니까? (1, 2 중 하나 입력)\n");
+                    for(i=0; i < hasDummyPair; ++i) {
+                        printf("%s ", cardMatrix[res[i]]); 
+                    }
+                    printf("\n");
+
+                    scanf("%d", &dummySelected);
+
+                    if(dummySelected == 1) {
+                        cardDelete(blanketCard, dummyRes[0]);
+                        cardInsert(eating, dummyRes[0]); 
+                    } else {
+                        cardDelete(blanketCard, dummyRes[1]);
+                        cardInsert(eating, dummyRes[1]);
+                    }
+
+                } else {
+                    printf("selected data : %d\n", selected_data);
+                    printf("dummy data : %d\n", dummyRes[0]);
+
+                    cardDelete(blanketCard, dummyRes[0]);
+                    cardInsert(eating, dummyRes[0]);
+                }
+
+            } else {
+                cardInsert(blanketCard, selected_data);
+            }
+        }
+
+    } else {
+        dummyRes = getSame(blanketCard, selected_data, &hasDummyPair);
+
+        cardInsert(blanketCard, index); 
+        cardDelete(holding, index);
+
+        if(hasDummyPair > 0) {
+            cardInsert(eating, selected_data);
+
+            if(hasDummyPair > 1) {
+                printf("짝이 맞는 두 개의 카드 중 어느 카드를 고르시겠습니까? (1, 2 중 하나 입력)\n");
+                for(i=0; i < hasPair; ++i) {
+                    printf("%s ", cardMatrix[dummyRes[i]]); 
+                }
+                printf("\n");
+
                 scanf("%d", &dummySelected);
 
                 if(dummySelected == 1) {
@@ -411,13 +457,20 @@ void putCard(int num) {
                 }
 
             } else {
+                printf("456 selected data : %d\n", selected_data);
+                printf("456 dummy data : %d\n", dummyRes[0]);
                 cardDelete(blanketCard, dummyRes[0]);
                 cardInsert(eating, dummyRes[0]);
             }
 
-        } else { // 담요에 짝이 존재하지 않을 경우
+        } else {
             cardInsert(blanketCard, selected_data);
         }
+    }
+
+    // 판 쓰리 체크
+    if(isClearBoard() == 1) {
+        setClearBoard();
     }
 }
 

@@ -12,6 +12,23 @@ void initializeRule(int index) {
     players[index].rules->nagari = 0;
 }
 
+
+// TODO:
+int isShake() { // 똑같은 패가 3장 있을 시 흔들 수 있음 자신이 이기면 점수. (* 2)
+    card *head = NULL;
+    int turn = getTurn();
+    int isPair = 0;
+
+    head = players[turn].holding_card;
+
+    while(head != NULL) {
+        
+    }
+
+    return 0;
+}
+
+
 void setShake() {
 	card *head = NULL;
 	int j,k;
@@ -37,14 +54,19 @@ void setShake() {
 }
 
 
+int isSulsa() {
+    
+    return 0;
+}
+
+
 void setSulsa() {
 	card *head = NULL, *head2=NULL;
 	int j,k;
 	int c;
     int turn = getTurn();
 
-	for(j=0;j<12;j++){ // plyaer가 든 패+더미 중 큰 애만큼 반복
-        // TODO: line 58과 마찬가지 이유로 버그
+	for(j=0;j<12;j++){ // player가 든 패+더미 중 큰 애만큼 반복
 		c=0;
 		head = players[turn].holding_card;
     	if(head != NULL) {
@@ -67,7 +89,18 @@ void setSulsa() {
 }
 
 
+// 판 쓰리 체크
+int isClearBoard() {
+    if(getCardSize(blanketCard) == 0) {
+        return 1;
+    }
+
+    return 0;
+}
+
+
 void setClearBoard(){
+    int i;
     int turn = getTurn();
 
 	if(blanketCard == NULL) {
@@ -76,6 +109,17 @@ void setClearBoard(){
 	else {
         players[turn].rules->clear_board = 0;
 	}
+
+    for(i=0; i < MAX_NUMBER_OF_PLAYER; ++i) {
+        if(i == turn) {
+            continue;
+
+        } else {
+            // 피 가져오기
+        }
+    }
+
+    // TODO: 다른 사람한테 피 한 개씩 받아와야 됨
 }
 
 
@@ -86,6 +130,12 @@ void setGo(){
 		//if()플레이어가 고를 한다고 눌렀을 때 (키);를 조건문으로 두기;
         players[turn].rules->go += 1;
 	}
+}
+
+
+int isChongtong() {
+    
+    return 0;
 }
 
 
