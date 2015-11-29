@@ -92,12 +92,6 @@ void setGo(){
 }
 
 
-int isChongtong() {
-    
-    return 0;
-}
-
-
 void setChongtong() {
 	card *head = NULL;
 	int j,k;
@@ -107,7 +101,7 @@ void setChongtong() {
 		c=0;
 		head = players[turn].holding_card;
     	if(head != NULL) {
-    		if((players[turn].holding_card->data/4)==j){
+    		if((head->data/4)==j){
 				c++;
 			}
 

@@ -13,12 +13,10 @@ typedef struct _rule{
 
 void initializeRule(int index);
 void setShake();
-int isSulsa();
 void setSulsa();
 int isClearBoard();
 void setClearBoard();
 void setGo();
-int isChongtong();
 void setChongtong();
 void setNagari();
 //void givecard(player *players, int i);
