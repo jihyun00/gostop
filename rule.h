@@ -12,7 +12,6 @@ typedef struct _rule{
 } rule;
 
 void initializeRule(int index);
-int isShake();
 void setShake();
 int isSulsa();
 void setSulsa();

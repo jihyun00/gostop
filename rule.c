@@ -13,33 +13,17 @@ void initializeRule(int index) {
 }
 
 
-// TODO:
-int isShake() { // 똑같은 패가 3장 있을 시 흔들 수 있음 자신이 이기면 점수. (* 2)
-    card *head = NULL;
-    int turn = getTurn();
-    int isPair = 0;
-
-    head = players[turn].holding_card;
-
-    while(head != NULL) {
-        
-    }
-
-    return 0;
-}
-
-
 void setShake() {
 	card *head = NULL;
 	int j,k;
 	int c;
     int turn = getTurn();
 		
-	for(j=0;j<12;j++){ // player가 든 패만큼 반복문 반복  
+	for(j=0; j<12; j++){ // player가 든 패만큼 반복문 반복  
 		c = 0;
 		head = players[turn].holding_card;
     	if(head != NULL) {
-    		if((players[turn].holding_card->data/4)==j){ 
+    		if((head->data/4)==j){ 
 				c++;
 			}
 
@@ -95,6 +79,9 @@ void setClearBoard(){
 }
 
 
+// TODO: 피 가져오는 거 함수로 만들기
+
+
 void setGo(){ 
     int turn = getTurn();
 
@@ -116,7 +103,7 @@ void setChongtong() {
 	int j,k;
 	int c;
     int turn = getTurn();
-	for(j=0;j<12;j++){ // player가 든 패만큼 반복문 반복 TODO: bug, 항상 player의 패가 12개라는 보장이 없음 
+	for(j=0;j<12;j++){ // player가 든 패만큼 반복문 반복 
 		c=0;
 		head = players[turn].holding_card;
     	if(head != NULL) {
