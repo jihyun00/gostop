@@ -1,5 +1,6 @@
 ﻿#include "card.h"
 #include "player.h"
+#include <string.h>
 
 const char cardMatrix[CardMAX][10] = {
     "1광","1오","1피1","1피2",
@@ -20,13 +21,27 @@ void cardInitialize() {
     int i;
     card *initialCard = (card *)malloc(sizeof(card)*CardMAX);
     card *playersCard = (card *)malloc(sizeof(card)*MAX_NUMBER_OF_PLAYER);
+
     dummyCard = (card *)malloc(sizeof(card));
     blanketCard = (card *)malloc(sizeof(card));
-   
+
     for(i=0; i < CardMAX; ++i) { // initialize card 
         initialCard[i].data = i; 
         initialCard[i].next = NULL;
     }
+
+    players[0].eating_card = (card *)malloc(sizeof(card));
+    players[1].eating_card = (card *)malloc(sizeof(card));
+    players[2].eating_card = (card *)malloc(sizeof(card));
+
+    players[0].eating_card->data = -1;
+    players[0].eating_card->next = NULL;
+
+    players[1].eating_card->data = -1;
+    players[1].eating_card->next = NULL;
+
+    players[2].eating_card->data = -1;
+    players[2].eating_card->next = NULL;
 
     cardShuffle(initialCard);
 
@@ -112,7 +127,6 @@ void divideCard(card *card_list, card *players_card) {
 
         head = head->next; 
     }
-    orderCard(dummyCard);
 }
 
 
@@ -199,27 +213,33 @@ void cardInsert(card *card_list, int data) {
     
     // 첫 번째 카드에 넣기 
     while(head != NULL) {
-        if(head->data > data) {
-            if(prev == NULL) {
-                temp->data = head->data;
-                head->data = target->data;
-                target->data = temp->data;
+        if(head->data == -1) {
+            head->data = data;
+            head->next = NULL;
 
-                prev = head;
-                head = head->next;
+        } else {
+            if(head->data > data) {
+                if(prev == NULL) {
+                    temp->data = head->data;
+                    head->data = target->data;
+                    target->data = temp->data;
+
+                    prev = head;
+                    head = head->next;
+                }
+                    
+                prev->next = target;
+                target->next = head;
+
+                return;
             }
+
+            // data가 list의 맨 마지막에 들어가는 경우
+            if(head->next == NULL) {
+                head->next = target; 
                 
-            prev->next = target;
-            target->next = head;
-
-            return;
-        }
-
-        // data가 list의 맨 마지막에 들어가는 경우
-        if(head->next == NULL) {
-            head->next = target; 
-            
-            return;
+                return;
+            }
         }
 
         prev = head;
@@ -277,33 +297,41 @@ int getCardSize(card *card_list) {
 }
 
 
-int getSame(card *card_list, int data) {  
+int* getSame(card *card_list, int data, int *size) {  
+    int i = 0;
+    int *res = (int *)malloc(sizeof(int)*3);
     card *head = card_list;
-    int cnt = 0;
+
+    memset(res, -1, sizeof(int)*3); // res 초기화
 
     if(head == NULL) {
-        return -1;
+        return res;
     }
 
     while(head != NULL) { // 노드가 끝일 때까지
         if((head->data/4) == data/4) {
-            cnt++;
+            *size = *size+1;
+            res[i++] = head->data;
         }
 
         head = head->next;
     }
 
-    return cnt;
+    return res;
 }
 
 
 void putCard(int num) {
-    int hasPair = -1;
-    int hasDummyPair = -1;
+    int hasPair = 0;
+    int hasDummyPair = 0;
     int turn;
     int selected_data;
     int index;
     int i;
+    int *res;
+    int *dummyRes;
+    int selected;
+    int dummySelected;
 
     card *holding = NULL;
     card *eating = NULL;
@@ -332,18 +360,31 @@ void putCard(int num) {
         head = head->next;
     }
 
-    hasPair = getSame(blanketCard, index);
+    res = getSame(blanketCard, index, &hasPair);
 
-    if(hasPair != 0) { // 담요에 짝이 존재할 경우
-        // 자기 패에서 값을 내고
-        // 짝이 맞으면 먹고, 
-        // TODO:
-        // 흔들기, 설사 등 테스트
-        // 딴 화투
-        // eating 카드 구현
+    printf("hasPair : %d\n", hasPair);
+
+    if(hasPair > 0) { // 담요에 짝이 존재할 경우
+        // TODO: 흔들기, 설사 등 테스트
         cardDelete(holding, index);
         cardInsert(eating, index);
-        //cardInsert(eating, ); // 짝이 맞는 카드 먹어야 함
+
+        if(hasPair > 1) {
+            printf("짝이 맞는 두 개의 카드 중 어느 카드를 고르시겠습니까?\n");
+            scanf("%d", &selected);
+
+            if(selected == 1) {
+                cardDelete(blanketCard, res[0]);
+                cardInsert(eating, res[0]); 
+            } else {
+                cardDelete(blanketCard, res[1]);
+                cardInsert(eating, res[1]);
+            }
+
+        } else {
+            cardDelete(blanketCard, res[0]);
+            cardInsert(eating, res[0]);
+        }
 
     } else { // 담요에 짝이 존재하지 않을 경우
         cardInsert(blanketCard, index); 
@@ -351,15 +392,28 @@ void putCard(int num) {
         selected_data = selectCard(dummyCard);
         cardDelete(dummyCard, selected_data);
         
-        hasDummyPair = getSame(blanketCard, selected_data);
+        dummyRes = getSame(blanketCard, selected_data, &hasDummyPair);
 
-        if(hasDummyPair != 0) { // 담요에 짝이 존재할 경우
-            // TODO: 
-            // 흔들기, 설사 등 테스트
-            // 딴 화투
-            cardDelete(holding, index);
-            cardInsert(eating, index);
-            //cardInsert(eating, ); // 짝이 맞는 카드 먹어야 함
+        if(hasDummyPair > 0) { // 담요에 짝이 존재할 경우
+            // TODO: 흔들기, 설사 등 테스트
+            cardInsert(eating, selected_data);
+
+            if(hasPair > 1) {
+                printf("짝이 맞는 두 개의 카드 중 어느 카드를 고르시겠습니까?\n");
+                scanf("%d", &dummySelected);
+
+                if(dummySelected == 1) {
+                    cardDelete(blanketCard, dummyRes[0]);
+                    cardInsert(eating, dummyRes[0]); 
+                } else {
+                    cardDelete(blanketCard, dummyRes[1]);
+                    cardInsert(eating, dummyRes[1]);
+                }
+
+            } else {
+                cardDelete(blanketCard, dummyRes[0]);
+                cardInsert(eating, dummyRes[0]);
+            }
 
         } else { // 담요에 짝이 존재하지 않을 경우
             cardInsert(blanketCard, selected_data);

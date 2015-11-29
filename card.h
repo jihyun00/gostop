@@ -30,7 +30,7 @@ int selectCard(card *card_list);
 void cardInsert(card *card_list, int data);
 void cardDelete(card *card_list, int data);
 int getCardSize(card *card_list);
-int getSame(card *card_list, int data);
+int* getSame(card *card_list, int data, int *size);
 void putCard(int num);
 void toggle();
 

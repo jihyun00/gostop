@@ -245,7 +245,13 @@ void drawScreen() {
         head = head->next;
     }
     printf("\n");
-    printf("(점수: %d) 딴 화투)\n\n", players[0].score);
+    printf("(점수: %d) 딴 화투) ", players[0].score);
+    head = players[0].eating_card;
+    while(head != NULL) {
+        printf("%s ", cardMatrix[head->data]);
+        head = head->next;
+    }
+    printf("\n");
 
     printf("B   : 패) ");
     head = players[1].holding_card;
@@ -254,7 +260,13 @@ void drawScreen() {
         head = head->next;
     }
     printf("\n");
-    printf("(점수: %d) 딴 화투)\n\n", players[1].score);
+    printf("(점수: %d) 딴 화투) ", players[1].score);
+    head = players[1].eating_card;
+    while(head != NULL) {
+        printf("%s ", cardMatrix[head->data]);
+        head = head->next;
+    }
+    printf("\n");
 
     printf("C   : 패) ");
     head = players[2].holding_card;
@@ -263,7 +275,13 @@ void drawScreen() {
         head = head->next;
     }
     printf("\n");
-    printf("(점수: %d) 딴 화투)\n\n", players[2].score);
+    printf("(점수: %d) 딴 화투) ", players[2].score);
+    head = players[2].eating_card;
+    while(head != NULL) {
+        printf("%s ", cardMatrix[head->data]);
+        head = head->next;
+    }
+    printf("\n");
 
     printf("깔린 패) ");
     head = blanketCard;

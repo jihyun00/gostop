@@ -13,11 +13,11 @@ typedef struct _rule{
 
 void initializeRule(int index);
 void setShake();
+void setSulsa();
 void setClearBoard();
 void setGo();
 void setChongtong();
 void setNagari();
-void setSulsa();
 //void givecard(player *players, int i);
 //void thadak(player *players, card *dummyCard, int i);
 //void doublepae(player *players, player *players, int i);
