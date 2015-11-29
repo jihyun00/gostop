@@ -418,9 +418,6 @@ void putCard(int num) {
                     }
 
                 } else {
-                    printf("selected data : %d\n", selected_data);
-                    printf("dummy data : %d\n", dummyRes[0]);
-
                     cardDelete(blanketCard, dummyRes[0]);
                     cardInsert(eating, dummyRes[0]);
                 }
@@ -457,8 +454,6 @@ void putCard(int num) {
                 }
 
             } else {
-                printf("456 selected data : %d\n", selected_data);
-                printf("456 dummy data : %d\n", dummyRes[0]);
                 cardDelete(blanketCard, dummyRes[0]);
                 cardInsert(eating, dummyRes[0]);
             }
