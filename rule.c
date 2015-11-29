@@ -54,38 +54,10 @@ void setShake() {
 }
 
 
-int isSulsa() {
-    
-    return 0;
-}
-
-
 void setSulsa() {
-	card *head = NULL, *head2=NULL;
-	int j,k;
-	int c;
     int turn = getTurn();
 
-	for(j=0;j<12;j++){ // player가 든 패+더미 중 큰 애만큼 반복
-		c=0;
-		head = players[turn].holding_card;
-    	if(head != NULL) {
-    		if((players[turn].holding_card->data/4)==j){ 
-				c++;
-			}
-			head = head->next;
-		}
-		if(head2 !=NULL){
-			if(((int)(blanketCard[j].data)/4)==j){ // TODO: blanketCard 이렇게 접근 못함
-				c++;
-			}
-			head2 = head2->next;
-	    }	
-		if(c==3){
-            players[turn].rules->sulsa = players[turn].rules->sulsa + 1;
-			break;
-		} 
-	}
+    players[turn].rules->sulsa = players[turn].rules->sulsa + 1;
 }
 
 

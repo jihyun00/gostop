@@ -364,13 +364,17 @@ void putCard(int num) {
     res = getSame(blanketCard, index, &hasPair);
     selected_data = selectCard(dummyCard);
     cardDelete(dummyCard, selected_data);
+    cardDelete(holding, index);
 
     if(hasPair > 0) {
         if((selected_data/4) == (index/4)) { // 설사
-            printf("설사\n");        
+            cardInsert(blanketCard, index);
+            cardInsert(blanketCard, res[0]);
+            cardInsert(blanketCard, selected_data);
+
+            setSulsa();
 
         } else {
-            cardDelete(holding, index);
             cardInsert(eating, index);
 
             if(hasPair > 1) {
@@ -431,7 +435,6 @@ void putCard(int num) {
         dummyRes = getSame(blanketCard, selected_data, &hasDummyPair);
 
         cardInsert(blanketCard, index); 
-        cardDelete(holding, index);
 
         if(hasDummyPair > 0) {
             cardInsert(eating, selected_data);
