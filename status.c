@@ -409,6 +409,8 @@ void save() {
 
     // gusip 정보 저장
     fprintf(fp, "gusip : %d", gusip);
+    // nagari 정보 저장
+    fprintf(fp, "nagari : %d", nagari);
 
     // player들 정보 저장
     fprintf(fp, "player1 id : %d\n", players[0].id);    
@@ -525,7 +527,7 @@ void load() {
     FILE *fp;
     fp = fopen("save.txt", "r");
     char line[512];
-    card *head = (card *)malloc(sizeof(card)*CardMAX); // TODO: malloc으로 할당한 거 다 0으로 초기화되나?
+    card *head = (card *)malloc(sizeof(card)*CardMAX); 
     int i = 0;
     int j;
 
@@ -551,7 +553,9 @@ void load() {
             i = 0;
         }
 
-        // TODO: head 초기화
+        free(head);
+        head = (card *)malloc(sizeof(card)*CardMAX); 
+        
         if(strstr(line, "blanketCard :")) {
             sscanf(line, "blanketCard: %d", &head[i++].data);
 
@@ -579,7 +583,9 @@ void load() {
             sscanf(line, "player1 turn : %d", &players[0].turn);
         }
 
-        // TODO: head 초기화
+        free(head);
+        head = (card *)malloc(sizeof(card)*CardMAX); 
+
         if(strstr(line, "players1 holding card :")) {
             sscanf(line, "players1 holding card : %d", &head[i++].data);
 
@@ -595,7 +601,9 @@ void load() {
             i = 0;
         }
         
-        // TODO: head 초기화
+        free(head);
+        head = (card *)malloc(sizeof(card)*CardMAX); 
+
         if(strstr(line, "players1 eating card :")) {
             sscanf(line, "players1 eating card : %d", &head[i++].data);
 
@@ -630,7 +638,10 @@ void load() {
         if(strstr(line, "player2 turn :")) {
             sscanf(line, "player2 turn : %d", &players[1].turn);
         }
-        // TODO: head 초기화
+
+        free(head);
+        head = (card *)malloc(sizeof(card)*CardMAX); 
+
         if(strstr(line, "players2 holding card :")) {
             sscanf(line, "players2 holding card : %d", &head[i++].data);
 
@@ -645,7 +656,10 @@ void load() {
             players[1].holding_card = &head[0];
             i = 0;
         }
-        // TODO: head 초기화
+
+        free(head);
+        head = (card *)malloc(sizeof(card)*CardMAX); 
+
         if(strstr(line, "players2 eating card :")) {
             sscanf(line, "players2 eating card : %d", &head[i++].data);
 
@@ -680,7 +694,10 @@ void load() {
         if(strstr(line, "player3 turn :")) {
             sscanf(line, "player3 turn : %d", &players[2].turn);
         }
-        // TODO: head 초기화
+
+        free(head);
+        head = (card *)malloc(sizeof(card)*CardMAX); 
+
         if(strstr(line, "players3 holding card :")) {
             sscanf(line, "players3 holding card : %d", &head[i++].data);
 
@@ -695,7 +712,10 @@ void load() {
             players[2].holding_card = &head[0];
             i = 0;
         }
-        // TODO: head 초기화
+
+        free(head);
+        head = (card *)malloc(sizeof(card)*CardMAX); 
+
         if(strstr(line, "players3 eating card :")) {
             sscanf(line, "players3 eating card : %d", &head[i++].data);
 
