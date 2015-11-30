@@ -16,6 +16,7 @@ typedef enum _game_player_status {
 
 } game_player_status;
 
+int nagari;
 
 void setScore(int playerId);
 int getScore(int playerId);

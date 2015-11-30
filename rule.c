@@ -112,22 +112,17 @@ int setGo(){
 
         return players[turn].rules->go;
         
-    } else if((strcmp(status, "stop") == 0) || (strcmp(status, "s") == 0)) {
-        setStop();
-
     } else {
-        // TODO: Error Handling
-        printf("Invalid command\n");
+        setStop();
     }
 
     return 0;
 }
 
 
-// TODO: setStop 구현, 이전 정보 필요한 것들 존재
 void setStop() {
     printf("STOP 합니다, 게임을 종료합니다.\n");
-
+    
     exit(0);
 }
 
@@ -153,8 +148,7 @@ void setChongtong(int index) {
 }
 
 
-// TODO: 나가리 구현, 나가리가 되면 그 다음판은 2배가 된다.
-int isNagari() {
+void isNagari() {
     int i, j;
     int cnt;
     int turn = getTurn();
@@ -163,7 +157,9 @@ int isNagari() {
 	if(dummyCard == NULL) {
         // 아무도 3점 이상 내지 못했을 경우
 		if((getScore(0) < 3) && (getScore(1) < 3) && (getScore(2) < 3)) {
-            return 1;
+            nagari = 1;
+
+            return;
 		}
     
         // 고를 했으나 추가 점수가 나지 않고 상대도 3점 이상을 획득하지 못한 경우
@@ -183,13 +179,15 @@ int isNagari() {
                 }
 
                 if(cnt == 2) {
-                    return 1;
+                    nagari = 1;
+
+                    return;
                 }
             }
         }
 	}
 
-    return 0;
+    return;
 }
 
 
@@ -220,7 +218,7 @@ void getPi(int turn) {
 
 
 int isGobak(int turn) {
-     
+         
     
     return -1;
 }
