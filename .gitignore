@@ -4,3 +4,6 @@ a.out
 *.dsYM/
 gostop.exe
 save.txt
+a.exe
+*.o
+*.gch

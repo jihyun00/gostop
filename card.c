@@ -2,6 +2,7 @@
 #include "player.h"
 #include "rule.h"
 #include <string.h>
+#include <unistd.h>
 
 const char cardMatrix[CardMAX][10] = {
     "1광","1오","1피1","1피2",
@@ -264,6 +265,13 @@ void cardDelete(card *card_list, int data) {
 
     //첫 번째 카드 지우기
     if(head != NULL && head->data == data) { 
+        if(getCardSize(head) == 1) {
+            head->data = -1;
+            head->next = NULL;
+
+            return;
+        }
+
         for(i=0; i < size-1; ++i) {
            head->data = head->next->data; 
            prev = head;
@@ -496,6 +504,10 @@ void putCard(int num) {
 
     // 판 쓰리 체크
     if(isClearBoard() == 1) {
+        printf("%d 유저가 판 쓰리~ \n", turn);
+
+        sleep(1);
+
         setClearBoard();
     }
 }
@@ -508,9 +520,5 @@ void toggle() {
 
     if(getCard(eating, 32) != NULL && gusip == 0) {
         gusip = 1;
-
-    } else {
-        // TODO: Error Handling
-        printf("Invalid Option\n");
     }
 }

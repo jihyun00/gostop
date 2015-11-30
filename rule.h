@@ -23,5 +23,6 @@ void setChongtong(int index);
 void isNagari();
 void getPi(int turn);
 int isGobak(int turn);
+void gameEnd();
 
 #endif

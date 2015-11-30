@@ -378,6 +378,9 @@ void drawScreen() {
     printf("A   : 패) ");
     head = players[0].holding_card;
     while(head != NULL) {
+        if(head->data == -1) {
+            break;
+        }
         printf("%s ", cardMatrix[head->data]);
         head = head->next;
     }
@@ -385,6 +388,9 @@ void drawScreen() {
     printf("(점수: %d) 딴 화투) ", getScore(0));
     head = players[0].eating_card;
     while(head != NULL) {
+        if(head->data == -1) {
+            break;
+        }
         printf("%s ", cardMatrix[head->data]);
         head = head->next;
     }
@@ -399,6 +405,9 @@ void drawScreen() {
     printf("B   : 패) ");
     head = players[1].holding_card;
     while(head != NULL) {
+        if(head->data == -1) {
+            break;
+        }
         printf("%s ", cardMatrix[head->data]);
         head = head->next;
     }
@@ -406,6 +415,9 @@ void drawScreen() {
     printf("(점수: %d) 딴 화투) ", getScore(1));
     head = players[1].eating_card;
     while(head != NULL) {
+        if(head->data == -1) {
+            break;
+        }
         printf("%s ", cardMatrix[head->data]);
         head = head->next;
     }
@@ -420,6 +432,9 @@ void drawScreen() {
     printf("C   : 패) ");
     head = players[2].holding_card;
     while(head != NULL) {
+        if(head->data == -1) {
+            break;
+        }
         printf("%s ", cardMatrix[head->data]);
         head = head->next;
     }
@@ -427,6 +442,9 @@ void drawScreen() {
     printf("(점수: %d) 딴 화투) ", getScore(2));
     head = players[2].eating_card;
     while(head != NULL) {
+        if(head->data == -1) {
+            break;
+        }
         printf("%s ", cardMatrix[head->data]);
         head = head->next;
     }
@@ -435,6 +453,9 @@ void drawScreen() {
     printf("깔린 패) ");
     head = blanketCard;
     while(head != NULL) {
+        if(head->data == -1) {
+            break;
+        }
         printf("%s ", cardMatrix[head->data]);
         head = head->next;
     }
