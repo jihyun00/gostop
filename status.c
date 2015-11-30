@@ -9,9 +9,12 @@
 
 // TODO: FIX
 // player 구조체에 점수 세팅
-void setScore(int playerId) {
+P_C_S setScore(int playerId) {
 
 	int tmp_score = 0;
+	
+	P_C_S return_tmp;
+
 
 	int i = 0;
     	int j = 0;
@@ -131,6 +134,15 @@ void setScore(int playerId) {
     }
 
     players[playerId].score = tmp_score;
+
+    return_tmp.pi = pi;
+    return_tmp.oh = oh;
+    return_tmp.sip = sip;
+    return_tmp.gwang = gwang;
+
+    return return_tmp;
+
+    
 }
 
 
@@ -143,7 +155,7 @@ int getScore(int playerId) {
 }
 
 
-void setMoney(player *playerId) {
+void setMoney(int playerId, P_C_S return_score) {
 	int i= 0;
 
 	player* tmp=NULL;
@@ -156,41 +168,38 @@ void setMoney(player *playerId) {
 		oh = 0, chodan = 0, hongdan = 0, chungdan = 0,
 		sip = 0, gukjin = 0, godori = 0;
 
-	player* head = NULL;
-	head = (player*)malloc(sizeof(player));
-	head = playerId;
-
-	for(i=0 ; head->eating_card->next != NULL ; i++) {
-		if((((head->eating_card->next->data)%4 == 2) || ((head->eating_card->next->data)%4 == 3)) && (((head->eating_card->next->data) != 46)||((head->eating_card->next->data) != 47))) {
-			pi++;
-        }
-
-		if(((head->eating_card->next->data) == 41) || ((head->eating_card->next->data) == 47)) {
-			pi =pi+2;
-        }
-
-		head->eating_card->next = head->eating_card->next->next;}
 
     //  TODO: 피박(해결)  고박(진사람들 쪽을 조사해야함)- (4,5번할때) 
     // 쓰리고, 포고, 흔들기, 멍텅구리(이와같은 것을 하고 이 긴사람 점수를 두배해주는 식으로 해결하면 됨)- (4,5번 할때)
 											   
-	if(playerId->id == tmp->id) {
-		playerId->money = INITIAL_MONEY + (tmp->score)*100*2;
+	if(player[playerId].id == tmp->id) {
+		player[playerId].money = INITIAL_MONEY + (tmp->score)*100*2;
 	} else {
-        if(pi < 7) {
-            playerId->money = INITIAL_MONEY - (tmp->score)*100*2;       //피박문제 해결한줄. 
+        if(player[playerId].return_score.pi < 7) {
+            player[playerId].money = INITIAL_MONEY - (tmp->score)*100*2;       //피박문제 해결한줄. 
             tmp->money = (tmp->money) + (tmp->score)*100;}				//피박문제 해결한줄.
         else
-            playerId->money = INITIAL_MONEY - (tmp->score)*100;
+            player[playerId].money = INITIAL_MONEY - (tmp->score)*100;
+    }
+
+
+	if(player[playerId].id == tmp->id) {
+		player[playerId].money = INITIAL_MONEY + (tmp->score)*100*2;
+	} else {
+        if(return_score.pi < 7) {
+            player[playerId].money = INITIAL_MONEY - (tmp->score)*100*2;       //피박문제 해결한줄. 
+            tmp->money = (tmp->money) + (tmp->score)*100;}				//피박문제 해결한줄.
+        else
+            player[playerId].money = INITIAL_MONEY - (tmp->score)*100;
     }
 }
 
 
 // player 구조체에 돈 세팅 
-int getMoney(player *playerId) {
+int getMoney(int playerId) {
     int money;
 
-	money = playerId->money;
+	money = players[playerId].money;
 
     return money;
 }
@@ -327,9 +336,9 @@ void drawInterface(char *command) {
 
         } else if((strcmp(command, "b") == 0) || (strcmp(command, "balance") == 0)) {
                 printf("-------게이머의 잔고---------\n");
-                printf("A의 잔고 : %d 원\n", getMoney(players));
-                printf("B의 잔고 : %d 원\n", getMoney(players+1));
-                printf("C의 잔고 : %d 원\n", getMoney(players+2));
+                printf("A의 잔고 : %d 원\n", getMoney(0));
+                printf("B의 잔고 : %d 원\n", getMoney(1));
+                printf("C의 잔고 : %d 원\n", getMoney(2));
 
         } else if((strcmp(command, "h") == 0) || (strcmp(command, "help") == 0)) { 
                 printf("--------- 도움말 ------------\n");
