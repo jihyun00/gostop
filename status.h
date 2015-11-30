@@ -25,10 +25,12 @@ typedef struct _game_player_card_status {
 	int gwang;
 } P_C_S;
 
+//P_C_S[MAX_NUMBER_OF_PLAYER];
 
-P_C_S setScore(int playerId);
+
+void setScore(int playerId);
 int getScore(int playerId);
-void setMoney(player *playerId);
+void setMoney(int playerId, P_C_S );
 int getMoney(int playerId);
 player* setWinner();
 void drawScreen(); // status 변할 때마다 화면에 값 그려주기

@@ -9,7 +9,7 @@
 
 // TODO: FIX
 // player 구조체에 점수 세팅
-P_C_S setScore(int playerId) {
+void setScore(int playerId) {
 
 	int tmp_score = 0;
 	
@@ -140,7 +140,7 @@ P_C_S setScore(int playerId) {
     return_tmp.sip = sip;
     return_tmp.gwang = gwang;
 
-    return return_tmp;
+   // return return_tmp;
 
     
 }
@@ -172,7 +172,7 @@ void setMoney(int playerId, P_C_S return_score) {
     //  TODO: 피박(해결)  고박(진사람들 쪽을 조사해야함)- (4,5번할때) 
     // 쓰리고, 포고, 흔들기, 멍텅구리(이와같은 것을 하고 이 긴사람 점수를 두배해주는 식으로 해결하면 됨)- (4,5번 할때)
 											   
-	if(player[playerId].id == tmp->id) {
+/*	if(player[playerId].id == tmp->id) {
 		player[playerId].money = INITIAL_MONEY + (tmp->score)*100*2;
 	} else {
         if(player[playerId].return_score.pi < 7) {
@@ -191,7 +191,7 @@ void setMoney(int playerId, P_C_S return_score) {
             tmp->money = (tmp->money) + (tmp->score)*100;}				//피박문제 해결한줄.
         else
             player[playerId].money = INITIAL_MONEY - (tmp->score)*100;
-    }
+    }                    */
 }
 
 
