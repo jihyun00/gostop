@@ -13,6 +13,7 @@ void setScore(int playerId) {
 	player* tmp = NULL;
 
 	tmp = (player*)malloc(sizeof(player));
+	tmp->score = 0;
 
 	int i = 0;
     int j;
