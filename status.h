@@ -17,14 +17,8 @@ typedef enum _game_player_status {
 } game_player_status;
 
 
-typedef struct _game_status {
-    int score; // 현재 이기고 있는 사람의 점수
-    // TODO: 깔린 패 정보
-
-} game_status;
-
-void setScore(player *playerId);
-int getScore(player *playerId);
+void setScore(int playerId);
+int getScore(int playerId);
 void setMoney(player *playerId);
 int getMoney(player *playerId);
 player* setWinner();

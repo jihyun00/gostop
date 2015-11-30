@@ -1,6 +1,8 @@
 #include "rule.h"
 #include "player.h"
 
+#include <string.h>
+
 void initializeRule(int index) {
     players[index].rules = (rule *)malloc(sizeof(rule)); 
 
@@ -83,25 +85,45 @@ void setClearBoard(){
 }
 
 
-// TODO:
+// TODO: 이건 1고 일 때만 해당됨;
 void setGo(){ 
     int turn = getTurn();
+    char status[10];
 
 	if(players[turn].score>=3){
 		//if()플레이어가 고를 한다고 눌렀을 때 (키);를 조건문으로 두기;
-        players[turn].rules->go += 1;
+        printf("Go하시겠습니까? Stop하시겠습니까?"); 
+
+        scanf("%s", status);
+
+        if((strcmp(status, "go") == 0) || (strcmp(status, "g") == 0)) {
+            players[turn].rules->go += 1;
+            
+        } else if((strcmp(status, "stop") == 0) || (strcmp(status, "s") == 0)) {
+            setStop();
+
+        } else {
+            // TODO: Error Handling
+            printf("Invalid command\n");
+        }
 	}
 }
 
 
-void setChongtong() {
+// TODO: setStop 구현
+void setStop() {
+    printf("STOP 합니다, 게임을 종료합니다.\n");
+    exit(0);
+}
+
+
+void setChongtong(int index) {
 	card *head = NULL;
 	int j,k;
 	int c;
-    int turn = getTurn();
 	for(j=0;j<12;j++){ // player가 든 패만큼 반복문 반복 
 		c=0;
-		head = players[turn].holding_card;
+		head = players[index].holding_card;
     	if(head != NULL) {
     		if((head->data/4)==j){
 				c++;
@@ -112,17 +134,28 @@ void setChongtong() {
 		if(c==4) break;
 	}
 
-    players[turn].rules->chongtong = j;
+    players[index].rules->chongtong = j;
 }
 
 
-void setNagari() {
+// TODO: 나가리 구현
+int isNagari() {
+    // 아무도 3점 이상을 내지 못한 경우 나가리라고 한다. 누가 고를 했으나 추가 점수가 나지 않고 상대도 3점 이상을 획득 하지 못한 경우도 나가리에 속한다. 나가리가 되면 그 다음 판은 2배(*2)가 된다.( 돈계산.)
+    int i, j;
     int turn = getTurn();
-
-	if(dummyCard == NULL){
+    int num_of_go = 0;
+	if(dummyCard == NULL) {
+        // 아무도 3점 이상 내지 못했을 경우
 		if((players[0].score < 3) && (players[1].score < 3) && (players[2].score < 3)) {
-            players[turn].rules->nagari = 1;
+            return 1;
 		}
+    
+        // 고를 했으나 추가 점수가 나지 않고 상대도 3점 이상을 획득하지 못한 경우
+        for(i=0; i < MAX_NUMBER_OF_PLAYER; ++i) {
+            int cnt = 0;
+
+            num_of_go = players[i].rules->go;
+        }
 	}
 }
 

@@ -105,8 +105,8 @@ void divideCard(card *card_list, card *players_card) {
     // 흔들기 처리
     for(i=0; i < MAX_NUMBER_OF_PLAYER; ++i) {
         setShake(i);  
+        setChongtong(i);
     }
-
     
     head = blanketCard;
     for(i=21; i < 27; ++i) {

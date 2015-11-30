@@ -18,8 +18,9 @@ int getSulsa();
 int isClearBoard();
 void setClearBoard();
 void setGo();
-void setChongtong();
-void setNagari();
+void setStop();
+void setChongtong(int index);
+int isNagari();
 void getPi(int turn);
 
 #endif

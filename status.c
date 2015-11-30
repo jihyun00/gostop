@@ -7,71 +7,72 @@
 #include <stdio.h>
 #include <unistd.h>
 
+// TODO: FIX
 // player 구조체에 점수 세팅
-void setScore(player *playerId) {
+void setScore(int playerId) {
 	player* tmp = NULL;
 
 	tmp = (player*)malloc(sizeof(player));
 
 	int i = 0;
+    int j;
 
 	int gwang = 0, bigwang = 0, pi = 0, ssangpi = 0, 
 		oh = 0, chodan = 0, hongdan = 0, chungdan = 0,
 		sip = 0, gukjin = 0, godori = 0;
 
-	player * head = NULL;
-	head = (player*)malloc(sizeof(player));
+    card *eating = NULL;
 
-	head = playerId;
+    eating = players[playerId].eating_card;
 
-	for(i=0 ; head->eating_card->next != NULL ; i++) {
-	    if((((head->eating_card->next->data)%4 == 2) || ((head->eating_card->next->data)%4 == 3)) && (((head->eating_card->next->data) != 46) || ((head->eating_card->next->data) != 47))) {
+	for(i=0 ; eating->next != NULL ; i++) {
+	    if((((eating->next->data)%4 == 2) || ((eating->next->data)%4 == 3)) && (((eating->next->data) != 46) || ((eating->next->data) != 47))) {
 			pi++;
         }
         
-		if(((head->eating_card->next->data) == 41) || ((head->eating_card->next->data) == 47)) {
+		if(((eating->next->data) == 41) || ((eating->next->data) == 47)) {
 		    ssangpi++;
         }
 
-		if(((head->eating_card->next->data) == 0) || ((head->eating_card->next->data) == 8) || ((head->eating_card->next->data)==28) || ((head->eating_card->next->data)==40)) {
+		if(((eating->next->data) == 0) || ((eating->next->data) == 8) || ((eating->next->data)==28) || ((eating->next->data)==40)) {
 			gwang++;
         }
 
-		if((head->eating_card->next->data) == 44){
+		if((eating->next->data) == 44){
 			gwang++, bigwang++;}
 
 
-		if((((head->eating_card->next->data)%4 == 1) && (((head->eating_card->next->data) != 29) || ((head->eating_card->next->data)!=41) || ((head->eating_card->next->data) != 45))) ||(head->eating_card->next->data == 46)) {
+		if((((eating->next->data)%4 == 1) && (((eating->next->data) != 29) || ((eating->next->data)!=41) || ((eating->next->data) != 45))) ||(eating->next->data == 46)) {
 		    oh++;
         }
 
-		if(((head->eating_card->next->data) == 1) || ((head->eating_card->next->data) == 5) || ((head->eating_card->next->data)==9)) {
+		if(((eating->next->data) == 1) || ((eating->next->data) == 5) || ((eating->next->data)==9)) {
 			hongdan++;
         }
 
-		if(((head->eating_card->next->data) == 13) || ((head->eating_card->next->data) == 17) || ((head->eating_card->next->data) == 23)) {
+		if(((eating->next->data) == 13) || ((eating->next->data) == 17) || ((eating->next->data) == 23)) {
 			chodan++;
         }
 
-		if(((head->eating_card->next->data) == 21) || ((head->eating_card->next->data) == 33) || ((head->eating_card->next->data)==37)) {
+		if(((eating->next->data) == 21) || ((eating->next->data) == 33) || ((eating->next->data)==37)) {
 			chungdan++;
         }
 
         // 구십(32)가 십으로 쓰일 때
-		if(((head->eating_card->next->data) == 4) || ((head->eating_card->next->data) == 12) || ((head->eating_card->next->data) == 16) || ((head->eating_card->next->data) == 20) || ((head->eating_card->next->data) == 24) || ((head->eating_card->next->data) == 29) || ((head->eating_card->next->data) == 36) || ((head->eating_card->next->data) == 45) || (((head->eating_card->next->data) == 32) && gusip == 1)) {
+		if(((eating->next->data) == 4) || ((eating->next->data) == 12) || ((eating->next->data) == 16) || ((eating->next->data) == 20) || ((eating->next->data) == 24) || ((eating->next->data) == 29) || ((eating->next->data) == 36) || ((eating->next->data) == 45) || (((eating->next->data) == 32) && gusip == 1)) {
 			sip++;
         } 
 
-		if(((head->eating_card->next->data) == 4) || ((head->eating_card->next->data) == 12)|| ((head->eating_card->next->data) == 33)) {
+		if(((eating->next->data) == 4) || ((eating->next->data) == 12)|| ((eating->next->data) == 33)) {
 			godori++;
         }
 
         // 구십(32)가 피로 쓰였을 때
-		if((head->eating_card->next->data) == 32) {
+		if((eating->next->data) == 32) {
 			pi=pi+2;
         } 
 
-	    head->eating_card->next = head->eating_card->next->next;
+	    eating->next = eating->next->next;
     }
 
 	if(ssangpi == 1) {
@@ -130,14 +131,14 @@ void setScore(player *playerId) {
 		tmp->score = tmp->score + 5;
     }
 
-	playerId->score = tmp->score;
+    players[playerId].score = tmp->score;
 }
 
 
-int getScore(player *playerId) {
+int getScore(int playerId) {
     int score;
 
-	score = playerId->score; 
+    score = players[playerId].score;
     
     return score;
 }
@@ -231,7 +232,7 @@ void drawScreen() {
         head = head->next;
     }
     printf("\n");
-    printf("(점수: %d) 딴 화투) ", players[0].score);
+    printf("(점수: %d) 딴 화투) ", getScore(0));
     head = players[0].eating_card;
     while(head != NULL) {
         printf("%s ", cardMatrix[head->data]);
@@ -252,7 +253,7 @@ void drawScreen() {
         head = head->next;
     }
     printf("\n");
-    printf("(점수: %d) 딴 화투) ", players[1].score);
+    printf("(점수: %d) 딴 화투) ", getScore(1));
     head = players[1].eating_card;
     while(head != NULL) {
         printf("%s ", cardMatrix[head->data]);
@@ -273,7 +274,7 @@ void drawScreen() {
         head = head->next;
     }
     printf("\n");
-    printf("(점수: %d) 딴 화투) ", players[2].score);
+    printf("(점수: %d) 딴 화투) ", getScore(2));
     head = players[2].eating_card;
     while(head != NULL) {
         printf("%s ", cardMatrix[head->data]);
@@ -321,19 +322,7 @@ void drawInterface(char *command) {
         
         
     } else { // 문자일 경우
-        if((strcmp(command, "g") == 0) || (strcmp(command, "go") == 0)) {
-                printf("go 함수\n");
-                // blah blah... 
-
-        } else if((strcmp(command, "s") == 0) || (strcmp(command, "stop") == 0)) {
-                if(players[getTurn()].turn == GAME_TURN_NOW && players[getTurn()].score>=3) {
-                    printf("STOP 합니다, 게임을 종료합니다.\n");
-                    exit(0);
-                }	
-
-            printf("stop \n");
-
-        } else if((strcmp(command, "e") == 0) || (strcmp(command, "exit") == 0)) {
+        if((strcmp(command, "e") == 0) || (strcmp(command, "exit") == 0)) {
                 printf("게임을 종료합니다\n");
                 exit(0);
 
@@ -419,6 +408,10 @@ void save() {
     }
     fprintf(fp, "\n");
 
+    // gusip 정보 저장
+    fprintf(fp, "gusip : %d", gusip);
+
+    // player들 정보 저장
     fprintf(fp, "player1 id : %d\n", players[0].id);    
     fprintf(fp, "player1 score : %d\n", players[0].score); 
     fprintf(fp, "player1 played : %d\n", players[0].played);    
