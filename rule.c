@@ -89,15 +89,15 @@ void setGo(){
     int turn = getTurn();
     char status[10];
 
-    if(players[turn].rules->go == 0) {
-        if(players[turn].score < 3){
+    if(players[turn].rules->go == 0) { // 고를 한 번도 한 적이 없을 때
+        if(players[turn].score < 3){ // 3점 이하는 out
             return; 
         }
 
-    } else {
-        /*if(players[turn].score ) { // TODO: 이전과 비교했을 때 2점 점수 증가 못했을 때
+    } else { // 고를 한 번 이상했을 때
+        if(players[turn].score < players[turn].addtional_score + 2) {  // 2점 이상 추가로 못 냈을 때는 out
             return;
-        }*/
+        }
     }
 
     printf("Go하시겠습니까? Stop하시겠습니까?"); 
@@ -107,6 +107,7 @@ void setGo(){
     if((strcmp(status, "go") == 0) || (strcmp(status, "g") == 0)) {
         players[turn].rules->go += 1;
         players[turn].score += 1;
+        players[turn].addtional_score = players[turn].score;
         
     } else if((strcmp(status, "stop") == 0) || (strcmp(status, "s") == 0)) {
         setStop();
