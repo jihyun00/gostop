@@ -1,5 +1,6 @@
 #include "rule.h"
 #include "player.h"
+#include "status.h"
 
 #include <string.h>
 
@@ -85,18 +86,18 @@ void setClearBoard(){
 }
 
 
-void setGo(){ 
+int setGo(){ 
     int turn = getTurn();
     char status[10];
 
     if(players[turn].rules->go == 0) { // 고를 한 번도 한 적이 없을 때
         if(players[turn].score < 3){ // 3점 이하는 out
-            return; 
+            return 0; 
         }
 
     } else { // 고를 한 번 이상했을 때
-        if(players[turn].score < players[turn].addtional_score + 2) {  // 2점 이상 추가로 못 냈을 때는 out
-            return;
+        if(players[turn].addtional_score < 2) {  // 2점 이상 추가로 못 냈을 때는 out
+            return 0;
         }
     }
 
@@ -107,7 +108,9 @@ void setGo(){
     if((strcmp(status, "go") == 0) || (strcmp(status, "g") == 0)) {
         players[turn].rules->go += 1;
         players[turn].score += 1;
-        players[turn].addtional_score = players[turn].score;
+        players[turn].addtional_score = players[turn].score; 
+
+        return players[turn].rules->go;
         
     } else if((strcmp(status, "stop") == 0) || (strcmp(status, "s") == 0)) {
         setStop();
@@ -116,6 +119,8 @@ void setGo(){
         // TODO: Error Handling
         printf("Invalid command\n");
     }
+
+    return 0;
 }
 
 
@@ -144,29 +149,47 @@ void setChongtong(int index) {
 		if(c==4) break;
 	}
 
-    players[index].rules->chongtong = j;
+    players[index].rules->chongtong += 1;
 }
 
 
-// TODO: 나가리 구현
+// TODO: 나가리 구현, 나가리가 되면 그 다음판은 2배가 된다.
 int isNagari() {
-    // 아무도 3점 이상을 내지 못한 경우 나가리라고 한다. 누가 고를 했으나 추가 점수가 나지 않고 상대도 3점 이상을 획득 하지 못한 경우도 나가리에 속한다. 나가리가 되면 그 다음 판은 2배(*2)가 된다.( 돈계산.)
     int i, j;
+    int cnt;
     int turn = getTurn();
     int num_of_go = 0;
+
 	if(dummyCard == NULL) {
         // 아무도 3점 이상 내지 못했을 경우
-		if((players[0].score < 3) && (players[1].score < 3) && (players[2].score < 3)) {
+		if((getScore(0) < 3) && (getScore(1) < 3) && (getScore(2) < 3)) {
             return 1;
 		}
     
         // 고를 했으나 추가 점수가 나지 않고 상대도 3점 이상을 획득하지 못한 경우
         for(i=0; i < MAX_NUMBER_OF_PLAYER; ++i) {
-            int cnt = 0;
-
+            cnt = 0;
             num_of_go = players[i].rules->go;
+
+            if(players[i].score < players[i].addtional_score + 1) {
+                for(j=0; j < MAX_NUMBER_OF_PLAYER; ++j) {
+                    if(i == j) {
+                        continue;
+                    }
+
+                    if(getScore(j) < 3) {
+                        cnt++;
+                    }
+                }
+
+                if(cnt == 2) {
+                    return 1;
+                }
+            }
         }
 	}
+
+    return 0;
 }
 
 
@@ -197,6 +220,7 @@ void getPi(int turn) {
 
 
 int isGobak(int turn) {
-
-
+     
+    
+    return -1;
 }

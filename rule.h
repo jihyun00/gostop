@@ -17,7 +17,7 @@ void setSulsa();
 int getSulsa();
 int isClearBoard();
 void setClearBoard();
-void setGo();
+int setGo();
 void setStop();
 void setChongtong(int index);
 int isNagari();
