@@ -85,34 +85,43 @@ void setClearBoard(){
 }
 
 
-// TODO: 이건 1고 일 때만 해당됨;
 void setGo(){ 
     int turn = getTurn();
     char status[10];
 
-	if(players[turn].score>=3){
-		//if()플레이어가 고를 한다고 눌렀을 때 (키);를 조건문으로 두기;
-        printf("Go하시겠습니까? Stop하시겠습니까?"); 
-
-        scanf("%s", status);
-
-        if((strcmp(status, "go") == 0) || (strcmp(status, "g") == 0)) {
-            players[turn].rules->go += 1;
-            
-        } else if((strcmp(status, "stop") == 0) || (strcmp(status, "s") == 0)) {
-            setStop();
-
-        } else {
-            // TODO: Error Handling
-            printf("Invalid command\n");
+    if(players[turn].rules->go == 0) {
+        if(players[turn].score < 3){
+            return; 
         }
-	}
+
+    } else {
+        /*if(players[turn].score ) { // TODO: 이전과 비교했을 때 2점 점수 증가 못했을 때
+            return;
+        }*/
+    }
+
+    printf("Go하시겠습니까? Stop하시겠습니까?"); 
+
+    scanf("%s", status);
+
+    if((strcmp(status, "go") == 0) || (strcmp(status, "g") == 0)) {
+        players[turn].rules->go += 1;
+        players[turn].score += 1;
+        
+    } else if((strcmp(status, "stop") == 0) || (strcmp(status, "s") == 0)) {
+        setStop();
+
+    } else {
+        // TODO: Error Handling
+        printf("Invalid command\n");
+    }
 }
 
 
-// TODO: setStop 구현
+// TODO: setStop 구현, 이전 정보 필요한 것들 존재
 void setStop() {
     printf("STOP 합니다, 게임을 종료합니다.\n");
+
     exit(0);
 }
 
@@ -160,7 +169,6 @@ int isNagari() {
 }
 
 
-// TODO: 점수 변동있을 수 있으므로, 재계산 필요
 void getPi(int turn) {
     int i;
 
@@ -184,4 +192,10 @@ void getPi(int turn) {
             head = head->next;
         }
     }
+}
+
+
+int isGobak(int turn) {
+
+
 }

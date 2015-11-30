@@ -8,6 +8,7 @@ void setPlayerInfo() {
         players[i].played = 0;
         players[i].money = 100000;
         players[i].turn = GAME_TURN_NOT_NOW;
+        players[i].addtional_score = 0;
 
 		players[i].id = i;
 
