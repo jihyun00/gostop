@@ -264,6 +264,13 @@ void cardDelete(card *card_list, int data) {
 
     //첫 번째 카드 지우기
     if(head != NULL && head->data == data) { 
+        if(getCardSize(head) == 1) {
+            head->data = -1;
+            head->next = NULL;
+
+            return;
+        }
+
         for(i=0; i < size-1; ++i) {
            head->data = head->next->data; 
            prev = head;

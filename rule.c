@@ -18,27 +18,28 @@ void initializeRule(int index) {
 
 void setShake(int index) {
 	card *head = NULL;
-	int j;
-	int c;
-    int turn = getTurn();
-		
-	for(j=0; j<12; j++){ // player가 든 패만큼 반복문 반복  
-		c = 0;
-		head = players[index].holding_card;
-    	if(head != NULL) {
-    		if((head->data/4)==j){ 
-				c++;
-			}
+	int c = 1;
+    int prev;
 
-	        head = head->next;
-	    }
-		
-		if(c==3){
+    head = players[index].holding_card;
+    prev = head->data/4;
+    while(head->next != NULL) {
+        if(prev == head->next->data/4) {
+            c++;
+
+        } else {
+            c = 1;
+        }
+
+        if(c==3){
             players[index].rules->shake += 1;
 
             break;
-		}
-	}
+        }
+
+        prev = head->next->data/4;
+        head = head->next;
+    }
 }
 
 
@@ -129,22 +130,28 @@ void setStop() {
 
 void setChongtong(int index) {
 	card *head = NULL;
-	int j,k;
-	int c;
-	for(j=0;j<12;j++){ // player가 든 패만큼 반복문 반복 
-		c=0;
-		head = players[index].holding_card;
-    	if(head != NULL) {
-    		if((head->data/4)==j){
-				c++;
-			}
+	int c = 1;
+    int prev;
 
-	        head = head->next;
-	    }
-		if(c==4) break;
-	}
+	head = players[index].holding_card;
+    prev = head->data/4;
+    while(head->next != NULL) {
+        if(prev == head->next->data/4) {
+            c++;
 
-    players[index].rules->chongtong += 1;
+        } else {
+            c = 1;
+        }
+
+        if(c==4){
+            players[index].rules->chongtong += 1;
+
+            break;
+        }
+
+        prev = head->next->data/4;
+        head = head->next;
+    }
 }
 
 
