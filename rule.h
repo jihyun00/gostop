@@ -19,9 +19,6 @@ void setClearBoard();
 void setGo();
 void setChongtong();
 void setNagari();
-//void givecard(player *players, int i);
-//void thadak(player *players, card *dummyCard, int i);
-//void doublepae(player *players, player *players, int i);
-//void getSulsa(player *players, card *blanketCard, rule *rules, int i);
+void getPi(int turn);
 
 #endif

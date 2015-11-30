@@ -367,12 +367,22 @@ void putCard(int num) {
     cardDelete(holding, index);
 
     if(hasPair > 0) {
-        if((selected_data/4) == (index/4)) { // 설사
-            cardInsert(blanketCard, index);
-            cardInsert(blanketCard, res[0]);
-            cardInsert(blanketCard, selected_data);
+        if((selected_data/4) == (index/4)) { 
+            if(hasPair > 1) { // 따닥
+                cardInsert(eating, index);
+                cardInsert(eating, res[0]);
+                cardInsert(eating, res[1]);
+                cardInsert(eating, selected_data);
 
-            setSulsa();
+                getPi(turn);
+
+            } else { // 설사
+                cardInsert(blanketCard, index);
+                cardInsert(blanketCard, res[0]);
+                cardInsert(blanketCard, selected_data);
+
+                setSulsa();
+            }
 
         } else {
             cardInsert(eating, index);
