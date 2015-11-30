@@ -1,5 +1,6 @@
 ﻿#include "card.h"
 #include "player.h"
+#include "rule.h"
 #include <string.h>
 
 const char cardMatrix[CardMAX][10] = {
@@ -100,6 +101,12 @@ void divideCard(card *card_list, card *players_card) {
 
     orderCard(&players_card[2]);
     players[2].holding_card = &players_card[2];
+
+    // 흔들기 처리
+    for(i=0; i < MAX_NUMBER_OF_PLAYER; ++i) {
+        setShake(i);  
+    }
+
     
     head = blanketCard;
     for(i=21; i < 27; ++i) {

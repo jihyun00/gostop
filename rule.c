@@ -13,15 +13,15 @@ void initializeRule(int index) {
 }
 
 
-void setShake() {
+void setShake(int index) {
 	card *head = NULL;
-	int j,k;
+	int j;
 	int c;
     int turn = getTurn();
 		
 	for(j=0; j<12; j++){ // player가 든 패만큼 반복문 반복  
 		c = 0;
-		head = players[turn].holding_card;
+		head = players[index].holding_card;
     	if(head != NULL) {
     		if((head->data/4)==j){ 
 				c++;
@@ -31,8 +31,9 @@ void setShake() {
 	    }
 		
 		if(c==3){
-            players[turn].rules->shake += 1;
-			break;
+            players[index].rules->shake += 1;
+
+            break;
 		}
 	}
 }

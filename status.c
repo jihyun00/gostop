@@ -218,6 +218,12 @@ void drawScreen() {
 
     card *head = NULL;
 
+    if(getTurn() == 0) {
+        printf("*");
+    }
+    if(players[0].rules->shake > 0) {
+        printf("(흔듦)");    
+    }
     printf("A   : 패) ");
     head = players[0].holding_card;
     while(head != NULL) {
@@ -233,6 +239,12 @@ void drawScreen() {
     }
     printf("\n");
 
+    if(getTurn() == 1) {
+        printf("*");
+    }
+    if(players[1].rules->shake > 0) {
+        printf("(흔듦)");    
+    }
     printf("B   : 패) ");
     head = players[1].holding_card;
     while(head != NULL) {
@@ -248,6 +260,12 @@ void drawScreen() {
     }
     printf("\n");
 
+    if(getTurn() == 2) {
+        printf("*");
+    }
+    if(players[2].rules->shake > 0) {
+        printf("(흔듦)");    
+    }
     printf("C   : 패) ");
     head = players[2].holding_card;
     while(head != NULL) {
@@ -281,7 +299,7 @@ void drawInterface(char *command) {
     // 숫자일 경우
     if(isdigit(command[0])) {
         int num;
-        int turn;
+        int turn = getTurn();
 
         num = atoi(command);
 
@@ -290,7 +308,7 @@ void drawInterface(char *command) {
                 printf("9십을 십으로 이동합니다(default : 십->피)\n");
 
             } else {
-                printf("%d번째 턴이고, %d 번째 카드를 선택하셨습니다\n",turn, num);
+                printf("%d번째 턴이고, %d 번째 카드를 선택하셨습니다\n", turn, num);
             }
                 
             turn = getTurn();
