@@ -9,6 +9,8 @@ int main(void) {
 
     while(1) {
         drawScreen();
+
+        setTurn(); 
     }
 
     return 0;

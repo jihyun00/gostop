@@ -49,11 +49,11 @@ int getSulsa() {
     int i;
     for(i=0; i < MAX_NUMBER_OF_PLAYER; ++i) {
         if(players[i].rules->sulsa == 1) {
-            return 1;
+            return i;
         }
     }
 
-    return 0;
+    return -1;
 }
 
 

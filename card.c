@@ -388,10 +388,12 @@ void putCard(int num) {
             cardInsert(eating, index);
 
             if(hasPair > 1) {
-                if(hasPair > 2 && (getSulsa() == 1)) { // 싼 거 먹기
+                if(hasPair > 2 && (getSulsa() > -1)) { // 싼 거 먹기
                     cardInsert(eating, res[0]); 
                     cardInsert(eating, res[1]); 
                     cardInsert(eating, selected_data);
+
+                    players[getSulsa()].rules->sulsa = 0;
 
                     getPi(turn);
 
