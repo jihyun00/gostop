@@ -10,13 +10,11 @@
 // TODO: FIX
 // player 구조체에 점수 세팅
 void setScore(int playerId) {
-	player* tmp = NULL;
 
-	tmp = (player*)malloc(sizeof(player));
-	tmp->score = 0;
+	int tmp_score = 0;
 
 	int i = 0;
-    int j;
+    	int j = 0;
 
 	int gwang = 0, bigwang = 0, pi = 0, ssangpi = 0, 
 		oh = 0, chodan = 0, hongdan = 0, chungdan = 0,
@@ -85,54 +83,54 @@ void setScore(int playerId) {
     }
 
 	if(pi >= 10) {
-		tmp->score = tmp->score + pi-9;
+		tmp_score = tmp_score + pi-9;
     }
 
 	if(gwang == 3) {
-		tmp->score = tmp->score + 3;
+		tmp_score = tmp_score + 3;
 	}
 
 	if((gwang == 3) && (bigwang ==1)) {
-	    tmp->score = tmp->score - 1;
+	    tmp_score = tmp_score - 1;
     }
 
 	if(gwang == 4) {
-		tmp->score = tmp->score + 1;
+		tmp_score = tmp_score + 1;
     }
 
 	if((gwang == 4) && (bigwang == 1)) {
-		tmp->score = tmp->score + 1;
+		tmp_score = tmp_score + 1;
     }
 
 	if(gwang == 5) {
-		tmp->score = tmp->score + 11;
+		tmp_score = tmp_score + 11;
     }
 
 	if(oh >= 5) {
-		tmp->score = tmp->score + oh-4;
+		tmp_score = tmp_score + oh-4;
     }
 
 	if(hongdan == 3) {
-		tmp->score = tmp->score + 3;
+		tmp_score = tmp_score + 3;
     }
 
 	if(chodan == 3) {
-		tmp->score = tmp->score + 3;
+		tmp_score = tmp_score + 3;
     }
 
 	if(chungdan == 3) {
-		tmp->score = tmp->score + 3;
+		tmp_score = tmp_score + 3;
     }
 
 	if(sip >= 5) {
-		tmp->score = tmp->score + sip-4;
+		tmp_score = tmp_score + sip-4;
     }
 
 	if(godori == 3) {
-		tmp->score = tmp->score + 5;
+		tmp_score = tmp_score + 5;
     }
 
-    players[playerId].score = tmp->score;
+    players[playerId].score = tmp_score;
 }
 
 
