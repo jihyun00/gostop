@@ -45,6 +45,18 @@ void setSulsa() {
 }
 
 
+int getSulsa() {
+    int i;
+    for(i=0; i < MAX_NUMBER_OF_PLAYER; ++i) {
+        if(players[i].rules->sulsa == 1) {
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+
 // 판 쓰리 체크
 int isClearBoard() {
     if(getCardSize(blanketCard) == 0) {

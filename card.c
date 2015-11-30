@@ -388,20 +388,29 @@ void putCard(int num) {
             cardInsert(eating, index);
 
             if(hasPair > 1) {
-                printf("짝이 맞는 두 개의 카드 중 어느 카드를 고르시겠습니까? (1, 2 중 하나 입력)\n");
-                for(i=0; i < hasPair; ++i) {
-                    printf("%s ", cardMatrix[res[i]]); 
-                }
-                printf("\n");
-
-                scanf("%d", &dummySelected);
-
-                if(dummySelected == 1) {
-                    cardDelete(blanketCard, res[0]);
+                if(hasPair > 2 && (getSulsa() == 1)) { // 싼 거 먹기
                     cardInsert(eating, res[0]); 
+                    cardInsert(eating, res[1]); 
+                    cardInsert(eating, selected_data);
+
+                    getPi(turn);
+
                 } else {
-                    cardDelete(blanketCard, res[1]);
-                    cardInsert(eating, res[1]);
+                    printf("짝이 맞는 두 개의 카드 중 어느 카드를 고르시겠습니까? (1, 2 중 하나 입력)\n");
+                    for(i=0; i < hasPair; ++i) {
+                        printf("%s ", cardMatrix[res[i]]); 
+                    }
+                    printf("\n");
+
+                    scanf("%d", &dummySelected);
+
+                    if(dummySelected == 1) {
+                        cardDelete(blanketCard, res[0]);
+                        cardInsert(eating, res[0]); 
+                    } else {
+                        cardDelete(blanketCard, res[1]);
+                        cardInsert(eating, res[1]);
+                    }
                 }
 
             } else {

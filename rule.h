@@ -14,6 +14,7 @@ typedef struct _rule{
 void initializeRule(int index);
 void setShake();
 void setSulsa();
+int getSulsa();
 int isClearBoard();
 void setClearBoard();
 void setGo();
