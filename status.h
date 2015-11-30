@@ -16,6 +16,7 @@ typedef enum _game_player_status {
 
 } game_player_status;
 
+int nagari;
 
 typedef struct _game_player_card_status {
 	int oh;

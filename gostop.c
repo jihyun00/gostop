@@ -17,6 +17,8 @@ int main(void) {
 
         setTurn(); 
         setGo();
+
+        isNagari();
     }
 
     return 0;
