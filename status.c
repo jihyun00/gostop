@@ -20,58 +20,58 @@ void setScore(int playerId) {
 		oh = 0, chodan = 0, hongdan = 0, chungdan = 0,
 		sip = 0, gukjin = 0, godori = 0;
 
-    card *eating = NULL;
+    card eating;
 
-    eating = players[playerId].eating_card;
+    eating.next = players[playerId].eating_card;
 
-	for(i=0 ; eating->next != NULL ; i++) {
-	    if((((eating->next->data)%4 == 2) || ((eating->next->data)%4 == 3)) && (((eating->next->data) != 46) || ((eating->next->data) != 47))) {
+	for(i=0 ; eating.next->next != NULL ; i++) {
+	    if((((eating.next->next->data)%4 == 2) || ((eating.next->next->data)%4 == 3)) && (((eating.next->next->data) != 46) || ((eating.next->next->data) != 47))) {
 			pi++;
         }
         
-		if(((eating->next->data) == 41) || ((eating->next->data) == 47)) {
+		if(((eating.next->next->data) == 41) || ((eating.next->next->data) == 47)) {
 		    ssangpi++;
         }
 
-		if(((eating->next->data) == 0) || ((eating->next->data) == 8) || ((eating->next->data)==28) || ((eating->next->data)==40)) {
+		if(((eating.next->next->data) == 0) || ((eating.next->next->data) == 8) || ((eating.next->next->data)==28) || ((eating.next->next->data)==40)) {
 			gwang++;
         }
 
-		if((eating->next->data) == 44){
+		if((eating.next->next->data) == 44){
 			gwang++, bigwang++;}
 
 
-		if((((eating->next->data)%4 == 1) && (((eating->next->data) != 29) || ((eating->next->data)!=41) || ((eating->next->data) != 45))) ||(eating->next->data == 46)) {
+		if((((eating.next->next->data)%4 == 1) && (((eating.next->next->data) != 29) || ((eating.next->next->data)!=41) || ((eating.next->next->data) != 45))) ||(eating.next->next->data == 46)) {
 		    oh++;
         }
 
-		if(((eating->next->data) == 1) || ((eating->next->data) == 5) || ((eating->next->data)==9)) {
+		if(((eating.next->next->data) == 1) || ((eating.next->next->data) == 5) || ((eating.next->next->data)==9)) {
 			hongdan++;
         }
 
-		if(((eating->next->data) == 13) || ((eating->next->data) == 17) || ((eating->next->data) == 23)) {
+		if(((eating.next->next->data) == 13) || ((eating.next->next->data) == 17) || ((eating.next->next->data) == 23)) {
 			chodan++;
         }
 
-		if(((eating->next->data) == 21) || ((eating->next->data) == 33) || ((eating->next->data)==37)) {
+		if(((eating.next->next->data) == 21) || ((eating.next->next->data) == 33) || ((eating.next->next->data)==37)) {
 			chungdan++;
         }
 
         // 구십(32)가 십으로 쓰일 때
-		if(((eating->next->data) == 4) || ((eating->next->data) == 12) || ((eating->next->data) == 16) || ((eating->next->data) == 20) || ((eating->next->data) == 24) || ((eating->next->data) == 29) || ((eating->next->data) == 36) || ((eating->next->data) == 45) || (((eating->next->data) == 32) && gusip == 1)) {
+		if(((eating.next->next->data) == 4) || ((eating.next->next->data) == 12) || ((eating.next->next->data) == 16) || ((eating.next->next->data) == 20) || ((eating.next->next->data) == 24) || ((eating.next->next->data) == 29) || ((eating.next->next->data) == 36) || ((eating.next->next->data) == 45) || (((eating.next->next->data) == 32) && gusip == 1)) {
 			sip++;
         } 
 
-		if(((eating->next->data) == 4) || ((eating->next->data) == 12)|| ((eating->next->data) == 33)) {
+		if(((eating.next->next->data) == 4) || ((eating.next->next->data) == 12)|| ((eating.next->next->data) == 33)) {
 			godori++;
         }
 
         // 구십(32)가 피로 쓰였을 때
-		if((eating->next->data) == 32) {
+		if((eating.next->next->data) == 32) {
 			pi=pi+2;
         } 
 
-	    eating->next = eating->next->next;
+	    eating.next = eating.next->next;
     }
 
 	if(ssangpi == 1) {
