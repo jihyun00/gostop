@@ -124,7 +124,7 @@ int setGo(){
 void setStop() {
     printf("STOP 합니다, 게임을 종료합니다.\n");
     
-    exit(0);
+    gameEnd(); 
 }
 
 
@@ -165,8 +165,9 @@ void isNagari() {
         // 아무도 3점 이상 내지 못했을 경우
 		if((getScore(0) < 3) && (getScore(1) < 3) && (getScore(2) < 3)) {
             nagari = 1;
+            printf("이번 판은 나가리~\n");
 
-            return;
+            exit(0);
 		}
     
         // 고를 했으나 추가 점수가 나지 않고 상대도 3점 이상을 획득하지 못한 경우
@@ -188,10 +189,14 @@ void isNagari() {
                 if(cnt == 2) {
                     nagari = 1;
 
-                    return;
+                    printf("이번 판은 나가리~\n");
+
+                    exit(0);
                 }
             }
         }
+
+        gameEnd();
 	}
 
     return;
@@ -228,4 +233,11 @@ int isGobak(int turn) {
          
     
     return -1;
+}
+
+
+void gameEnd() {
+    printf("게임 종료되었습니다. 승자는 %d\n", setWinner()->id);
+
+    exit(0);
 }
