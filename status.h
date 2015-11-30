@@ -17,10 +17,18 @@ typedef enum _game_player_status {
 } game_player_status;
 
 
-void setScore(int playerId);
+typedef struct _game_player_card_status {
+	int oh;
+	int sip;
+	int pi;
+	int gwang;
+} P_C_S;
+
+
+P_C_S setScore(int playerId);
 int getScore(int playerId);
 void setMoney(player *playerId);
-int getMoney(player *playerId);
+int getMoney(int playerId);
 player* setWinner();
 void drawScreen(); // status 변할 때마다 화면에 값 그려주기
                    // 플레이어 차례, 점수, 갖고 있는 패 등 그려주기

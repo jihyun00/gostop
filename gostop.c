@@ -11,9 +11,9 @@ int main(void) {
     while(1) {
         drawScreen();
 
-        /*for(i=0; i < MAX_NUMBER_OF_PLAYER; ++i) {
+        for(i=0; i < MAX_NUMBER_OF_PLAYER; ++i) {
             setScore(i);
-        }*/
+        }
 
         setTurn(); 
         setGo();
