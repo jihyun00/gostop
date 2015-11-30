@@ -313,12 +313,7 @@ void drawInterface(char *command) {
                 
             turn = getTurn();
             putCard(num);
-
-        } else {
-            // TODO: Error Hanlding
-            printf("Invalid command\n");
         }
-        
         
     } else { // 문자일 경우
         if((strcmp(command, "e") == 0) || (strcmp(command, "exit") == 0)) {
@@ -353,12 +348,11 @@ void drawInterface(char *command) {
             printf("게임을 로드합니다.\n");
 
             load();
-
-        } else {
-            // TODO : Error Handling
-            printf("Invalid command\n");
         }
 
+        scanf("%s", command);
+
+        drawInterface(command);
     }
 }
 
