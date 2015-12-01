@@ -76,7 +76,7 @@ void setClearBoard(){
     int i;
     int turn = getTurn();
 
-	if(blanketCard == NULL) {
+	if(blanketCard->data == -1 && getCardSize(blanketCard) == 1) {
         players[turn].rules->clear_board = 1;
 	}
 	else {
@@ -102,7 +102,7 @@ int setGo(){
         }
     }
 
-    printf("Go하시겠습니까? Stop하시겠습니까?"); 
+    printf("Go하시겠습니까? Stop하시겠습니까? (g, s)"); 
 
     scanf("%s", status);
 

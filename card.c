@@ -218,7 +218,12 @@ void cardInsert(card *card_list, int data) {
     card *target = (card *)malloc(sizeof(card));
     target->data = data;
     target->next = NULL;
-    
+
+    // holding card가 0인 상태일 때
+    if(data == -1) {
+        return;
+    }
+
     // 첫 번째 카드에 넣기 
     while(head != NULL) {
         if(head->data == -1) {
@@ -321,6 +326,12 @@ int* getSame(card *card_list, int data, int *size) {
     memset(res, -1, sizeof(int)*3); // res 초기화
 
     if(head == NULL) {
+        return res;
+    }
+
+    if(data == -1) {
+        *size = 0;
+
         return res;
     }
 
