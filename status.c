@@ -435,6 +435,8 @@ void drawInterface(char *command) {
 
             load();
 
+            drawScreen(); 
+
         } else {
             printf("유효하지 않은 명령어입니다.\n");
 
@@ -612,6 +614,8 @@ void load() {
     FILE *fp;
     fp = fopen("save.txt", "r");
     char line[512];
+    card *dummy = (card *)malloc(sizeof(card)*CardMAX); 
+    card *blanket = (card *)malloc(sizeof(card)*CardMAX); 
     card *head = (card *)malloc(sizeof(card)*CardMAX); 
     int i = 0;
     int j;
@@ -624,35 +628,34 @@ void load() {
 
     while(fgets(line, 512, fp) != NULL) {
         if(strstr(line, "dummyCard :")) {
-            sscanf(line, "dummyCard: %d", &head[i++].data);
+            sscanf(line, "dummyCard: %d", &dummy[i++].data);
 
+            printf("633\n");
             while(line[0] == '\n') {
-                sscanf(line, " %d", &head[i++].data);
+                printf("634\n");
+                sscanf(line, " %d", &dummy[i++].data);
             }
 
             for(j=0; j < i; ++j) {
-                head[j].next = &head[j+1];
+                dummy[j].next = &dummy[j+1];
             }
 
             dummyCard = &head[0];
             i = 0;
         }
 
-        free(head);
-        head = (card *)malloc(sizeof(card)*CardMAX); 
-        
         if(strstr(line, "blanketCard :")) {
-            sscanf(line, "blanketCard: %d", &head[i++].data);
+            sscanf(line, "blanketCard: %d", &blanket[i++].data);
 
             while(line[0] == '\n') {
-                sscanf(line, " %d", &head[i++].data);
+                sscanf(line, " %d", &blanket[i++].data);
             }
 
             for(j=0; j < i; ++j) {
-                head[j].next = &head[j+1];
+                blanket[j].next = &blanket[j+1];
             }
 
-            blanketCard = &head[0];
+            blanketCard = &blanket[0];
             i = 0;
         }
         if(strstr(line, "player1 id :")) {
@@ -667,9 +670,6 @@ void load() {
         if(strstr(line, "player1 turn :")) {
             sscanf(line, "player1 turn : %d", &players[0].turn);
         }
-
-        free(head);
-        head = (card *)malloc(sizeof(card)*CardMAX); 
 
         if(strstr(line, "players1 holding card :")) {
             sscanf(line, "players1 holding card : %d", &head[i++].data);
@@ -686,9 +686,6 @@ void load() {
             i = 0;
         }
         
-        free(head);
-        head = (card *)malloc(sizeof(card)*CardMAX); 
-
         if(strstr(line, "players1 eating card :")) {
             sscanf(line, "players1 eating card : %d", &head[i++].data);
 
@@ -724,9 +721,6 @@ void load() {
             sscanf(line, "player2 turn : %d", &players[1].turn);
         }
 
-        free(head);
-        head = (card *)malloc(sizeof(card)*CardMAX); 
-
         if(strstr(line, "players2 holding card :")) {
             sscanf(line, "players2 holding card : %d", &head[i++].data);
 
@@ -741,9 +735,6 @@ void load() {
             players[1].holding_card = &head[0];
             i = 0;
         }
-
-        free(head);
-        head = (card *)malloc(sizeof(card)*CardMAX); 
 
         if(strstr(line, "players2 eating card :")) {
             sscanf(line, "players2 eating card : %d", &head[i++].data);
@@ -780,9 +771,6 @@ void load() {
             sscanf(line, "player3 turn : %d", &players[2].turn);
         }
 
-        free(head);
-        head = (card *)malloc(sizeof(card)*CardMAX); 
-
         if(strstr(line, "players3 holding card :")) {
             sscanf(line, "players3 holding card : %d", &head[i++].data);
 
@@ -797,9 +785,6 @@ void load() {
             players[2].holding_card = &head[0];
             i = 0;
         }
-
-        free(head);
-        head = (card *)malloc(sizeof(card)*CardMAX); 
 
         if(strstr(line, "players3 eating card :")) {
             sscanf(line, "players3 eating card : %d", &head[i++].data);
