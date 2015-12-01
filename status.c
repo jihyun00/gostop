@@ -230,7 +230,7 @@ void setMoney(int playerId ) {
 
          if((players[(tmp->id)].rules->shake)==1)
           j=j*2;
-         if((players[(tmp-.id)].rules->shake)==2)
+         if((players[(tmp->id)].rules->shake)==2)
           j=j*4;
 
             tmp->money = (tmp->money) + (tmp->score)*100*j;
