@@ -19,7 +19,7 @@ void setScore(int playerId) {
 	int i = 0;
     	int j = 0;
 
-	int gwang = 0, bigwang = 0, pi = 0, ssangpi = 0, 
+	int gwang = 0, bigwang = 0, pi = 0, ssangpi = 0,     
 		oh = 0, chodan = 0, hongdan = 0, chungdan = 0,
 		sip = 0, gukjin = 0, godori = 0;
 
@@ -28,7 +28,7 @@ void setScore(int playerId) {
     eating.next = players[playerId].eating_card;
 
 	for(i=0 ; eating.next->next != NULL ; i++) {
-	    if((((eating.next->next->data)%4 == 2) || ((eating.next->next->data)%4 == 3)) && (((eating.next->next->data) != 46) || ((eating.next->next->data) != 47))) {
+	    if((((eating.next->next->data)%4 == 2) || ((eating.next->next->data)%4 == 3)) && (((eating.next->next->data) != 46) && ((eating.next->next->data) != 47))) {
 			pi++;
         }
         
@@ -44,7 +44,7 @@ void setScore(int playerId) {
 			gwang++, bigwang++;}
 
 
-		if((((eating.next->next->data)%4 == 1) && (((eating.next->next->data) != 29) || ((eating.next->next->data)!=41) || ((eating.next->next->data) != 45))) ||(eating.next->next->data == 46)) {
+		if((((eating.next->next->data)%4 == 1) && (((eating.next->next->data) != 29) && ((eating.next->next->data)!=41) && ((eating.next->next->data) != 45))) ||(eating.next->next->data == 46)) {
 		    oh++;
         }
 
@@ -133,14 +133,36 @@ void setScore(int playerId) {
 		tmp_score = tmp_score + 5;
     }
 
+    if((players[playerId].rules->chongtong)==1)
+    tmp_score = tmp_score+3;
+    
+
+    tmp_score = tmp_score + (players[playerId].rules->go); 
+
+
+    if((players[playerId].rules->shake)==1)
+    tmp_score = tmp_score*2;
+    if((players[playerId].rules->shake)==2)
+    tmp_score = tmp_score*4;
+    
+    if((players[playerId].rules->go)==3)
+    tmp_score = tmp_score*2;
+    
+    if((players[playerId].rules->go)==4)
+    tmp_score = tmp_score*4;
+
+    if((players[playerId].rules->go)==5)
+    tmp_score = tmp_score*8;
+    
+
     players[playerId].score = tmp_score;
 
     return_tmp.pi = pi;
     return_tmp.oh = oh;
     return_tmp.sip = sip;
     return_tmp.gwang = gwang;
-
-   // return return_tmp;
+    PlayerStat[playerId]=return_tmp; 
+    
 
     
 }
@@ -154,145 +176,12 @@ int getScore(int playerId) {
     return score;
 }
 
-P_C_S setscore2(int playerId) {
-
-	int tmp_score = 0;
-	
-	P_C_S return_tmp;
 
 
-	int i = 0;
-    	int j = 0;
-
-	int gwang = 0, bigwang = 0, pi = 0, ssangpi = 0, 
-		oh = 0, chodan = 0, hongdan = 0, chungdan = 0,
-		sip = 0, gukjin = 0, godori = 0;
-
-    card eating;
-
-    eating.next = players[playerId].eating_card;
-
-	for(i=0 ; eating.next->next != NULL ; i++) {
-	    if((((eating.next->next->data)%4 == 2) || ((eating.next->next->data)%4 == 3)) && (((eating.next->next->data) != 46) || ((eating.next->next->data) != 47))) {
-			pi++;
-        }
-        
-		if(((eating.next->next->data) == 41) || ((eating.next->next->data) == 47)) {
-		    ssangpi++;
-        }
-
-		if(((eating.next->next->data) == 0) || ((eating.next->next->data) == 8) || ((eating.next->next->data)==28) || ((eating.next->next->data)==40)) {
-			gwang++;
-        }
-
-		if((eating.next->next->data) == 44){
-			gwang++, bigwang++;}
-
-
-		if((((eating.next->next->data)%4 == 1) && (((eating.next->next->data) != 29) || ((eating.next->next->data)!=41) || ((eating.next->next->data) != 45))) ||(eating.next->next->data == 46)) {
-		    oh++;
-        }
-
-		if(((eating.next->next->data) == 1) || ((eating.next->next->data) == 5) || ((eating.next->next->data)==9)) {
-			hongdan++;
-        }
-
-		if(((eating.next->next->data) == 13) || ((eating.next->next->data) == 17) || ((eating.next->next->data) == 23)) {
-			chodan++;
-        }
-
-		if(((eating.next->next->data) == 21) || ((eating.next->next->data) == 33) || ((eating.next->next->data)==37)) {
-			chungdan++;
-        }
-
-        // 구십(32)가 십으로 쓰일 때
-		if(((eating.next->next->data) == 4) || ((eating.next->next->data) == 12) || ((eating.next->next->data) == 16) || ((eating.next->next->data) == 20) || ((eating.next->next->data) == 24) || ((eating.next->next->data) == 29) || ((eating.next->next->data) == 36) || ((eating.next->next->data) == 45) || (((eating.next->next->data) == 32) && gusip == 1)) {
-			sip++;
-        } 
-
-		if(((eating.next->next->data) == 4) || ((eating.next->next->data) == 12)|| ((eating.next->next->data) == 33)) {
-			godori++;
-        }
-
-        // 구십(32)가 피로 쓰였을 때
-		if((eating.next->next->data) == 32) {
-			pi=pi+2;
-        } 
-
-	    eating.next = eating.next->next;
-    }
-
-	if(ssangpi == 1) {
-		pi = pi+2;
-    }
-    
-	if(ssangpi == 2) {
-		pi = pi+4;
-    }
-
-	if(pi >= 10) {
-		tmp_score = tmp_score + pi-9;
-    }
-
-	if(gwang == 3) {
-		tmp_score = tmp_score + 3;
-	}
-
-	if((gwang == 3) && (bigwang ==1)) {
-	    tmp_score = tmp_score - 1;
-    }
-
-	if(gwang == 4) {
-		tmp_score = tmp_score + 1;
-    }
-
-	if((gwang == 4) && (bigwang == 1)) {
-		tmp_score = tmp_score + 1;
-    }
-
-	if(gwang == 5) {
-		tmp_score = tmp_score + 11;
-    }
-
-	if(oh >= 5) {
-		tmp_score = tmp_score + oh-4;
-    }
-
-	if(hongdan == 3) {
-		tmp_score = tmp_score + 3;
-    }
-
-	if(chodan == 3) {
-		tmp_score = tmp_score + 3;
-    }
-
-	if(chungdan == 3) {
-		tmp_score = tmp_score + 3;
-    }
-
-	if(sip >= 5) {
-		tmp_score = tmp_score + sip-4;
-    }
-
-	if(godori == 3) {
-		tmp_score = tmp_score + 5;
-    }
-
-    players[playerId].score = tmp_score;
-
-    return_tmp.pi = pi;
-    return_tmp.oh = oh;
-    return_tmp.sip = sip;
-    return_tmp.gwang = gwang;
-
-    return return_tmp;
-
-    
-}
-
-void setMoney(int playerId, P_C_S PlayerStatus[] ) {
+void setMoney(int playerId ) {
 	int i= 0;
 	int j =0;
+    int k = 0;
 
 	player* tmp=NULL;
 
@@ -305,32 +194,49 @@ void setMoney(int playerId, P_C_S PlayerStatus[] ) {
 		sip = 0, gukjin = 0, godori = 0;
 
 
-    //  TODO: 피박(해결), 광박(해결),  고박(진사람들 쪽을 조사해야함)- (4,5번할때) 
-    // 쓰리고, 포고, 흔들기,멍텅구리 (이와같은 것을 하고 이 긴사람 점수를 두배해주는 식으로 해결하면 됨)- (4,5번 할때)
+    //  TODO: 피박(해결), 광박(해결), 멍텅구리(해결),  고박(진사람들 쪽을 조사해야함)- (4,5번할때) 
+    // 쓰리고, 포고, 흔들기(이와같은 것을 하고 이 긴사람 점수를 두배해주는 식으로 해결하면 됨)- (4,5번 할때)
 	
 
 
-	if(players[playerId].id == tmp->id) {
-		players[playerId].money = players[playerId].money + (tmp->score)*100*2;
-	} else if(1){
+
+        if((tmp->id)!=playerId) {
+            j++;
+        }
 
 		
-        if((PlayerStatus[(tmp->id)].pi > 10) && (PlayerStatus[i].pi < 7)) {
-            players[playerId].money = players[playerId].money - (tmp->score)*100*2;       //피박문제 해결한줄. 
-            tmp->money = (tmp->money) + (tmp->score)*100;}				//피박문제 해결한줄.
+        if((PlayerStat[(tmp->id)].pi > 10) && (PlayerStat[playerId].pi < 7)) {
+            j=j*2;
+
+            //players[playerId].money = players[playerId].money - (tmp->score)*100*2;       //피박문제 해결한줄. 
+            //tmp->money = (tmp->money) + (tmp->score)*100;
+        }				
 
 	
-        if((PlayerStatus[(tmp->id)].gwang > 3) && (PlayerStatus[i].gwang < 1)) {
-            players[playerId].money = players[playerId].money - (tmp->score)*100*2;       //광박문제 해결한줄. 
-            tmp->money = (tmp->money) + (tmp->score)*100;}
+        if((PlayerStat[(tmp->id)].gwang > 3) && (PlayerStat[playerId].gwang < 1)) {
+           j=j*2;
+            //players[playerId].money = players[playerId].money - (tmp->score)*100*2;       //광박문제 해결한줄. 
+            //tmp->money = (tmp->money) + (tmp->score)*100;
+        }
 
-        if((PlayerStatus[(tmp->id)].gwang > 3) && (PlayerStatus[i].gwang < 1) 
-        && (PlayerStatus[(tmp->id)].pi > 10) && (PlayerStatus[i].pi < 7)) {
-            tmp->money = (tmp->money) + (tmp->score)*100;}
-	}
+        //if((PlayerStat[(tmp->id)].gwang > 3) && (PlayerStat[playerId].gwang < 1)  
+        //&& (PlayerStat[(tmp->id)].pi > 10) && (PlayerStat[playerId].pi < 7)) {                // 피박+광박 문제 해결.
+         //   tmp->money = (tmp->money) + (tmp->score)*100;
+       // }
 
-        else
-            players[playerId].money = players[playerId].money - (tmp->score)*100;
+        if(PlayerStat[(tmp->id)].sip > 7)  {
+            j=j*2;
+            //players[playerId].money = players[playerId].money - (tmp->score)*100*2;       //광박문제 해결한줄. 
+            //tmp->money = (tmp->money) + (tmp->score)*100;
+        }
+
+        k=isNagari();
+        if(k == 1){
+            j=j*2;}
+
+
+            tmp->money = (tmp->money) + (tmp->score)*100*j;
+        players[playerId].money = players[playerId].money - (tmp->score)*100*j;
     
 
 
