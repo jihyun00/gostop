@@ -139,12 +139,6 @@ void setScore(int playerId) {
 
     tmp_score = tmp_score + (players[playerId].rules->go); 
 
-
-    if((players[playerId].rules->shake)==1)
-    tmp_score = tmp_score*2;
-    if((players[playerId].rules->shake)==2)
-    tmp_score = tmp_score*4;
-    
     if((players[playerId].rules->go)==3)
     tmp_score = tmp_score*2;
     
@@ -194,8 +188,8 @@ void setMoney(int playerId ) {
 		sip = 0, gukjin = 0, godori = 0;
 
 
-    //  TODO: 피박(해결), 광박(해결), 멍텅구리(해결),  고박(진사람들 쪽을 조사해야함)- (4,5번할때) 
-    // 쓰리고, 포고, 흔들기(이와같은 것을 하고 이 긴사람 점수를 두배해주는 식으로 해결하면 됨)- (4,5번 할때)
+    //  TODO: 피박(해결), 광박(해결), 멍텅구리(해결), 흔들기(해결) 고박(진사람들 쪽을 조사해야함)- (4,5번할때) 
+    // 쓰리고(해결), 포고(해결), (이와같은 것을 하고 이 긴사람 점수를 두배해주는 식으로 해결하면 됨)- (4,5번 할때)
 	
 
 
@@ -234,6 +228,10 @@ void setMoney(int playerId ) {
         if(k == 1){
             j=j*2;}
 
+         if((players[(tmp->id)].rules->shake)==1)
+          j=j*2;
+         if((players[(tmp-.id)].rules->shake)==2)
+          j=j*4;
 
             tmp->money = (tmp->money) + (tmp->score)*100*j;
         players[playerId].money = players[playerId].money - (tmp->score)*100*j;

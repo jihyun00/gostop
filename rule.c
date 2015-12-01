@@ -152,7 +152,7 @@ void setChongtong(int index) {
 }
 
 
-void isNagari() {
+int isNagari() {
     int i, j;
     int cnt;
     int turn = getTurn();
@@ -196,7 +196,7 @@ void isNagari() {
         gameEnd();
 	}
 
-    return;
+    return nagari;
 }
 
 
