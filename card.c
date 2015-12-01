@@ -218,7 +218,12 @@ void cardInsert(card *card_list, int data) {
     card *target = (card *)malloc(sizeof(card));
     target->data = data;
     target->next = NULL;
-    
+
+    // holding card가 0인 상태일 때
+    if(data == -1) {
+        return;
+    }
+
     // 첫 번째 카드에 넣기 
     while(head != NULL) {
         if(head->data == -1) {
@@ -324,6 +329,12 @@ int* getSame(card *card_list, int data, int *size) {
         return res;
     }
 
+    if(data == -1) {
+        *size = 0;
+
+        return res;
+    }
+
     while(head != NULL) { // 노드가 끝일 때까지
         if((head->data/4) == data/4) {
             *size = *size+1;
@@ -415,6 +426,9 @@ void putCard(int num) {
                 } else {
                     printf("짝이 맞는 두 개의 카드 중 어느 카드를 고르시겠습니까? (1, 2 중 하나 입력)\n");
                     for(i=0; i < hasPair; ++i) {
+                        if(res[i] == -1) {
+                            continue;
+                        }
                         printf("%s ", cardMatrix[res[i]]); 
                     }
                     printf("\n");
@@ -443,7 +457,10 @@ void putCard(int num) {
                 if(hasDummyPair > 1) {
                     printf("짝이 맞는 두 개의 카드 중 어느 카드를 고르시겠습니까? (1, 2 중 하나 입력)\n");
                     for(i=0; i < hasDummyPair; ++i) {
-                        printf("%s ", cardMatrix[res[i]]); 
+                        if(dummyRes[i] == -1) {
+                            continue;
+                        }
+                        printf("%s ", cardMatrix[dummyRes[i]]); 
                     }
                     printf("\n");
 
@@ -478,6 +495,9 @@ void putCard(int num) {
             if(hasDummyPair > 1) {
                 printf("짝이 맞는 두 개의 카드 중 어느 카드를 고르시겠습니까? (1, 2 중 하나 입력)\n");
                 for(i=0; i < hasPair; ++i) {
+                    if(dummyRes[i] == -1) {
+                        continue;
+                    }
                     printf("%s ", cardMatrix[dummyRes[i]]); 
                 }
                 printf("\n");
@@ -507,8 +527,6 @@ void putCard(int num) {
         printf("%d 유저가 판 쓰리~ \n", turn);
 
         sleep(1);
-
-        setClearBoard();
     }
 }
 
