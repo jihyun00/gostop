@@ -335,14 +335,6 @@ int* getSame(card *card_list, int data, int *size) {
         return res;
     }
 
-    printf("card_list data : ");
-    card *test = card_list;
-    while(test != NULL) {
-        printf("%d ", test->data); 
-        test = test->next;
-    }
-    printf("\n");
-
     while(head != NULL) { // 노드가 끝일 때까지
         if((head->data/4) == data/4) {
             *size = *size+1;
