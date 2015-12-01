@@ -338,7 +338,18 @@ void drawInterface(char *command) {
                 printf("9십을 십으로 이동합니다(default : 십->피)\n");
 
             } else {
-                printf("%d번째 턴이고, %d 번째 카드를 선택하셨습니다\n", turn, num);
+                if(getCardSize(players[turn].holding_card) < num) {
+                    printf("갖고 있는 카드 수에서 벗어나는 값입니다.\n"); 
+                    printf("다시 입력해주세요.\n"); 
+                    printf("명령 : "); 
+
+                    scanf("%s", command);
+
+                    drawInterface(command);
+
+                } else {
+                    printf("%d번째 턴이고, %d 번째 카드를 선택하셨습니다\n", turn, num);
+                }
             }
                 
             turn = getTurn();
@@ -378,8 +389,13 @@ void drawInterface(char *command) {
             printf("게임을 로드합니다.\n");
 
             load();
+
+        } else {
+            printf("유효하지 않은 명령어입니다.\n");
+
         }
 
+        printf("명령 : "); 
         scanf("%s", command);
 
         drawInterface(command);
