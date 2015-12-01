@@ -369,7 +369,6 @@ void drawScreen() {
     drawInterface(command);
 }
 
-
 void drawInterface(char *command) {
     // 숫자일 경우
     if(isdigit(command[0])) {
@@ -427,24 +426,16 @@ void drawInterface(char *command) {
 
         } else if(strcmp(command, "save") == 0) {
                 printf("게임을 저장합니다.\n");
-
                 save();
-
         } else if(strcmp(command, "load") == 0) {
             printf("게임을 로드합니다.\n");
-
             load();
-
             drawScreen(); 
-
         } else {
             printf("유효하지 않은 명령어입니다.\n");
-
         }
-
         printf("명령 : "); 
         scanf("%s", command);
-
         drawInterface(command);
     }
 }
@@ -477,7 +468,7 @@ void save() {
     // dummyCard 정보 저장
     fprintf(fp, "dummyCard : ");
     while(head != NULL) {
-        fprintf(fp, "%d ", head->data); 
+        fprintf(fp, "%2d ", head->data); 
 
         head = head->next;
     }
@@ -488,16 +479,16 @@ void save() {
     // blanketCard 정보 저장
     fprintf(fp, "blanketCard : ");
     while(head != NULL) {
-        fprintf(fp, "%d ", head->data); 
+        fprintf(fp, "%2d ", head->data); 
 
         head = head->next;
     }
     fprintf(fp, "\n");
 
     // gusip 정보 저장
-    fprintf(fp, "gusip : %d", gusip);
+    fprintf(fp, "gusip : %d\n", gusip);
     // nagari 정보 저장
-    fprintf(fp, "nagari : %d", nagari);
+    fprintf(fp, "nagari : %d\n", nagari);
 
     // player들 정보 저장
     fprintf(fp, "player1 id : %d\n", players[0].id);    
@@ -510,8 +501,7 @@ void save() {
 
     fprintf(fp, "player1 holding card : ");
     while(head != NULL) {
-        fprintf(fp, "%d ", head->data);
-
+        fprintf(fp, "%2d ", head->data);
         head = head->next;
     }
     fprintf(fp, "\n");
@@ -520,12 +510,10 @@ void save() {
 
     fprintf(fp, "player1 eating card : ");
     while(head != NULL) {
-        fprintf(fp, "%d ", head->data);
-
+        fprintf(fp, "%2d ", head->data);
         head = head->next;
     }
     fprintf(fp, "\n");
-
     fprintf(fp, "player1 rule : ");
     fprintf(fp, "%d %d %d %d %d %d", players[0].rules->shake,
                                      players[0].rules->sulsa,
@@ -534,33 +522,26 @@ void save() {
                                      players[0].rules->go,
                                      players[0].rules->nagari);
     fprintf(fp, "\n");
-    
     fprintf(fp, "player2 id : %d\n", players[1].id);    
     fprintf(fp, "player2 score : %d\n", players[1].score); 
     fprintf(fp, "player2 played : %d\n", players[1].played);    
     fprintf(fp, "player2 money : %d\n", players[1].money);    
     fprintf(fp, "player2 turn : %d\n", players[1].turn);    
-    
     head = players[1].holding_card;
 
     fprintf(fp, "player2 holding card : ");
     while(head != NULL) {
-        fprintf(fp, "%d ", head->data);
-
+        fprintf(fp, "%2d ", head->data);
         head = head->next;
     }
     fprintf(fp, "\n");
-
     head = players[1].eating_card;
-
     fprintf(fp, "player2 eating card : ");
     while(head != NULL) {
-        fprintf(fp, "%d ", head->data);
-
+        fprintf(fp, "%2d ", head->data);
         head = head->next;
     }
     fprintf(fp, "\n");
-
     fprintf(fp, "player2 rule : ");
     fprintf(fp, "%d %d %d %d %d %d", players[1].rules->shake,
                                      players[1].rules->sulsa,
@@ -569,7 +550,6 @@ void save() {
                                      players[1].rules->go,
                                      players[1].rules->nagari);
     fprintf(fp, "\n");
-    
     fprintf(fp, "player3 id : %d\n", players[2].id);    
     fprintf(fp, "player3 score : %d\n", players[2].score); 
     fprintf(fp, "player3 played : %d\n", players[2].played);    
@@ -580,7 +560,7 @@ void save() {
 
     fprintf(fp, "player3 holding card : ");
     while(head != NULL) {
-        fprintf(fp, "%d ", head->data);
+        fprintf(fp, "%2d ", head->data);
 
         head = head->next;
     }
@@ -590,12 +570,11 @@ void save() {
 
     fprintf(fp, "player3 eating card : ");
     while(head != NULL) {
-        fprintf(fp, "%d ", head->data);
+        fprintf(fp, "%2d ", head->data);
 
         head = head->next;
     }
     fprintf(fp, "\n");
-
     fprintf(fp, "player3 rule : ");
     fprintf(fp, "%d %d %d %d %d %d", players[2].rules->shake,
                                      players[2].rules->sulsa,
@@ -604,9 +583,7 @@ void save() {
                                      players[2].rules->go,
                                      players[2].rules->nagari);
     fprintf(fp, "\n");
-
     fclose(fp);
-
 }
 
 
@@ -616,47 +593,56 @@ void load() {
     char line[512];
     card *dummy = (card *)malloc(sizeof(card)*CardMAX); 
     card *blanket = (card *)malloc(sizeof(card)*CardMAX); 
-    card *head = (card *)malloc(sizeof(card)*CardMAX); 
+    card *head = (card *)malloc(sizeof(card)*CardMAX); 	
+    card *headah = (card *)malloc(sizeof(card)*CardMAX);
+    card *headae = (card *)malloc(sizeof(card)*CardMAX);
+    card *headbh = (card *)malloc(sizeof(card)*CardMAX); 
+    card *headbe = (card *)malloc(sizeof(card)*CardMAX);
+    card *headch = (card *)malloc(sizeof(card)*CardMAX); 
+    card *headce = (card *)malloc(sizeof(card)*CardMAX);
+
     int i = 0;
     int j;
 
     if(fp == NULL) {
         fprintf(stderr, "파일 open을 실패하였습니다.\n");
-
         return;
     }
 
     while(fgets(line, 512, fp) != NULL) {
         if(strstr(line, "dummyCard :")) {
-            sscanf(line, "dummyCard: %d", &dummy[i++].data);
-
-            printf("633\n");
-            while(line[0] == '\n') {
-                printf("634\n");
-                sscanf(line, " %d", &dummy[i++].data);
+            while(line[9+3*i] != '\n') {
+                sscanf(line+9+i*3," %2d", &dummy[i++].data);
+		
             }
-
-            for(j=0; j < i; ++j) {
+            dummy[i-1].next=NULL;
+            for(j=0; j < i-2; ++j) {
                 dummy[j].next = &dummy[j+1];
             }
 
-            dummyCard = &head[0];
+            dummyCard = &dummy[0];
             i = 0;
         }
 
         if(strstr(line, "blanketCard :")) {
-            sscanf(line, "blanketCard: %d", &blanket[i++].data);
-
-            while(line[0] == '\n') {
-                sscanf(line, " %d", &blanket[i++].data);
+            while(line[11+3*i] != '\n') {
+                sscanf(line+11+3*i, " %2d", &blanket[i++].data);
+		
             }
-
-            for(j=0; j < i; ++j) {
+	    
+	    blanket[i-1].next=NULL;
+            for(j=0; j < i-2; ++j) {
                 blanket[j].next = &blanket[j+1];
             }
 
             blanketCard = &blanket[0];
             i = 0;
+        }
+	if(strstr(line, "gusip :")) {
+            sscanf(line, "gusip : %d", &gusip);
+        }
+	if(strstr(line, "nagari :")) {
+            sscanf(line, "nagari : %d", &nagari);
         }
         if(strstr(line, "player1 id :")) {
             sscanf(line, "player1 id : %d", &players[0].id);
@@ -671,33 +657,31 @@ void load() {
             sscanf(line, "player1 turn : %d", &players[0].turn);
         }
 
-        if(strstr(line, "players1 holding card :")) {
-            sscanf(line, "players1 holding card : %d", &head[i++].data);
-
-            while(line[0] == '\n') {
-                sscanf(line, " %d", &head[i++].data);
+        if(strstr(line, "player1 holding card :")) {
+            while(line[20+3*i] != '\n') {
+                sscanf(line+20+3*i, " %2d", &headah[i++].data);
+		
+            }
+	    headah[i-1].next=NULL;
+            for(j=0; j < i-2; ++j) {
+                headah[j].next = &headah[j+1];
             }
 
-            for(j=0; j < i; ++j) {
-                head[j].next = &head[j+1];
-            }
-
-            players[0].holding_card = &head[0];
+            players[0].holding_card = &headah[0];
             i = 0;
         }
         
-        if(strstr(line, "players1 eating card :")) {
-            sscanf(line, "players1 eating card : %d", &head[i++].data);
-
-            while(line[0] == '\n') {
-                sscanf(line, " %d", &head[i++].data);
+        if(strstr(line, "player1 eating card :")) {
+            while(line[19+3*i] != '\n'){
+                sscanf(line+19+3*i, " %2d", &headae[i++].data);
+		
+            }
+	    headae[i-1].next=NULL;
+            for(j=0; j < i-2; ++j) {
+                headae[j].next = &headae[j+1];
             }
 
-            for(j=0; j < i; ++j) {
-                head[j].next = &head[j+1];
-            }
-
-            players[0].eating_card = &head[0];
+            players[0].eating_card = &headae[0];
             i = 0;
         }
         if(strstr(line, "player1 rule :")) {
@@ -720,34 +704,31 @@ void load() {
         if(strstr(line, "player2 turn :")) {
             sscanf(line, "player2 turn : %d", &players[1].turn);
         }
-
-        if(strstr(line, "players2 holding card :")) {
-            sscanf(line, "players2 holding card : %d", &head[i++].data);
-
-            while(line[0] == '\n') {
-                sscanf(line, " %d", &head[i++].data);
+	
+        if(strstr(line, "player2 holding card :")) {
+            while(line[20+3*i] != '\n') {
+                sscanf(line+20+3*i, " %2d", &headbh[i++].data);
+		
             }
-
-            for(j=0; j < i; ++j) {
-                head[j].next = &head[j+1];
+	    headbh[i-1].next=NULL;
+            for(j=0; j < i-2; ++j) {
+                headbh[j].next = &headbh[j+1];
             }
-
-            players[1].holding_card = &head[0];
+            players[1].holding_card = &headbh[0];
             i = 0;
         }
 
-        if(strstr(line, "players2 eating card :")) {
-            sscanf(line, "players2 eating card : %d", &head[i++].data);
-
-            while(line[0] == '\n') {
-                sscanf(line, " %d", &head[i++].data);
+        if(strstr(line, "player2 eating card :")) {
+            while(line[19+3*i] != '\n'){
+                sscanf(line+19+3*i, " %2d", &headbe[i++].data);
+		
+            }
+	    headbe[i-1].next=NULL;
+            for(j=0; j < i-2; ++j) {
+                headbe[j].next = &headbe[j+1];
             }
 
-            for(j=0; j < i; ++j) {
-                head[j].next = &head[j+1];
-            }
-
-            players[1].eating_card = &head[0];
+            players[1].eating_card = &headbe[0];
             i = 0;
         }
         if(strstr(line, "player2 rule :")) {
@@ -771,33 +752,31 @@ void load() {
             sscanf(line, "player3 turn : %d", &players[2].turn);
         }
 
-        if(strstr(line, "players3 holding card :")) {
-            sscanf(line, "players3 holding card : %d", &head[i++].data);
-
-            while(line[0] == '\n') {
-                sscanf(line, " %d", &head[i++].data);
+        if(strstr(line, "player3 holding card :")) {
+            while(line[20+3*i] != '\n'){
+                sscanf(line+20+3*i, " %2d", &headch[i++].data);
+		
+            }
+	    headch[i-1].next=NULL;
+            for(j=0; j < i-2; ++j) {
+                headch[j].next = &headch[j+1];
             }
 
-            for(j=0; j < i; ++j) {
-                head[j].next = &head[j+1];
-            }
-
-            players[2].holding_card = &head[0];
+            players[2].holding_card = &headch[0];
             i = 0;
         }
 
-        if(strstr(line, "players3 eating card :")) {
-            sscanf(line, "players3 eating card : %d", &head[i++].data);
-
-            while(line[0] == '\n') {
-                sscanf(line, " %d", &head[i++].data);
+        if(strstr(line, "player3 eating card :")) {
+            while(line[19+3*i] != '\n'){
+                sscanf(line+19+3*i, " %2d", &headce[i++].data);
+		
+            }
+	    headce[i-1].next=NULL;
+            for(j=0; j < i-2; ++j) {
+                headce[j].next = &headce[j+1];
             }
 
-            for(j=0; j < i; ++j) {
-                head[j].next = &head[j+1];
-            }
-
-            players[2].eating_card = &head[0];
+            players[2].eating_card = &headce[0];
         }
         if(strstr(line, "player3 rule :")) {
             sscanf(line, "player3 rule : %d %d %d %d %d %d", &players[2].rules->shake, 
