@@ -7,7 +7,6 @@
 #include <stdio.h>
 #include <unistd.h>
 
-// TODO: FIX
 // player 구조체에 점수 세팅
 void setScore(int playerId) {
 

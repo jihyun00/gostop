@@ -538,5 +538,7 @@ void toggle() {
 
     if(getCard(eating, 32) != NULL && gusip == 0) {
         gusip = 1;
+
+        printf("9십을 십으로 이동합니다.\n");
     }
 }

@@ -7,3 +7,4 @@ save.txt
 a.exe
 *.o
 *.gch
+*.stackdump
