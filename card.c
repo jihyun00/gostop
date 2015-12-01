@@ -518,8 +518,6 @@ void putCard(int num) {
         printf("%d 유저가 판 쓰리~ \n", turn);
 
         sleep(1);
-
-        setClearBoard();
     }
 }
 

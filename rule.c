@@ -64,7 +64,9 @@ int getSulsa() {
 
 // 판 쓰리 체크
 int isClearBoard() {
-    if(getCardSize(blanketCard) == 0) {
+    if(getCardSize(blanketCard) == 1 && blanketCard->data == -1) {
+        setClearBoard();
+
         return 1;
     }
 
@@ -76,12 +78,7 @@ void setClearBoard(){
     int i;
     int turn = getTurn();
 
-	if(blanketCard->data == -1 && getCardSize(blanketCard) == 1) {
-        players[turn].rules->clear_board = 1;
-	}
-	else {
-        players[turn].rules->clear_board = 0;
-	}
+    players[turn].rules->clear_board = 1;
 
     getPi(turn);
 }
@@ -161,7 +158,7 @@ void isNagari() {
     int turn = getTurn();
     int num_of_go = 0;
 
-	if(dummyCard == NULL) {
+	if((dummyCard->data == -1) && (getCardSize(dummyCard) == 1)) {
         // 아무도 3점 이상 내지 못했을 경우
 		if((getScore(0) < 3) && (getScore(1) < 3) && (getScore(2) < 3)) {
             nagari = 1;
