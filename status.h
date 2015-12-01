@@ -29,7 +29,6 @@ P_C_S PlayerStat[MAX_NUMBER_OF_PLAYER];
 
 
 void setScore(int playerId);
-void player_card_stat(int playerId);
 int getScore(int playerId);
 void setMoney(int playerId);
 int getMoney(int playerId);
