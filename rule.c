@@ -1,4 +1,4 @@
-#include "rule.h"
+﻿#include "rule.h"
 #include "player.h"
 #include "status.h"
 
@@ -234,7 +234,19 @@ int isGobak(int turn) {
 
 
 void gameEnd() {
-    printf("게임 종료되었습니다. 승자는 %d\n", setWinner()->id);
-
+    int winner = setWinner()->id;
+    if(winner==0)
+    printf("게임 종료되었습니다. 승자는 %c\n", 'A');
+    else if(winner==1)
+    printf("게임 종료되었습니다. 승자는 %c\n", 'B');
+    else if(winner==2)
+    printf("게임 종료되었습니다. 승자는 %c\n", 'C');
+    setMoney(0);
+    setMoney(1);
+    setMoney(2);
+    printf("-------게이머의 잔고---------\n");
+    printf("A의 잔고 : %d 원\n", getMoney(0));
+    printf("B의 잔고 : %d 원\n", getMoney(1));
+    printf("C의 잔고 : %d 원\n", getMoney(2));
     exit(0);
 }
