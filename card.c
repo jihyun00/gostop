@@ -494,7 +494,7 @@ void putCard(int num) {
 
             if(hasDummyPair > 1) {
                 printf("짝이 맞는 두 개의 카드 중 어느 카드를 고르시겠습니까? (1, 2 중 하나 입력)\n");
-                for(i=0; i < hasPair; ++i) {
+                for(i=0; i < hasDummyPair; ++i) {
                     if(dummyRes[i] == -1) {
                         continue;
                     }
