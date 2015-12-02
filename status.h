@@ -38,5 +38,6 @@ void drawScreen(); // status 변할 때마다 화면에 값 그려주기
 void drawInterface(char *command); // 사용자 인터페이스 처리
 void save();
 void load();
+void onlydrawScreen();
 
 #endif

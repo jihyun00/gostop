@@ -365,10 +365,109 @@ void drawScreen() {
     printf("\n\n");
     printf("명령 : ");
     scanf("%s", command);
-
     drawInterface(command);
 }
 
+void onlydrawScreen() {
+    // status 변할 때마다 화면에 값 그려주기
+    // 플레이어 차례, 점수, 갖고 있는 패 등
+    char command[256];
+
+    system("clear");
+
+    card *head = NULL;
+
+    if(getTurn() == 0) {
+        printf("*");
+    }
+    if(players[0].rules->shake > 0) {
+        printf("(흔듦)");    
+    }
+    printf("A   : 패) ");
+    head = players[0].holding_card;
+    while(head != NULL) {
+        if(head->data == -1) {
+            break;
+        }
+        printf("%s ", cardMatrix[head->data]);
+        head = head->next;
+    }
+    printf("\n");
+    printf("(점수: %d) 딴 화투) ", getScore(0));
+    head = players[0].eating_card;
+    while(head != NULL) {
+        if(head->data == -1) {
+            break;
+        }
+        printf("%s ", cardMatrix[head->data]);
+        head = head->next;
+    }
+    printf("\n");
+
+    if(getTurn() == 1) {
+        printf("*");
+    }
+    if(players[1].rules->shake > 0) {
+        printf("(흔듦)");    
+    }
+    printf("B   : 패) ");
+    head = players[1].holding_card;
+    while(head != NULL) {
+        if(head->data == -1) {
+            break;
+        }
+        printf("%s ", cardMatrix[head->data]);
+        head = head->next;
+    }
+    printf("\n");
+    printf("(점수: %d) 딴 화투) ", getScore(1));
+    head = players[1].eating_card;
+    while(head != NULL) {
+        if(head->data == -1) {
+            break;
+        }
+        printf("%s ", cardMatrix[head->data]);
+        head = head->next;
+    }
+    printf("\n");
+
+    if(getTurn() == 2) {
+        printf("*");
+    }
+    if(players[2].rules->shake > 0) {
+        printf("(흔듦)");    
+    }
+    printf("C   : 패) ");
+    head = players[2].holding_card;
+    while(head != NULL) {
+        if(head->data == -1) {
+            break;
+        }
+        printf("%s ", cardMatrix[head->data]);
+        head = head->next;
+    }
+    printf("\n");
+    printf("(점수: %d) 딴 화투) ", getScore(2));
+    head = players[2].eating_card;
+    while(head != NULL) {
+        if(head->data == -1) {
+            break;
+        }
+        printf("%s ", cardMatrix[head->data]);
+        head = head->next;
+    }
+    printf("\n");
+
+    printf("깔린 패) ");
+    head = blanketCard;
+    while(head != NULL) {
+        if(head->data == -1) {
+            break;
+        }
+        printf("%s ", cardMatrix[head->data]);
+        head = head->next;
+    }
+}
 void drawInterface(char *command) {
     // 숫자일 경우
     if(isdigit(command[0])) {
@@ -430,11 +529,13 @@ void drawInterface(char *command) {
         } else if(strcmp(command, "load") == 0) {
             printf("게임을 로드합니다.\n");
             load();
-            drawScreen(); 
+            onlydrawScreen();
+            printf("\n\n");
         } else {
             printf("유효하지 않은 명령어입니다.\n");
         }
         printf("명령 : "); 
+
         scanf("%s", command);
         drawInterface(command);
     }
