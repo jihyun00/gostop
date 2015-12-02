@@ -376,7 +376,6 @@ void onlydrawScreen() {
     system("clear");
 
     card *head = NULL;
-
     if(getTurn() == 0) {
         printf("*");
     }
@@ -457,7 +456,6 @@ void onlydrawScreen() {
         head = head->next;
     }
     printf("\n");
-
     printf("깔린 패) ");
     head = blanketCard;
     while(head != NULL) {
@@ -528,6 +526,7 @@ void drawInterface(char *command) {
                 save();
         } else if(strcmp(command, "load") == 0) {
             printf("게임을 로드합니다.\n");
+	    cardInitialize();
             load();
             onlydrawScreen();
             printf("\n\n");
@@ -535,7 +534,6 @@ void drawInterface(char *command) {
             printf("유효하지 않은 명령어입니다.\n");
         }
         printf("명령 : "); 
-
         scanf("%s", command);
         drawInterface(command);
     }
@@ -691,6 +689,7 @@ void save() {
 void load() {
     FILE *fp;
     fp = fopen("save.txt", "r");
+	rewind(fp);
     char line[512];
     card *dummy = (card *)malloc(sizeof(card)*CardMAX); 
     card *blanket = (card *)malloc(sizeof(card)*CardMAX); 
@@ -720,7 +719,6 @@ void load() {
             for(j=0; j < i-2; ++j) {
                 dummy[j].next = &dummy[j+1];
             }
-
             dummyCard = &dummy[0];
             i = 0;
         }
@@ -728,10 +726,9 @@ void load() {
         if(strstr(line, "blanketCard :")) {
             while(line[11+3*i] != '\n') {
                 sscanf(line+11+3*i, " %2d", &blanket[i++].data);
-		
             }
 	    
-	    blanket[i-1].next=NULL;
+	    blanket[i-2].next=NULL;
             for(j=0; j < i-2; ++j) {
                 blanket[j].next = &blanket[j+1];
             }
@@ -888,7 +885,5 @@ void load() {
                                                              &players[2].rules->nagari);
         }
     }
-
-
     fclose(fp);
 }
