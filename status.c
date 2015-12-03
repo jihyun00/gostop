@@ -378,6 +378,7 @@ void drawScreen() {
     drawInterface(command);
 }
 
+
 void onlydrawScreen() {
     char command[256];
 
@@ -477,11 +478,14 @@ void onlydrawScreen() {
     }
     blanketCard = tmpblanket;
 }
+
+
 void drawInterface(char *command) {
     // 숫자일 경우
     if(isdigit(command[0])) {
         int num;
         int turn = getTurn();
+        char id[3] = {'A', 'B', 'C'};
 
         num = atoi(command);
 
@@ -498,8 +502,8 @@ void drawInterface(char *command) {
                     drawInterface(command);
 
                 } else {
-                    printf("%d번째 턴이고, %d 번째 카드를 선택하셨습니다\n", turn, num);
-		    turn = getTurn();
+                    printf("%c번째 턴이고, %d 번째 카드를 선택하셨습니다\n", id[turn], num);
+		            turn = getTurn();
             	    putCard(num);
                 }
             }
