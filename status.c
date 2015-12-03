@@ -170,6 +170,8 @@ void setMoney(int playerId ) {
 	int i= 0;
 	int j =0;
     int k = 0;
+    int g = 0;
+    int other = 0;
 
 	player* tmp=NULL;
 
@@ -213,6 +215,56 @@ void setMoney(int playerId ) {
         j=j*4;
     }
 
+
+
+
+    if((players[playerId].gobak) == 1){
+
+
+    other = 3 - ((tmp->id)+playerId);
+
+    g = 1;
+
+
+    
+    if((PlayerStat[(tmp->id)].pi > 10) && (PlayerStat[other].pi < 7)) {
+        g=g*2;
+    }				
+
+
+    if((PlayerStat[(tmp->id)].gwang > 3) && (PlayerStat[other].gwang < 1)) {
+       g=g*2;
+    }
+
+    if(PlayerStat[(tmp->id)].sip > 7) {
+        g=g*2;
+    }
+
+    k=isNagari();
+
+    if(k == 1) {
+        g=g*2;
+    }
+
+    if((players[(tmp->id)].rules->shake)==1) {
+        g=g*2;
+    }
+    if((players[(tmp->id)].rules->shake)==2) {
+        g=g*4;
+    }
+    
+
+    tmp->money = (tmp->money) + (tmp->score)*100*g;
+    players[playerId].money = players[playerId].money - (tmp->score)*100*g;
+    players[other].money = players[other].money + (tmp->score)*100*g;
+
+    }
+
+
+
+
+
+
     tmp->money = (tmp->money) + (tmp->score)*100*j;
     players[playerId].money = players[playerId].money - (tmp->score)*100*j;
 }
@@ -229,7 +281,25 @@ int getMoney(int playerId) {
 
 
 player* setWinner(){
-    int cmp=-1;
+    
+    if(players[0].winner== 1)
+        return &players[0];
+    if(players[1].winner== 1)
+        return &players[1];
+    if(players[2].winner== 1)
+        return &players[2];
+    else return 0;
+
+
+
+
+
+
+
+
+
+
+    /*int cmp=-1;
     int turn=getTurn();
     if((players[turn].history>4) || (players[turn].history<0)){
         if((players[0].score > players[1].score) && (players[0].score > players[2].score)) {
@@ -242,7 +312,7 @@ player* setWinner(){
             return &players[2];
         }
     }
-    else return &players[turn];
+    else return &players[turn];*/
 }
 
 

@@ -213,14 +213,20 @@ int setGo(){
         players[turn].rules->go += 1;
         players[turn].score += 1;
         players[turn].addtional_score = players[turn].score; 
+        players[turn].gobak = 1;
+        players[(turn+1)%3].gobak= 0;
+        players[(turn+2)%3].gobak= 0;
+
+
+
         return players[turn].rules->go;
     } else {
-        if(isGobak()){
+        /*if(isGobak()){
 
             players[turn].history=1;
             gameEnd();
         }
-        else setStop();
+        else*/ setStop();
     }
     return 0;
 }
@@ -230,12 +236,14 @@ void setStop() {
     int turn=getTurn();
     printf("STOP 합니다, 게임을 종료합니다.\n");
 
+    players[turn].winner=1;
+
     players[turn].history=0;
     gameEnd(); 
 }
 
 
-int isGobak(){
+/*int isGobak(){
     int turn = getTurn();
     int other1, other2;
     if(players[turn].score > 3){
@@ -262,17 +270,21 @@ int isGobak(){
     }
     else return 0;
 
-}
+}*/
 
 void gameEnd() {
     int i;
     char name[5]={'A','B','C'};
-
-    int winner = setWinner()->id;
+    player* tmp= NULL;
+    tmp = setWinner();
+    
+    int winner = tmp->id;
     printf("게임 종료되었습니다. 승자는 %c\n", name[winner]);
     printf("-------게이머의 잔고---------\n");
     for(i=0;i<3;i++){
         setMoney(i);
+    }
+    for(i=0;i<3;i++){
         printf("%c의 잔고 : %d 원\n", name[i], getMoney(i));
     }
 
