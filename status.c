@@ -737,14 +737,14 @@ void load() {        // save.txt 파일내용을 한줄씩 읽기
         }
         if(strstr(line, "player1 turn :")) {
             sscanf(line, "player1 turn : %d", &players[0].turn);
-<<<<<<< HEAD
+
         }								// A의 info 읽기
 
         if(strstr(line, "player1 holding card :")) {			// A의 가지고 있는 패읽기
-=======
+
         }
         if(strstr(line, "player1 holding card :")) {
->>>>>>> f821fb05dbc95854417830b1c442eb0232b4d1fc
+
             while(line[23+3*i] != '\n') {
                 sscanf(line+23+3*i, " %2d", &headah[i].data);
                 i++;
