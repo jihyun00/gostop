@@ -219,16 +219,7 @@ int setGo(){
 
         return players[turn].rules->go;
     } else {
-//<<<<<<< HEAD
-        /*if(isGobak()){
-=======
-        if(isGobak()) {
->>>>>>> 26b439f2476b88fc4dc0ab7b3a6e7e8d8a1d9666
-
-            players[turn].history=1;
-            gameEnd();
-        }
-        else*/ setStop();
+        setStop();
     }
     return 0;
 }
@@ -243,35 +234,6 @@ void setStop() {
     players[turn].history=0;
     gameEnd(); 
 }
-
-
-/*int isGobak(){
-    int turn = getTurn();
-    int other1, other2;
-    if(players[turn].score > 3){
-        switch(turn){
-            case 1 : {other1=2; other2=3; break;}
-            case 2 : {other1=1; other2=3; break;}
-            case 3 : {other1=1; other2=2; break;}
-        }
-        if(!(players[other1].rules->go)&&!(players[other2].rules->go)){
-            players[other1].rules->gobak += 1;
-            players[other2].rules->gobak += 1;
-            return 1;
-        }
-        else if(!(players[other1].rules->go)||!(players[other2].rules->go)){
-            if(!(players[other1].rules->go)){
-                players[other1].rules->gobak += 1;
-            }
-            if(!(players[other2].rules->go)){
-                players[other2].rules->gobak += 1;
-            }
-            return 1; 
-        }
-        else return 0;
-    }
-    else return 0;
-}*/
 
 
 void gameEnd() {
