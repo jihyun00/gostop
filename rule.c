@@ -271,12 +271,8 @@ void setStop() {
         else return 0;
     }
     else return 0;
-<<<<<<< HEAD
-
 }*/
-//=======
-//}
-//>z>>>>>> 26b439f2476b88fc4dc0ab7b3a6e7e8d8a1d9666
+
 
 void gameEnd() {
     int i;
