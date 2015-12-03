@@ -115,7 +115,7 @@ void setChongtong(int index) {
 }
 
 
-int isNagari() {
+void isNagari() {
     int i, j;
     int cnt;
     int turn = getTurn();
@@ -127,7 +127,7 @@ int isNagari() {
             nagari = 1;
             printf("이번 판은 나가리~\n");
 
-            exit(0);
+            gameEnd();
 		}
     
         // 고를 했으나 추가 점수가 나지 않고 상대도 3점 이상을 획득하지 못한 경우
@@ -151,7 +151,7 @@ int isNagari() {
 
                     printf("이번 판은 나가리~\n");
 
-                    exit(0);
+                    gameEnd();
                 }
             }
         }
@@ -159,8 +159,6 @@ int isNagari() {
         players[turn].history=4;
         gameEnd();
 	}
-
-    return nagari;
 }
 
 

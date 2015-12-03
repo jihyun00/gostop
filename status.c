@@ -165,7 +165,6 @@ int getScore(int playerId) {
 }
 
 
-
 void setMoney(int playerId ) {
 	int i= 0;
 	int j =0;
@@ -200,7 +199,8 @@ void setMoney(int playerId ) {
         j=j*2;
     }
 
-    k=isNagari();
+    //k=isNagari();
+    k = nagari;
 
     if(k == 1) {
         j=j*2;
