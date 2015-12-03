@@ -6,7 +6,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <unistd.h>
-
+int loadVariable;
 // player 구조체에 점수 세팅
 void setScore(int playerId) {
 
@@ -526,10 +526,12 @@ void drawInterface(char *command) {
                 save();
         } else if(strcmp(command, "load") == 0) {
             printf("게임을 로드합니다.\n");
-	    cardInitialize();
-            load();
+	    if(loadVariable==0)
+            {load();
             onlydrawScreen();
-            printf("\n\n");
+            printf("\n\n");}
+	    else
+	    printf("연속으로 로드 할 수 없습니다.\n");
         } else {
             printf("유효하지 않은 명령어입니다.\n");
         }
@@ -685,8 +687,10 @@ void save() {
     fclose(fp);
 }
 
-
 void load() {
+    loadVariable=1;
+    setPlayerInfo();
+    setTurn();
     FILE *fp;
     fp = fopen("save.txt", "r");
 	rewind(fp);
