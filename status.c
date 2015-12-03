@@ -251,15 +251,20 @@ int getMoney(int playerId) {
 
 
 player* setWinner(){
-    if((players[0].score > players[1].score) && (players[0].score > players[2].score)) {
-        return &players[0]; 
-        
-    } else if((players[1].score > players[0].score) && (players[1].score > players[2].score)) {
-        return &players[1];
+    int cmp=-1;
+    int turn=getTurn();
+    if((players[turn].history>4) || (players[turn].history<0)){
+        if((players[0].score > players[1].score) && (players[0].score > players[2].score)) {
+            return &players[0]; 
+            
+        } else if((players[1].score > players[0].score) && (players[1].score > players[2].score)) {
+            return &players[1];
 
-    } else {
-        return &players[2];
+        } else {
+            return &players[2];
+        }
     }
+    else return &players[turn];
 }
 
 

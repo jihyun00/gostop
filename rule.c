@@ -4,18 +4,19 @@
 
 #include <string.h>
 
+//rules 구조체 초기화
 void initializeRule(int index) {
     players[index].rules = (rule *)malloc(sizeof(rule)); 
-
     players[index].rules->shake = 0;
     players[index].rules->sulsa = 0;
     players[index].rules->clear_board = 0;
     players[index].rules->chongtong = 0;
     players[index].rules->go = 0;
     players[index].rules->nagari = 0;
+    players[index].rules->gobak = 0;
 }
 
-
+//흔들기
 void setShake(int index) {
 	card *head = NULL;
 	int c = 1;
@@ -47,6 +48,10 @@ void setSulsa() {
     int turn = getTurn();
 
     players[turn].rules->sulsa = players[turn].rules->sulsa + 1;
+    if(players[turn].rules->sulsa==3){
+        players[turn].history=3;
+        gameEnd();
+    }
 }
 
 
@@ -57,7 +62,6 @@ int getSulsa() {
             return i;
         }
     }
-
     return -1;
 }
 
@@ -84,52 +88,11 @@ void setClearBoard(){
 }
 
 
-int setGo(){ 
-    int turn = getTurn();
-    char status[10];
-
-    if(players[turn].rules->go == 0) { // 고를 한 번도 한 적이 없을 때
-        if(players[turn].score < 3){ // 3점 이하는 out
-            return 0; 
-        }
-
-    } else { // 고를 한 번 이상했을 때
-        if(players[turn].addtional_score < 2) {  // 2점 이상 추가로 못 냈을 때는 out
-            return 0;
-        }
-    }
-
-    printf("Go하시겠습니까? Stop하시겠습니까? (g, s)"); 
-
-    scanf("%s", status);
-
-    if((strcmp(status, "go") == 0) || (strcmp(status, "g") == 0)) {
-        players[turn].rules->go += 1;
-        players[turn].score += 1;
-        players[turn].addtional_score = players[turn].score; 
-
-        return players[turn].rules->go;
-        
-    } else {
-        setStop();
-    }
-
-    return 0;
-}
-
-
-void setStop() {
-    printf("STOP 합니다, 게임을 종료합니다.\n");
-    
-    gameEnd(); 
-}
-
-
 void setChongtong(int index) {
 	card *head = NULL;
 	int c = 1;
     int prev;
-
+    int turn=getTurn();
 	head = players[index].holding_card;
     prev = head->data/4;
     while(head->next != NULL) {
@@ -142,13 +105,13 @@ void setChongtong(int index) {
 
         if(c==4){
             players[index].rules->chongtong += 1;
-
+            players[turn].history=3;
+            gameEnd();
             break;
         }
-
         prev = head->next->data/4;
         head = head->next;
-    }
+    }    
 }
 
 
@@ -193,6 +156,7 @@ int isNagari() {
             }
         }
 
+        players[turn].history=4;
         gameEnd();
 	}
 
@@ -226,27 +190,88 @@ void getPi(int turn) {
 }
 
 
-int isGobak(int turn) {
-         
-    
-    return -1;
+int setGo(){ 
+    int turn = getTurn();
+    char status[10];
+
+    if(players[turn].rules->go == 0) { // 고를 한 번도 한 적이 없을 때
+        if(players[turn].score < 3){ // 3점 이하는 out
+            return 0; 
+        }
+    }
+    else { // 고를 한 번 이상했을 때
+        if(players[turn].addtional_score < 2) {  // 2점 이상 추가로 못 냈을 때는 out
+            return 0;
+        }
+    }
+
+    printf("Go하시겠습니까? Stop하시겠습니까? (g, s)"); 
+
+    scanf("%s", status);
+
+    if((strcmp(status, "go") == 0) || (strcmp(status, "g") == 0)) {
+        players[turn].rules->go += 1;
+        players[turn].score += 1;
+        players[turn].addtional_score = players[turn].score; 
+        return players[turn].rules->go;
+    } else {
+        if(isGobak()){
+
+            players[turn].history=1;
+            gameEnd();
+        }
+        else setStop();
+    }
+    return 0;
 }
 
 
+void setStop() {
+    int turn=getTurn();
+    printf("STOP 합니다, 게임을 종료합니다.\n");
+
+    players[turn].history=0;
+    gameEnd(); 
+}
+
+
+int isGobak(){
+    int turn = getTurn();
+    int other1, other2;
+    if(players[turn].score > 3){
+        switch(turn){
+            case 1 : {other1=2; other2=3; break;}
+            case 2 : {other1=1; other2=3; break;}
+            case 3 : {other1=1; other2=2; break;}
+        }
+        if(!(players[other1].rules->go)&&!(players[other2].rules->go)){
+            players[other1].rules->gobak += 1;
+            players[other2].rules->gobak += 1;
+            return 1;
+        }
+        else if(!(players[other1].rules->go)||!(players[other2].rules->go)){
+            if(!(players[other1].rules->go)){
+                players[other1].rules->gobak += 1;
+            }
+            if(!(players[other2].rules->go)){
+                players[other2].rules->gobak += 1;
+            }
+            return 1; 
+        }
+        else return 0;
+    }
+    else return 0;
+
+}
+
 void gameEnd() {
     int winner = setWinner()->id;
-    if(winner==0)
-    printf("게임 종료되었습니다. 승자는 %c\n", 'A');
-    else if(winner==1)
-    printf("게임 종료되었습니다. 승자는 %c\n", 'B');
-    else if(winner==2)
-    printf("게임 종료되었습니다. 승자는 %c\n", 'C');
-    setMoney(0);
-    setMoney(1);
-    setMoney(2);
+    printf("게임 종료되었습니다. 승자는 %c\n", name[winner]);
     printf("-------게이머의 잔고---------\n");
-    printf("A의 잔고 : %d 원\n", getMoney(0));
-    printf("B의 잔고 : %d 원\n", getMoney(1));
-    printf("C의 잔고 : %d 원\n", getMoney(2));
+    for(int i=0;i<3;i++){
+        setMoney(i);
+        printf("%c의 잔고 : %d 원\n", name[i], getMoney(i));
+    }
+
     exit(0);
 }

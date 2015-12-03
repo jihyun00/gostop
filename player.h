@@ -23,6 +23,7 @@ typedef struct _player {
     int played;// 이전에 play했는지 체크
     int money; // player가 갖고 있는 돈
     int turn;
+    int history;
     card *holding_card; // 갖고 있는 패
     card *eating_card; // 먹은 패
     rule *rules;
