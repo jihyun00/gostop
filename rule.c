@@ -215,7 +215,7 @@ int setGo(){
         players[turn].addtional_score = players[turn].score; 
         return players[turn].rules->go;
     } else {
-        if(isGobak()){
+        if(isGobak()) {
 
             players[turn].history=1;
             gameEnd();
@@ -261,7 +261,6 @@ int isGobak(){
         else return 0;
     }
     else return 0;
-
 }
 
 void gameEnd() {
