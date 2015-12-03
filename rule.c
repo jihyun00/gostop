@@ -3,7 +3,7 @@
 #include "status.h"
 
 #include <string.h>
-
+char id[3] = {'A', 'B', 'C'};
 //rules 구조체 초기화
 void initializeRule(int index) {
     players[index].rules = (rule *)malloc(sizeof(rule)); 
@@ -202,7 +202,7 @@ int setGo(){
             return 0;
         }
     }
-    printf("%d 플레이어가 %d 점수를 얻었습니다!\n",turn,getScore(turn));
+    printf("%c 플레이어가 점수 %d 획득!\n",id[turn],getScore(turn));
     printf("Go하시겠습니까? Stop하시겠습니까? (g, s)"); 
 
     scanf("%s", status);
@@ -214,14 +214,12 @@ int setGo(){
         players[turn].gobak = 1;
         players[(turn+1)%3].gobak= 0;
         players[(turn+2)%3].gobak= 0;
+
+
+
         return players[turn].rules->go;
     } else {
-	printf("STOP 했습니다\n");
-        /*if(isGobak()) {
-            players[turn].history=1;
-            gameEnd();
-        }
-        else setStop();*/
+        setStop();
     }
     return 0;
 }
@@ -236,35 +234,6 @@ void setStop() {
     players[turn].history=0;
     gameEnd(); 
 }
-
-
-/*int isGobak(){
-    int turn = getTurn();
-    int other1, other2;
-    if(players[turn].score > 3){
-        switch(turn){
-            case 1 : {other1=2; other2=3; break;}
-            case 2 : {other1=1; other2=3; break;}
-            case 3 : {other1=1; other2=2; break;}
-        }
-        if(!(players[other1].rules->go)&&!(players[other2].rules->go)){
-            players[other1].rules->gobak += 1;
-            players[other2].rules->gobak += 1;
-            return 1;
-        }
-        else if(!(players[other1].rules->go)||!(players[other2].rules->go)){
-            if(!(players[other1].rules->go)){
-                players[other1].rules->gobak += 1;
-            }
-            if(!(players[other2].rules->go)){
-                players[other2].rules->gobak += 1;
-            }
-            return 1; 
-        }
-        else return 0;
-    }
-    else return 0;
-}*/
 
 
 void gameEnd() {
