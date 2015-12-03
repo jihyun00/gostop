@@ -6,7 +6,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <unistd.h>
-int loadVariable;
+
 // player 구조체에 점수 세팅
 void setScore(int playerId) {
 
@@ -374,6 +374,7 @@ void drawScreen() {
 }
 
 void onlydrawScreen() {
+	// 입력받지 않고 단순히 그려주는 함수
     // status 변할 때마다 화면에 값 그려주기
     // 플레이어 차례, 점수, 갖고 있는 패 등
     char command[256];
@@ -693,7 +694,6 @@ void save() {
 }
 
 void load() {
-    loadVariable=1;
     setPlayerInfo();
     setTurn();
     FILE *fp;
@@ -717,10 +717,10 @@ void load() {
         fprintf(stderr, "파일 open을 실패하였습니다.\n");
         return;
     }
-    while(fgets(line, 512, fp) != NULL) {
+    while(fgets(line, 512, fp) != NULL) {  
         if(strstr(line, "dummyCard :")) {
 
-            while(line[11+3*i] != '\n') {
+            while(line[11+3*i] != '\n') { 
                 sscanf(line+11+i*3," %2d", &dummy[i].data);
 				i++;
             }
