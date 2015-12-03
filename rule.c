@@ -213,12 +213,12 @@ int setGo(){
         players[turn].addtional_score = players[turn].score; 
         return players[turn].rules->go;
     } else {
-        if(isGobak()) {
+        /*if(isGobak()) {
 
             players[turn].history=1;
             gameEnd();
         }
-        else setStop();
+        else setStop();*/
     }
     return 0;
 }
