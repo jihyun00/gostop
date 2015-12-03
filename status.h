@@ -1,7 +1,8 @@
-﻿#include "player.h"
-
+﻿
 #ifndef _STATUS_H_
 #define _STATUS_H_
+
+#include "player.h"
 
 typedef enum _game_player_status {
     // 기본, 흔들기, 설사, 판쓰리, 총통 등 status 구조체
@@ -17,8 +18,6 @@ typedef enum _game_player_status {
 } game_player_status;
 
 int nagari;
-
-const char all[5][10]={"STOP","GOBAK","CHONGTONG","SULSA","NAGARI"};
 
 typedef struct _game_player_card_status {
 	int oh;

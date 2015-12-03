@@ -1,7 +1,6 @@
 #ifndef _RULE_H_
 #define _RULE_H_
 
-
 typedef struct _rule{
     int shake;
     int sulsa;
@@ -11,10 +10,6 @@ typedef struct _rule{
     int nagari;
     int gobak;
 } rule;
-
-
-char name[5]={'A','B','C'};
-
 
 void initializeRule(int index);
 void setShake();
