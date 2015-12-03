@@ -272,7 +272,9 @@ void gameEnd() {
     char name[5]={'A','B','C'};
     player* tmp= NULL;
     tmp = setWinner();
-    
+    if(tmp ==NULL)
+        exit(0);
+    else{
     int winner = tmp->id;
     printf("게임 종료되었습니다. 승자는 %c\n", name[winner]);
     printf("-------게이머의 잔고---------\n");
@@ -283,5 +285,5 @@ void gameEnd() {
         printf("%c의 잔고 : %d 원\n", name[i], getMoney(i));
     }
 
-    exit(0);
+    exit(0);}
 }
