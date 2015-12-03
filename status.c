@@ -288,7 +288,7 @@ player* setWinner(){
         return &players[1];
     if(players[2].winner== 1)
         return &players[2];
-    else return 0;
+    else return NULL;
 
 
 
