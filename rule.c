@@ -202,7 +202,7 @@ int setGo(){
             return 0;
         }
     }
-
+    printf("%d 플레이어가 %d 점수를 얻었습니다!\n",turn,getScore(turn));
     printf("Go하시겠습니까? Stop하시겠습니까? (g, s)"); 
 
     scanf("%s", status);
