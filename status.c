@@ -457,14 +457,17 @@ void onlydrawScreen() {
     }
     printf("\n");
     printf("깔린 패) ");
-    head = blanketCard;
-    while(head != NULL) {
-        if(head->data == -1) {
+    card* tmpblanket = blanketCard;
+    int cnt=0;
+    while(blanketCard != NULL) {
+        if(blanketCard->data == -1) {
             break;
         }
-        printf("%s ", cardMatrix[head->data]);
-        head = head->next;
+        int n = blanketCard->data;
+        printf("O) %s ", cardMatrix[n]);
+        blanketCard = blanketCard->next;
     }
+    blanketCard = tmpblanket;
 }
 void drawInterface(char *command) {
     // 숫자일 경우
@@ -526,12 +529,9 @@ void drawInterface(char *command) {
                 save();
         } else if(strcmp(command, "load") == 0) {
             printf("게임을 로드합니다.\n");
-	    if(loadVariable==0)
-            {load();
+            load();
             onlydrawScreen();
-            printf("\n\n");}
-	    else
-	    printf("연속으로 로드 할 수 없습니다.\n");
+            printf("\n\n");
         } else {
             printf("유효하지 않은 명령어입니다.\n");
         }
@@ -567,9 +567,9 @@ void save() {
     head = dummyCard;
 
     // dummyCard 정보 저장
-    fprintf(fp, "dummyCard : ");
+    fprintf(fp, "dummyCard :");
     while(head != NULL) {
-        fprintf(fp, "%2d ", head->data); 
+        fprintf(fp, " %2d", head->data); 
 
         head = head->next;
     }
@@ -578,9 +578,9 @@ void save() {
     head = blanketCard;
 
     // blanketCard 정보 저장
-    fprintf(fp, "blanketCard : ");
+    fprintf(fp, "blanketCard :");
     while(head != NULL) {
-        fprintf(fp, "%2d ", head->data); 
+        fprintf(fp, " %2d", head->data); 
 
         head = head->next;
     }
@@ -712,15 +712,15 @@ void load() {
         fprintf(stderr, "파일 open을 실패하였습니다.\n");
         return;
     }
-
     while(fgets(line, 512, fp) != NULL) {
         if(strstr(line, "dummyCard :")) {
-            while(line[9+3*i] != '\n') {
-                sscanf(line+9+i*3," %2d", &dummy[i++].data);
-		
+
+            while(line[11+3*i] != '\n') {
+                sscanf(line+11+i*3," %2d", &dummy[i].data);
+				i++;
             }
             dummy[i-1].next=NULL;
-            for(j=0; j < i-2; ++j) {
+            for(j=0; j < i-1; ++j) {
                 dummy[j].next = &dummy[j+1];
             }
             dummyCard = &dummy[0];
@@ -728,12 +728,13 @@ void load() {
         }
 
         if(strstr(line, "blanketCard :")) {
-            while(line[11+3*i] != '\n') {
-                sscanf(line+11+3*i, " %2d", &blanket[i++].data);
+            while(line[13+3*i] != '\n') {
+                sscanf(line+13+3*i, " %2d", &blanket[i].data);
+                i++;
             }
 	    
-	    blanket[i-2].next=NULL;
-            for(j=0; j < i-2; ++j) {
+	    blanket[i-1].next=NULL;
+            for(j=0; j < i-1; ++j) {
                 blanket[j].next = &blanket[j+1];
             }
 
@@ -760,12 +761,12 @@ void load() {
         }
 
         if(strstr(line, "player1 holding card :")) {
-            while(line[20+3*i] != '\n') {
-                sscanf(line+20+3*i, " %2d", &headah[i++].data);
-		
+            while(line[23+3*i] != '\n') {
+                sscanf(line+23+3*i, " %2d", &headah[i].data);
+                i++;
             }
 	    headah[i-1].next=NULL;
-            for(j=0; j < i-2; ++j) {
+            for(j=0; j < i-1; ++j) {
                 headah[j].next = &headah[j+1];
             }
 
@@ -774,12 +775,12 @@ void load() {
         }
         
         if(strstr(line, "player1 eating card :")) {
-            while(line[19+3*i] != '\n'){
-                sscanf(line+19+3*i, " %2d", &headae[i++].data);
-		
+            while(line[22+3*i] != '\n'){
+                sscanf(line+22+3*i, " %2d", &headae[i].data);
+                i++;
             }
 	    headae[i-1].next=NULL;
-            for(j=0; j < i-2; ++j) {
+            for(j=0; j < i-1; ++j) {
                 headae[j].next = &headae[j+1];
             }
 
@@ -808,12 +809,12 @@ void load() {
         }
 	
         if(strstr(line, "player2 holding card :")) {
-            while(line[20+3*i] != '\n') {
-                sscanf(line+20+3*i, " %2d", &headbh[i++].data);
-		
+            while(line[23+3*i] != '\n') {
+                sscanf(line+23+3*i, " %2d", &headbh[i].data);
+                i++;
             }
 	    headbh[i-1].next=NULL;
-            for(j=0; j < i-2; ++j) {
+            for(j=0; j < i-1; ++j) {
                 headbh[j].next = &headbh[j+1];
             }
             players[1].holding_card = &headbh[0];
@@ -821,12 +822,12 @@ void load() {
         }
 
         if(strstr(line, "player2 eating card :")) {
-            while(line[19+3*i] != '\n'){
-                sscanf(line+19+3*i, " %2d", &headbe[i++].data);
-		
+            while(line[22+3*i] != '\n'){
+                sscanf(line+22+3*i, " %2d", &headbe[i].data);
+				i++;
             }
 	    headbe[i-1].next=NULL;
-            for(j=0; j < i-2; ++j) {
+            for(j=0; j < i-1; ++j) {
                 headbe[j].next = &headbe[j+1];
             }
 
@@ -855,12 +856,12 @@ void load() {
         }
 
         if(strstr(line, "player3 holding card :")) {
-            while(line[20+3*i] != '\n'){
-                sscanf(line+20+3*i, " %2d", &headch[i++].data);
-		
+            while(line[23+3*i] != '\n'){
+                sscanf(line+23+3*i, " %2d", &headch[i].data);
+				i++;
             }
 	    headch[i-1].next=NULL;
-            for(j=0; j < i-2; ++j) {
+            for(j=0; j < i-1; ++j) {
                 headch[j].next = &headch[j+1];
             }
 
@@ -869,15 +870,14 @@ void load() {
         }
 
         if(strstr(line, "player3 eating card :")) {
-            while(line[19+3*i] != '\n'){
-                sscanf(line+19+3*i, " %2d", &headce[i++].data);
-		
+            while(line[22+3*i] != '\n'){
+                sscanf(line+22+3*i, " %2d", &headce[i].data);
+				i++;
             }
 	    headce[i-1].next=NULL;
-            for(j=0; j < i-2; ++j) {
+            for(j=0; j < i-1; ++j) {
                 headce[j].next = &headce[j+1];
             }
-
             players[2].eating_card = &headce[0];
         }
         if(strstr(line, "player3 rule :")) {
