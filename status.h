@@ -18,6 +18,8 @@ typedef enum _game_player_status {
 
 int nagari;
 
+const char all[5][10]={"STOP","GOBAK","CHONGTONG","SULSA","NAGARI"};
+
 typedef struct _game_player_card_status {
 	int oh;
 	int sip;

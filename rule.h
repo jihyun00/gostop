@@ -1,6 +1,7 @@
 #ifndef _RULE_H_
 #define _RULE_H_
 
+
 typedef struct _rule{
     int shake;
     int sulsa;
@@ -8,8 +9,12 @@ typedef struct _rule{
     int chongtong;
     int go;
     int nagari;
-
+    int gobak;
 } rule;
+
+
+char name[5]={'A','B','C'};
+
 
 void initializeRule(int index);
 void setShake();
@@ -22,7 +27,7 @@ void setStop();
 void setChongtong(int index);
 int isNagari();
 void getPi(int turn);
-int isGobak(int turn);
+int isGobak();
 void gameEnd();
 
 #endif
