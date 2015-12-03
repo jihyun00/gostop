@@ -115,7 +115,7 @@ void setChongtong(int index) {
 }
 
 
-int isNagari() {
+void isNagari() {
     int i, j;
     int cnt;
     int turn = getTurn();
@@ -127,7 +127,7 @@ int isNagari() {
             nagari = 1;
             printf("이번 판은 나가리~\n");
 
-            exit(0);
+            gameEnd();
 		}
     
         // 고를 했으나 추가 점수가 나지 않고 상대도 3점 이상을 획득하지 못한 경우
@@ -151,7 +151,7 @@ int isNagari() {
 
                     printf("이번 판은 나가리~\n");
 
-                    exit(0);
+                    gameEnd();
                 }
             }
         }
@@ -159,8 +159,6 @@ int isNagari() {
         players[turn].history=4;
         gameEnd();
 	}
-
-    return nagari;
 }
 
 
@@ -204,7 +202,7 @@ int setGo(){
             return 0;
         }
     }
-
+    printf("%d 플레이어가 %d 점수를 얻었습니다!\n",turn,getScore(turn));
     printf("Go하시겠습니까? Stop하시겠습니까? (g, s)"); 
 
     scanf("%s", status);
@@ -221,7 +219,11 @@ int setGo(){
 
         return players[turn].rules->go;
     } else {
+//<<<<<<< HEAD
         /*if(isGobak()){
+=======
+        if(isGobak()) {
+>>>>>>> 26b439f2476b88fc4dc0ab7b3a6e7e8d8a1d9666
 
             players[turn].history=1;
             gameEnd();
@@ -269,8 +271,12 @@ void setStop() {
         else return 0;
     }
     else return 0;
+<<<<<<< HEAD
 
 }*/
+//=======
+//}
+//>z>>>>>> 26b439f2476b88fc4dc0ab7b3a6e7e8d8a1d9666
 
 void gameEnd() {
     int i;

@@ -20,7 +20,7 @@ void setClearBoard();
 int setGo();
 void setStop();
 void setChongtong(int index);
-int isNagari();
+void isNagari();
 void getPi(int turn);
 int isGobak();
 void gameEnd();
