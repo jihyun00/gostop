@@ -242,7 +242,6 @@ void setMoney(int playerId ) {
             g=g*4;
         }
         
-        tmp->money = (tmp->money) + (tmp->score)*100*g;
         players[playerId].money = players[playerId].money - (tmp->score)*100*g;
         players[other].money = players[other].money + (tmp->score)*100*g;
     }
