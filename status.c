@@ -548,7 +548,7 @@ void drawInterface(char *command) {
 }
 
 
-void save() {
+void save() { //데이터들을 한 줄씩 쓰는 함수
     // player 구조체 모든 정보
     // dummyCard, blanketCard
     FILE *fp;
@@ -693,7 +693,7 @@ void save() {
     fclose(fp);
 }
 
-void load() {
+void load() {        // save.txt 파일내용을 한줄씩 읽기
     setPlayerInfo();
     setTurn();
     FILE *fp;
@@ -717,7 +717,7 @@ void load() {
         fprintf(stderr, "파일 open을 실패하였습니다.\n");
         return;
     }
-    while(fgets(line, 512, fp) != NULL) {  
+    while(fgets(line, 512, fp) != NULL) {          // 화투패 더미 읽기
         if(strstr(line, "dummyCard :")) {
 
             while(line[11+3*i] != '\n') { 
@@ -732,7 +732,7 @@ void load() {
             i = 0;
         }
 
-        if(strstr(line, "blanketCard :")) {
+        if(strstr(line, "blanketCard :")) {	  // 깔린 패 읽기
             while(line[13+3*i] != '\n') {
                 sscanf(line+13+3*i, " %2d", &blanket[i].data);
                 i++;
@@ -763,9 +763,9 @@ void load() {
         }
         if(strstr(line, "player1 turn :")) {
             sscanf(line, "player1 turn : %d", &players[0].turn);
-        }
+        }								// A의 info 읽기
 
-        if(strstr(line, "player1 holding card :")) {
+        if(strstr(line, "player1 holding card :")) {			// A의 가지고 있는 패읽기
             while(line[23+3*i] != '\n') {
                 sscanf(line+23+3*i, " %2d", &headah[i].data);
                 i++;
@@ -779,7 +779,7 @@ void load() {
             i = 0;
         }
         
-        if(strstr(line, "player1 eating card :")) {
+        if(strstr(line, "player1 eating card :")) {			// A가 먹은 패읽기
             while(line[22+3*i] != '\n'){
                 sscanf(line+22+3*i, " %2d", &headae[i].data);
                 i++;
@@ -792,7 +792,7 @@ void load() {
             players[0].eating_card = &headae[0];
             i = 0;
         }
-        if(strstr(line, "player1 rule :")) {
+        if(strstr(line, "player1 rule :")) {				// A의 룰 읽기
             sscanf(line, "player1 rule : %d %d %d %d %d %d", &players[0].rules->shake, 
                                                              &players[0].rules->sulsa, 
                                                              &players[0].rules->clear_board,
@@ -811,9 +811,9 @@ void load() {
         }
         if(strstr(line, "player2 turn :")) {
             sscanf(line, "player2 turn : %d", &players[1].turn);
-        }
+        }						 		//B 정보 읽기
 	
-        if(strstr(line, "player2 holding card :")) {
+        if(strstr(line, "player2 holding card :")) {			//B 지니고 있는 패읽기
             while(line[23+3*i] != '\n') {
                 sscanf(line+23+3*i, " %2d", &headbh[i].data);
                 i++;
@@ -826,7 +826,7 @@ void load() {
             i = 0;
         }
 
-        if(strstr(line, "player2 eating card :")) {
+        if(strstr(line, "player2 eating card :")) {			//B 먹은패 읽기
             while(line[22+3*i] != '\n'){
                 sscanf(line+22+3*i, " %2d", &headbe[i].data);
 				i++;
@@ -839,7 +839,7 @@ void load() {
             players[1].eating_card = &headbe[0];
             i = 0;
         }
-        if(strstr(line, "player2 rule :")) {
+        if(strstr(line, "player2 rule :")) {				//B의 룰 읽기
             sscanf(line, "player2 rule : %d %d %d %d %d %d", &players[1].rules->shake, 
                                                              &players[1].rules->sulsa, 
                                                              &players[1].rules->clear_board,
@@ -858,9 +858,9 @@ void load() {
         }
         if(strstr(line, "player3 turn :")) {
             sscanf(line, "player3 turn : %d", &players[2].turn);
-        }
+        }								//C 정보 읽기
 
-        if(strstr(line, "player3 holding card :")) {
+        if(strstr(line, "player3 holding card :")) {			//C 지니고 있는 패 읽기
             while(line[23+3*i] != '\n'){
                 sscanf(line+23+3*i, " %2d", &headch[i].data);
 				i++;
@@ -874,7 +874,7 @@ void load() {
             i = 0;
         }
 
-        if(strstr(line, "player3 eating card :")) {
+        if(strstr(line, "player3 eating card :")) {			//C 먹은 패 읽기
             while(line[22+3*i] != '\n'){
                 sscanf(line+22+3*i, " %2d", &headce[i].data);
 				i++;
@@ -885,7 +885,7 @@ void load() {
             }
             players[2].eating_card = &headce[0];
         }
-        if(strstr(line, "player3 rule :")) {
+        if(strstr(line, "player3 rule :")) {				// C의 룰 읽기
             sscanf(line, "player3 rule : %d %d %d %d %d %d", &players[2].rules->shake, 
                                                              &players[2].rules->sulsa, 
                                                              &players[2].rules->clear_board,
