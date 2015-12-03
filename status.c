@@ -201,7 +201,6 @@ void setMoney(int playerId ) {
         j=j*2;
     }
 
-    //k=isNagari();
     k = nagari;
 
     if(k == 1) {
@@ -215,55 +214,38 @@ void setMoney(int playerId ) {
         j=j*4;
     }
 
-
-
-
     if((players[playerId].gobak) == 1){
+        other = 3 - ((tmp->id)+playerId);
 
+        g = 1;
 
-    other = 3 - ((tmp->id)+playerId);
+        if((PlayerStat[(tmp->id)].pi > 10) && (PlayerStat[other].pi < 7)) {
+            g=g*2;
+        }				
 
-    g = 1;
+        if((PlayerStat[(tmp->id)].gwang > 3) && (PlayerStat[other].gwang < 1)) {
+           g=g*2;
+        }
 
+        if(PlayerStat[(tmp->id)].sip > 7) {
+            g=g*2;
+        }
 
-    
-    if((PlayerStat[(tmp->id)].pi > 10) && (PlayerStat[other].pi < 7)) {
-        g=g*2;
-    }				
+        if(k == 1) {
+            g=g*2;
+        }
 
-
-    if((PlayerStat[(tmp->id)].gwang > 3) && (PlayerStat[other].gwang < 1)) {
-       g=g*2;
+        if((players[(tmp->id)].rules->shake)==1) {
+            g=g*2;
+        }
+        if((players[(tmp->id)].rules->shake)==2) {
+            g=g*4;
+        }
+        
+        tmp->money = (tmp->money) + (tmp->score)*100*g;
+        players[playerId].money = players[playerId].money - (tmp->score)*100*g;
+        players[other].money = players[other].money + (tmp->score)*100*g;
     }
-
-    if(PlayerStat[(tmp->id)].sip > 7) {
-        g=g*2;
-    }
-
-   // k=isNagari();
-
-    if(k == 1) {
-        g=g*2;
-    }
-
-    if((players[(tmp->id)].rules->shake)==1) {
-        g=g*2;
-    }
-    if((players[(tmp->id)].rules->shake)==2) {
-        g=g*4;
-    }
-    
-
-    tmp->money = (tmp->money) + (tmp->score)*100*g;
-    players[playerId].money = players[playerId].money - (tmp->score)*100*g;
-    players[other].money = players[other].money + (tmp->score)*100*g;
-
-    }
-
-
-
-
-
 
     tmp->money = (tmp->money) + (tmp->score)*100*j;
     players[playerId].money = players[playerId].money - (tmp->score)*100*j;
