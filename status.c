@@ -129,10 +129,10 @@ void setScore(int playerId) {
 		tmp_score = tmp_score + 5;
     }
 
-    if((players[playerId].rules->chongtong)==1)
-    tmp_score = tmp_score+3;
-
-    tmp_score = tmp_score + (players[playerId].rules->go); 
+    if((players[playerId].rules->chongtong)==1) {
+        tmp_score = tmp_score+3;
+        tmp_score = tmp_score + (players[playerId].rules->go); 
+    }
 
     if((players[playerId].rules->go)==3) {
         tmp_score = tmp_score*2;
@@ -694,7 +694,6 @@ void load() {        // save.txt 파일내용을 한줄씩 읽기
     }
     while(fgets(line, 512, fp) != NULL) {          // 화투패 더미 읽기
         if(strstr(line, "dummyCard :")) {
-
             while(line[11+3*i] != '\n') { 
                 sscanf(line+11+i*3," %2d", &dummy[i].data);
 				i++;
@@ -713,7 +712,7 @@ void load() {        // save.txt 파일내용을 한줄씩 읽기
                 i++;
             }
 	    
-	    blanket[i-1].next=NULL;
+	        blanket[i-1].next=NULL;
             for(j=0; j < i-1; ++j) {
                 blanket[j].next = &blanket[j+1];
             }
@@ -721,10 +720,10 @@ void load() {        // save.txt 파일내용을 한줄씩 읽기
             blanketCard = &blanket[0];
             i = 0;
         }
-	if(strstr(line, "gusip :")) {
+        if(strstr(line, "gusip :")) {
             sscanf(line, "gusip : %d", &gusip);
         }
-	if(strstr(line, "nagari :")) {
+	    if(strstr(line, "nagari :")) {
             sscanf(line, "nagari : %d", &nagari);
         }
         if(strstr(line, "player1 id :")) {
@@ -738,14 +737,19 @@ void load() {        // save.txt 파일내용을 한줄씩 읽기
         }
         if(strstr(line, "player1 turn :")) {
             sscanf(line, "player1 turn : %d", &players[0].turn);
+<<<<<<< HEAD
         }								// A의 info 읽기
 
         if(strstr(line, "player1 holding card :")) {			// A의 가지고 있는 패읽기
+=======
+        }
+        if(strstr(line, "player1 holding card :")) {
+>>>>>>> f821fb05dbc95854417830b1c442eb0232b4d1fc
             while(line[23+3*i] != '\n') {
                 sscanf(line+23+3*i, " %2d", &headah[i].data);
                 i++;
             }
-	    headah[i-1].next=NULL;
+	        headah[i-1].next=NULL;
             for(j=0; j < i-1; ++j) {
                 headah[j].next = &headah[j+1];
             }
@@ -759,7 +763,7 @@ void load() {        // save.txt 파일내용을 한줄씩 읽기
                 sscanf(line+22+3*i, " %2d", &headae[i].data);
                 i++;
             }
-	    headae[i-1].next=NULL;
+	        headae[i-1].next=NULL;
             for(j=0; j < i-1; ++j) {
                 headae[j].next = &headae[j+1];
             }
@@ -793,7 +797,7 @@ void load() {        // save.txt 파일내용을 한줄씩 읽기
                 sscanf(line+23+3*i, " %2d", &headbh[i].data);
                 i++;
             }
-	    headbh[i-1].next=NULL;
+	        headbh[i-1].next=NULL;
             for(j=0; j < i-1; ++j) {
                 headbh[j].next = &headbh[j+1];
             }
@@ -806,7 +810,7 @@ void load() {        // save.txt 파일내용을 한줄씩 읽기
                 sscanf(line+22+3*i, " %2d", &headbe[i].data);
 				i++;
             }
-	    headbe[i-1].next=NULL;
+	        headbe[i-1].next=NULL;
             for(j=0; j < i-1; ++j) {
                 headbe[j].next = &headbe[j+1];
             }
@@ -840,7 +844,7 @@ void load() {        // save.txt 파일내용을 한줄씩 읽기
                 sscanf(line+23+3*i, " %2d", &headch[i].data);
 				i++;
             }
-	    headch[i-1].next=NULL;
+	        headch[i-1].next=NULL;
             for(j=0; j < i-1; ++j) {
                 headch[j].next = &headch[j+1];
             }
@@ -854,7 +858,7 @@ void load() {        // save.txt 파일내용을 한줄씩 읽기
                 sscanf(line+22+3*i, " %2d", &headce[i].data);
 				i++;
             }
-	    headce[i-1].next=NULL;
+	        headce[i-1].next=NULL;
             for(j=0; j < i-1; ++j) {
                 headce[j].next = &headce[j+1];
             }
