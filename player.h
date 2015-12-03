@@ -1,8 +1,8 @@
-#include "card.h"
-#include "rule.h"
-
 #ifndef _PLAYER_H_
 #define _PLAYER_H_
+
+#include "card.h"
+#include "rule.h"
 
 #define MAX_NUMBER_OF_PLAYER    3
 #define INITIAL_MONEY   100000
