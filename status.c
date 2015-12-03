@@ -467,18 +467,15 @@ void drawInterface(char *command) {
                     printf("갖고 있는 카드 수에서 벗어나는 값입니다.\n"); 
                     printf("다시 입력해주세요.\n"); 
                     printf("명령 : "); 
-
                     scanf("%s", command);
-
                     drawInterface(command);
 
                 } else {
                     printf("%d번째 턴이고, %d 번째 카드를 선택하셨습니다\n", turn, num);
+		    turn = getTurn();
+            	    putCard(num);
                 }
             }
-                
-            turn = getTurn();
-            putCard(num);
         }
         
     } else { // 문자일 경우
