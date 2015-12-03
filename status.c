@@ -470,7 +470,7 @@ void onlydrawScreen() {
             break;
         }
         int n = blanketCard->data;
-        printf("O) %s ", cardMatrix[n]);
+        printf("%s ", cardMatrix[n]);
         blanketCard = blanketCard->next;
     }
     blanketCard = tmpblanket;
