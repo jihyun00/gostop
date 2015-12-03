@@ -9,21 +9,18 @@
 
 // player 구조체에 점수 세팅
 void setScore(int playerId) {
-
 	int tmp_score = 0;
 	
 	P_C_S return_tmp;
 
-
 	int i = 0;
-    	int j = 0;
+    int j = 0;
 
 	int gwang = 0, bigwang = 0, pi = 0, ssangpi = 0,     
 		oh = 0, chodan = 0, hongdan = 0, chungdan = 0,
 		sip = 0, gukjin = 0, godori = 0;
 
     card eating;
-
     eating.next = players[playerId].eating_card;
 
 	for(i=0 ; eating.next->next != NULL ; i++) {
@@ -134,19 +131,20 @@ void setScore(int playerId) {
 
     if((players[playerId].rules->chongtong)==1)
     tmp_score = tmp_score+3;
-    
 
     tmp_score = tmp_score + (players[playerId].rules->go); 
 
-    if((players[playerId].rules->go)==3)
-    tmp_score = tmp_score*2;
+    if((players[playerId].rules->go)==3) {
+        tmp_score = tmp_score*2;
+    }
     
-    if((players[playerId].rules->go)==4)
-    tmp_score = tmp_score*4;
+    if((players[playerId].rules->go)==4) {
+        tmp_score = tmp_score*4;
+    }
 
-    if((players[playerId].rules->go)==5)
-    tmp_score = tmp_score*8;
-    
+    if((players[playerId].rules->go)==5) {
+        tmp_score = tmp_score*8;
+    }
 
     players[playerId].score = tmp_score;
 
@@ -155,9 +153,6 @@ void setScore(int playerId) {
     return_tmp.sip = sip;
     return_tmp.gwang = gwang;
     PlayerStat[playerId]=return_tmp; 
-    
-
-    
 }
 
 
@@ -187,56 +182,39 @@ void setMoney(int playerId ) {
 		sip = 0, gukjin = 0, godori = 0;
 
 
-    //  TODO: 피박(해결), 광박(해결), 멍텅구리(해결), 흔들기(해결) 고박(진사람들 쪽을 조사해야함)- (4,5번할때) 
-    // 쓰리고(해결), 포고(해결), (이와같은 것을 하고 이 긴사람 점수를 두배해주는 식으로 해결하면 됨)- (4,5번 할때)
-	
+    if((tmp->id)!=playerId) {
+        j++;
+    }
 
-
-
-        if((tmp->id)!=playerId) {
-            j++;
-        }
-
-		
-        if((PlayerStat[(tmp->id)].pi > 10) && (PlayerStat[playerId].pi < 7)) {
-            j=j*2;
-
-            //players[playerId].money = players[playerId].money - (tmp->score)*100*2;       //피박문제 해결한줄. 
-            //tmp->money = (tmp->money) + (tmp->score)*100;
-        }				
-
-	
-        if((PlayerStat[(tmp->id)].gwang > 3) && (PlayerStat[playerId].gwang < 1)) {
-           j=j*2;
-            //players[playerId].money = players[playerId].money - (tmp->score)*100*2;       //광박문제 해결한줄. 
-            //tmp->money = (tmp->money) + (tmp->score)*100;
-        }
-
-        //if((PlayerStat[(tmp->id)].gwang > 3) && (PlayerStat[playerId].gwang < 1)  
-        //&& (PlayerStat[(tmp->id)].pi > 10) && (PlayerStat[playerId].pi < 7)) {                // 피박+광박 문제 해결.
-         //   tmp->money = (tmp->money) + (tmp->score)*100;
-       // }
-
-        if(PlayerStat[(tmp->id)].sip > 7)  {
-            j=j*2;
-            //players[playerId].money = players[playerId].money - (tmp->score)*100*2;       //광박문제 해결한줄. 
-            //tmp->money = (tmp->money) + (tmp->score)*100;
-        }
-
-        k=isNagari();
-        if(k == 1){
-            j=j*2;}
-
-         if((players[(tmp->id)].rules->shake)==1)
-          j=j*2;
-         if((players[(tmp->id)].rules->shake)==2)
-          j=j*4;
-
-            tmp->money = (tmp->money) + (tmp->score)*100*j;
-        players[playerId].money = players[playerId].money - (tmp->score)*100*j;
     
+    if((PlayerStat[(tmp->id)].pi > 10) && (PlayerStat[playerId].pi < 7)) {
+        j=j*2;
+    }				
 
 
+    if((PlayerStat[(tmp->id)].gwang > 3) && (PlayerStat[playerId].gwang < 1)) {
+       j=j*2;
+    }
+
+    if(PlayerStat[(tmp->id)].sip > 7) {
+        j=j*2;
+    }
+
+    k=isNagari();
+
+    if(k == 1) {
+        j=j*2;
+    }
+
+    if((players[(tmp->id)].rules->shake)==1) {
+        j=j*2;
+    }
+    if((players[(tmp->id)].rules->shake)==2) {
+        j=j*4;
+    }
+
+    tmp->money = (tmp->money) + (tmp->score)*100*j;
+    players[playerId].money = players[playerId].money - (tmp->score)*100*j;
 }
 
 
@@ -374,9 +352,6 @@ void drawScreen() {
 }
 
 void onlydrawScreen() {
-	// 입력받지 않고 단순히 그려주는 함수
-    // status 변할 때마다 화면에 값 그려주기
-    // 플레이어 차례, 점수, 갖고 있는 패 등
     char command[256];
 
     system("clear");
