@@ -502,7 +502,11 @@ void drawInterface(char *command) {
                     drawInterface(command);
 
                 } else {
+<<<<<<< HEAD
                     printf("%c의 턴이고, %d 번째 카드를 선택하셨습니다\n", id[turn], num);
+=======
+                    printf("%c번째 턴이고, %d 번째 카드를 선택하셨습니다\n", id[turn], num);
+>>>>>>> f309ecab8b413eb9ce7cac52b68290714283f1d8
 		            turn = getTurn();
             	    putCard(num);
                 }

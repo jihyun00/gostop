@@ -27,17 +27,14 @@ void setShake(int index) {
     while(head->next != NULL) {
         if(prev == head->next->data/4) {
             c++;
-
         } else {
             c = 1;
         }
-
         if(c==3){
             players[index].rules->shake += 1;
 
             break;
         }
-
         prev = head->next->data/4;
         head = head->next;
     }
@@ -70,10 +67,8 @@ int getSulsa() {
 int isClearBoard() {
     if(getCardSize(blanketCard) == 1 && blanketCard->data == -1) {
         setClearBoard();
-
         return 1;
     }
-
     return 0;
 }
 
@@ -81,9 +76,7 @@ int isClearBoard() {
 void setClearBoard(){
     int i;
     int turn = getTurn();
-
     players[turn].rules->clear_board = 1;
-
     getPi(turn);
 }
 
@@ -126,7 +119,6 @@ void isNagari() {
 		if((getScore(0) < 3) && (getScore(1) < 3) && (getScore(2) < 3)) {
             nagari = 1;
             printf("이번 판은 나가리~\n");
-
             gameEnd();
 		}
     
@@ -145,17 +137,13 @@ void isNagari() {
                         cnt++;
                     }
                 }
-
                 if(cnt == 2) {
                     nagari = 1;
-
                     printf("이번 판은 나가리~\n");
-
                     gameEnd();
                 }
             }
         }
-
         players[turn].history=4;
         gameEnd();
 	}
@@ -164,29 +152,24 @@ void isNagari() {
 
 void getPi(int turn) {
     int i;
-
     card *head = NULL;
     
     for(i=0; i < MAX_NUMBER_OF_PLAYER; ++i) {
         if(i == turn) {
             continue;
         }
-
         while(head != NULL) {
             if((head->data%4 == 2) || (head->data%4 == 3) || (gusip == 0 && head->data == 28)) {
                 if(head->data != 46) {
                     cardInsert(players[turn].eating_card, head->data);
                     cardDelete(players[i].eating_card, head->data);
-                    
                     break;
                 }
             }
-
             head = head->next;
         }
     }
 }
-
 
 int setGo(){ 
     int turn = getTurn();
@@ -204,7 +187,6 @@ int setGo(){
     }
     printf("%c 플레이어가 점수 %d 획득!\n",id[turn],getScore(turn));
     printf("Go하시겠습니까? Stop하시겠습니까? (g, s)"); 
-
     scanf("%s", status);
 
     if((strcmp(status, "go") == 0) || (strcmp(status, "g") == 0)) {
@@ -214,9 +196,6 @@ int setGo(){
         players[turn].gobak = 1;
         players[(turn+1)%3].gobak= 0;
         players[(turn+2)%3].gobak= 0;
-
-
-
         return players[turn].rules->go;
     } else {
         setStop();
@@ -228,31 +207,29 @@ int setGo(){
 void setStop() {
     int turn=getTurn();
     printf("STOP 합니다, 게임을 종료합니다.\n");
-
     players[turn].winner=1;
-
     players[turn].history=0;
     gameEnd(); 
 }
-
 
 void gameEnd() {
     int i;
     char name[5]={'A','B','C'};
     player* tmp= NULL;
     tmp = setWinner();
-    if(tmp ==NULL)
-        exit(0);
-    else{
-    int winner = tmp->id;
-    printf("게임 종료되었습니다. 승자는 %c\n", name[winner]);
-    printf("-------게이머의 잔고---------\n");
-    for(i=0;i<3;i++){
-        setMoney(i);
+    if(tmp ==NULL) {
+        printf("게임 종료되었습니다.\n");
+        //exit(0);
+    } else{
+        int winner = tmp->id;
+        printf("게임 종료되었습니다. 승자는 %c\n", name[winner]);
+        for(i=0;i<3;i++){
+            setMoney(i);
+        }
     }
+    printf("-------게이머의 잔고---------\n");
     for(i=0;i<3;i++){
         printf("%c의 잔고 : %d 원\n", name[i], getMoney(i));
     }
-
-    exit(0);}
+    exit(0);
 }
