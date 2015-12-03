@@ -279,7 +279,7 @@ void gameEnd() {
     char name[5]={'A','B','C'};
     player* tmp= NULL;
     tmp = setWinner();
-    if(tmp =NULL)
+    if(tmp ==NULL)
         exit(0);
     else{
     int winner = tmp->id;
