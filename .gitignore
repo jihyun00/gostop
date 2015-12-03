@@ -8,3 +8,4 @@ a.exe
 *.o
 *.gch
 *.stackdump
+.vimrc
