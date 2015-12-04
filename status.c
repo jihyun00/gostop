@@ -490,25 +490,8 @@ void drawInterface(char *command) {
 
         num = atoi(command);
 
-        if(num < 10 && num > 0) {
-            if(num == 9) {
-                printf("9십을 십으로 이동합니다(default : 십->피)\n");
-
-            } else {
-                if(getCardSize(players[turn].holding_card) < num) {
-                    printf("갖고 있는 카드 수에서 벗어나는 값입니다.\n"); 
-                    printf("다시 입력해주세요.\n"); 
-                    printf("명령 : "); 
-                    scanf("%s", command);
-                    drawInterface(command);
-
-                } else {
-                    printf("%c번째 턴이고, %d 번째 카드를 선택하셨습니다\n", id[turn], num);
-		            turn = getTurn();
-            	    putCard(num);
-                }
-            }
-        }
+        putCard(num);
+        printf("%c번째 턴이고, %d 번째 카드를 선택하셨습니다\n", id[turn], num);
         
     } else { // 문자일 경우
         if((strcmp(command, "e") == 0) || (strcmp(command, "exit") == 0)) {

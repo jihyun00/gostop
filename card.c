@@ -379,6 +379,13 @@ void putCard(int num) {
         scanf("%d", &num);
     }
 
+    if(getCardSize(players[turn].holding_card) < num) {
+        printf("갖고 있는 카드 수에서 벗어나는 값입니다.\n"); 
+        printf("다시 입력해주세요.\n"); 
+        printf("명령 : "); 
+        scanf("%d", &num);
+    }
+
     // 사용자 인터페이스에서 1~7 사이의 값으로 입력받은 걸
     // 카드 데이터로 변경
     for(i=0; i < num; ++i) {
@@ -539,6 +546,9 @@ void toggle() {
     if(getCard(eating, 32) != NULL && gusip == 0) {
         gusip = 1;
 
-        printf("9십을 십으로 이동합니다.\n");
+        printf("9십을 십으로 이동합니다(default : 십->피)\n");
+
+    } else {
+        printf("toggle하려는 카드가 존재하지 않습니다.\n");
     }
 }
