@@ -214,6 +214,7 @@ void setMoney(int playerId ) {
         j=j*4;
     }
 
+    if(playerId != (tmp->id)){
     if((players[playerId].gobak) == 1){
         other = 3 - ((tmp->id)+playerId);
 
@@ -244,6 +245,7 @@ void setMoney(int playerId ) {
         
         players[playerId].money = players[playerId].money - (tmp->score)*100*g;
         players[other].money = players[other].money + (tmp->score)*100*g;
+    }
     }
 
     tmp->money = (tmp->money) + (tmp->score)*100*j;
