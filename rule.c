@@ -3,7 +3,8 @@
 #include "status.h"
 
 #include <string.h>
-char id[3] = {'A', 'B', 'C'};
+char id[3] = {'A', 'B', 'C'}; // 숫자에 따른 플레이어 이름 출력을 위한 배
+
 //rules 구조체 초기화
 void initializeRule(int index) {
     players[index].rules = (rule *)malloc(sizeof(rule)); 
@@ -92,7 +93,7 @@ void setChongtong(int index) {
 	head = players[index].holding_card;
     prev = head->data/4;
     while(head->next != NULL) {
-        if(prev == head->next->data/4) {
+        if(prev == head->next->data/4) {  // 4로 나누었을때의 몫이 같으면 같은 달이므로 총통이 된다.
             c++;
 
         } else {

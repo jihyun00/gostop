@@ -22,7 +22,7 @@ const char cardMatrix[CardMAX][10] = { // 카드 데이터를 이름으로 출�
     "12광","12십","12띠","12쌍피" 
 };
 
-void cardInitialize() { // 카드 동적 할당 및 player들에게 카드 할당
+void cardInitialize() { // 카드(고유 숫자) 동적 할당 및 player들에게 카드 할당
     int i;
     card *initialCard = (card *)malloc(sizeof(card)*CardMAX); 
     card *playersCard = (card *)malloc(sizeof(card)*MAX_NUMBER_OF_PLAYER);
