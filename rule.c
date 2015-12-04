@@ -203,9 +203,15 @@ int setGo(){
         players[(turn+1)%3].gobak= 0;
         players[(turn+2)%3].gobak= 0;
         return players[turn].rules->go;
-    } else {
+    } else if((strcmp(status, "stop") == 0) || (strcmp(status, "s") == 0)) {
         setStop();
+
+    } else {
+        printf("명령어를 잘못 입력하셨습니다.\n");
+
+        setGo(); 
     }
+
     return 0;
 }
 
