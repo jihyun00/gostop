@@ -158,6 +158,12 @@ void getPi(int turn) {
         if(i == turn) {
             continue;
         }
+
+        head = players[i].eating_card;
+        if(head == NULL) {
+            continue;
+        }
+
         while(head != NULL) {
             if((head->data%4 == 2) || (head->data%4 == 3) || (gusip == 0 && head->data == 28)) {
                 if(head->data != 46) {

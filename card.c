@@ -401,18 +401,26 @@ void putCard(int num) {
 
     if(hasPair > 0) {
         if((selected_data/4) == (index/4)) { 
-            if(hasPair > 1) { // 따닥
+            if(hasPair > 1) { // 따닥 
                 cardInsert(eating, index);
                 cardInsert(eating, res[0]);
                 cardInsert(eating, res[1]);
                 cardInsert(eating, selected_data);
 
+                cardDelete(blanketCard, res[0]);
+                cardDelete(blanketCard, res[1]);
+
+                printf("따닥!\n");
+                sleep(1);
+
                 getPi(turn);
 
             } else { // 설사
                 cardInsert(blanketCard, index);
-                cardInsert(blanketCard, res[0]);
                 cardInsert(blanketCard, selected_data);
+
+                printf("설사!\n");
+                sleep(1);
 
                 setSulsa();
             }
@@ -424,7 +432,15 @@ void putCard(int num) {
                 if(hasPair > 2 && (getSulsa() > -1)) { // 싼 거 먹기
                     cardInsert(eating, res[0]); 
                     cardInsert(eating, res[1]); 
+                    cardInsert(eating, res[2]);
                     cardInsert(eating, selected_data);
+
+                    cardDelete(blanketCard, res[0]);
+                    cardDelete(blanketCard, res[1]);
+                    cardDelete(blanketCard, res[2]);
+
+                    printf("싼 거 먹기 성공!\n");
+                    sleep(1);
 
                     players[getSulsa()].rules->sulsa = 0;
 
@@ -460,8 +476,24 @@ void putCard(int num) {
 
             if(hasDummyPair > 0) {
                 cardInsert(eating, selected_data);
+                if(hasDummyPair > 2) { // 싼 거 먹기
+                    cardInsert(eating, dummyRes[0]); 
+                    cardInsert(eating, dummyRes[1]); 
+                    cardInsert(eating, dummyRes[2]); 
+                    cardInsert(eating, selected_data);
 
-                if(hasDummyPair > 1) {
+                    cardDelete(blanketCard, dummyRes[0]);
+                    cardDelete(blanketCard, dummyRes[1]);
+                    cardDelete(blanketCard, dummyRes[2]);
+
+                    printf("싼 거 먹기 성공!\n");
+                    sleep(1);
+
+                    players[getSulsa()].rules->sulsa = 0;
+
+                    getPi(turn);
+
+                } else if(hasDummyPair > 1) {
                     printf("짝이 맞는 두 개의 카드 중 어느 카드를 고르시겠습니까? (1, 2 중 하나 입력)\n");
                     for(i=0; i < hasDummyPair; ++i) {
                         if(dummyRes[i] == -1) {
@@ -498,8 +530,24 @@ void putCard(int num) {
 
         if(hasDummyPair > 0) {
             cardInsert(eating, selected_data);
+            if(hasDummyPair > 2) {
+                cardInsert(eating, dummyRes[0]); 
+                cardInsert(eating, dummyRes[1]); 
+                cardInsert(eating, dummyRes[2]); 
+                cardInsert(eating, selected_data);
 
-            if(hasDummyPair > 1) {
+                cardDelete(blanketCard, dummyRes[0]);
+                cardDelete(blanketCard, dummyRes[1]);
+                cardDelete(blanketCard, dummyRes[2]);
+
+                printf("싼 거 먹기 성공!\n");
+                sleep(1);
+
+                players[getSulsa()].rules->sulsa = 0;
+
+                getPi(turn);
+
+            } else if(hasDummyPair > 1) {
                 printf("짝이 맞는 두 개의 카드 중 어느 카드를 고르시겠습니까? (1, 2 중 하나 입력)\n");
                 for(i=0; i < hasDummyPair; ++i) {
                     if(dummyRes[i] == -1) {
