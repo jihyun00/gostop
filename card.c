@@ -601,7 +601,7 @@ void putCard(int num) { // 사용자가 카드를 내고, 카드를 뽑고, 카�
 }
 
 
-void toggle() {
+void toggle() { // 토글 기능 수행하는 함수
     int turn = getTurn();
 
     card *eating = players[turn].eating_card;

@@ -21,7 +21,7 @@ void setPlayerInfo() {
 }
 
 
-void setTurn() {
+void setTurn() { // 턴 설정해주는 함수
     int i;
     
     for(i=0; i < MAX_NUMBER_OF_PLAYER; ++i) {

@@ -40,7 +40,7 @@ void setShake(int index) {
     }
 }
 
-
+// 설사 기능 설정
 void setSulsa() {
     int turn = getTurn();
 
@@ -52,6 +52,7 @@ void setSulsa() {
 }
 
 
+// 설사한 적이 있는지 체크
 int getSulsa() {
     int i;
     for(i=0; i < MAX_NUMBER_OF_PLAYER; ++i) {
@@ -73,6 +74,7 @@ int isClearBoard() {
 }
 
 
+// 판쓰리 설정
 void setClearBoard(){
     int i;
     int turn = getTurn();
@@ -81,6 +83,7 @@ void setClearBoard(){
 }
 
 
+// 총통 여부 체크
 void setChongtong(int index) {
 	card *head = NULL;
 	int c = 1;
@@ -108,6 +111,7 @@ void setChongtong(int index) {
 }
 
 
+// 나가리 여부 체크
 void isNagari() {
     int i, j;
     int cnt;
@@ -150,6 +154,7 @@ void isNagari() {
 }
 
 
+// 다른 사람에게 피를 한 장씩 가져오는 함수
 void getPi(int turn) {
     int i;
     card *head = NULL;
@@ -177,6 +182,7 @@ void getPi(int turn) {
     }
 }
 
+// 점수가 났는지 체크 후 점수 났을 경우 go를 할지 말지 체크
 int setGo(){ 
     int turn = getTurn();
     char status[10];
@@ -216,6 +222,7 @@ int setGo(){
 }
 
 
+// 고를 할 수 있는 상황에서 stop을 했을 때 처리하는 함수
 void setStop() {
     int turn=getTurn();
     printf("STOP 합니다, 게임을 종료합니다.\n");
@@ -224,6 +231,7 @@ void setStop() {
     gameEnd(); 
 }
 
+// 게임이 마무리되고 승자를 가리고, 잔고 등을 출력해주는 함수
 void gameEnd() {
     int i;
     char name[5]={'A','B','C'};

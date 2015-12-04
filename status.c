@@ -871,7 +871,7 @@ void load() {        // save.txt 파일내용을 한줄씩 읽기
 }
 
 
-void getCommand(char *command) {
+void getCommand(char *command) { // 문자로 입력받은 명령어 정보 리턴
     if((strcmp(command, "e") == 0) || (strcmp(command, "exit") == 0)) {
             printf("게임을 종료합니다\n");
             exit(0);
