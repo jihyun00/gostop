@@ -40,5 +40,6 @@ void drawInterface(char *command); // 사용자 인터페이스 처리
 void save();
 void load();
 void onlydrawScreen();
+void getCommand(char *command);
 
 #endif

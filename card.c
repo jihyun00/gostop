@@ -1,10 +1,13 @@
 ﻿#include "card.h"
 #include "player.h"
 #include "rule.h"
+#include "status.h"
+
 #include <string.h>
 #include <unistd.h>
+#include <ctype.h>
 
-const char cardMatrix[CardMAX][10] = {
+const char cardMatrix[CardMAX][10] = { // 카드 데이터를 이름으로 출력하기 위해 선언한 배열
     "1광","1오","1피1","1피2",
     "2십","2오","2피1","2피2",
     "3광","3오","3피1","3피2",
@@ -19,9 +22,9 @@ const char cardMatrix[CardMAX][10] = {
     "12광","12십","12띠","12쌍피" 
 };
 
-void cardInitialize() {
+void cardInitialize() { // 카드 동적 할당 및 player들에게 카드 할당
     int i;
-    card *initialCard = (card *)malloc(sizeof(card)*CardMAX);
+    card *initialCard = (card *)malloc(sizeof(card)*CardMAX); 
     card *playersCard = (card *)malloc(sizeof(card)*MAX_NUMBER_OF_PLAYER);
 
     dummyCard = (card *)malloc(sizeof(card));
@@ -51,7 +54,7 @@ void cardInitialize() {
 }
 
 
-void divideCard(card *card_list, card *players_card) {
+void divideCard(card *card_list, card *players_card) { // shuffle한 카드 player들에게 나눠주기
     int i;
     card *head = NULL;
 
@@ -138,7 +141,7 @@ void divideCard(card *card_list, card *players_card) {
 }
 
 
-void cardShuffle(card *card_list) {
+void cardShuffle(card *card_list) { // 카드 random 하게 섞기
     int i;
     int duplicated_check[CardMAX] = { 0, };
 
@@ -158,7 +161,7 @@ void cardShuffle(card *card_list) {
 }
 
 
-void orderCard(card *card_list) {
+void orderCard(card *card_list) { // 카드를 번호순으로 정렬하기
     card *q;
     card *r;
     int temp;
@@ -179,7 +182,7 @@ void orderCard(card *card_list) {
 }
 
 
-card *getCard(card *card_list, int data) {  
+card *getCard(card *card_list, int data) { // 카드 정보 가져오기
     card *head = card_list;
 
     if(head == NULL) {
@@ -199,7 +202,7 @@ card *getCard(card *card_list, int data) {
 }
 
 
-int selectCard(card *card_list) {
+int selectCard(card *card_list) { // 카드리스트에서 맨 위에 있는 카드 뽑기
     card *head = card_list;
     
     if(head == NULL) {
@@ -210,7 +213,7 @@ int selectCard(card *card_list) {
 }
 
 
-void cardInsert(card *card_list, int data) { 
+void cardInsert(card *card_list, int data) { // 카드리스트에 카드 추가
     card *head = card_list;
     card *prev = NULL;
     card *temp = (card *)malloc(sizeof(card));
@@ -261,7 +264,7 @@ void cardInsert(card *card_list, int data) {
 }
 
 
-void cardDelete(card *card_list, int data) {  
+void cardDelete(card *card_list, int data) { // 카드 리스트로부터 카드 삭제
     card *head = card_list;
     card *temp = (card *)malloc(sizeof(card));
     card *prev = NULL;
@@ -304,7 +307,7 @@ void cardDelete(card *card_list, int data) {
 }
 
 
-int getCardSize(card *card_list) {
+int getCardSize(card *card_list) { // 가지고 있는 카드 갯수 리턴
     int size = 0;
     card *head = card_list;
 
@@ -317,7 +320,7 @@ int getCardSize(card *card_list) {
 }
 
 
-int* getSame(card *card_list, int data, int *size) {  
+int* getSame(card *card_list, int data, int *size) { // 카드가 같은 달에 속하는지 체크
     int i = 0;
     *size = 0;
     int *res = (int *)malloc(sizeof(int)*3);
@@ -348,7 +351,7 @@ int* getSame(card *card_list, int data, int *size) {
 }
 
 
-void putCard(int num) {
+void putCard(int num) { // 사용자가 카드를 내고, 카드를 뽑고, 카드를 먹는 과정
     int hasPair = 0;
     int hasDummyPair = 0;
     int turn;
@@ -359,6 +362,7 @@ void putCard(int num) {
     int *dummyRes;
     int selected;
     int dummySelected;
+    char command[256];
 
     card *holding = NULL;
     card *eating = NULL;
@@ -376,14 +380,25 @@ void putCard(int num) {
 
         printf("카드를 선택해주세요.\n");
 
-        scanf("%d", &num);
-    }
+        while(1) {
+            scanf("%s", command);
 
-    if(getCardSize(players[turn].holding_card) < num) {
-        printf("갖고 있는 카드 수에서 벗어나는 값입니다.\n"); 
-        printf("다시 입력해주세요.\n"); 
-        printf("명령 : "); 
-        scanf("%d", &num);
+            if(isdigit(command[0])) {
+                num = atoi(command);
+
+                if(getCardSize(players[turn].holding_card) < num) {
+                    printf("갖고 있는 카드 수에서 벗어나는 값입니다.\n"); 
+                    printf("다시 입력해주세요.\n"); 
+                    printf("명령 : "); 
+
+                } else {
+                    break;
+                }
+
+            } else {
+                getCommand(command);
+            }
+        }
     }
 
     // 사용자 인터페이스에서 1~7 사이의 값으로 입력받은 걸

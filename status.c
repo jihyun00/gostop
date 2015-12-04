@@ -481,7 +481,7 @@ void onlydrawScreen() {
 }
 
 
-void drawInterface(char *command) {
+void drawInterface(char *command) { // interface를 그려주는 함수
     // 숫자일 경우
     if(isdigit(command[0])) {
         int num;
@@ -490,44 +490,28 @@ void drawInterface(char *command) {
 
         num = atoi(command);
 
+        while(1) {
+            if(num == 9) {
+                break;
+            }
+
+            if(getCardSize(players[turn].holding_card) < num) {
+                printf("갖고 있는 카드 수에서 벗어나는 값입니다.\n"); 
+                printf("다시 입력해주세요.\n"); 
+                printf("명령 : "); 
+                scanf("%d", &num);
+
+            } else {
+                break;
+            }
+        }
+
         putCard(num);
         printf("%c번째 턴이고, %d 번째 카드를 선택하셨습니다\n", id[turn], num);
         
     } else { // 문자일 경우
-        if((strcmp(command, "e") == 0) || (strcmp(command, "exit") == 0)) {
-                printf("게임을 종료합니다\n");
-                exit(0);
+        getCommand(command);
 
-        } else if((strcmp(command, "b") == 0) || (strcmp(command, "balance") == 0)) {
-                printf("-------게이머의 잔고---------\n");
-                printf("A의 잔고 : %d 원\n", getMoney(0));
-                printf("B의 잔고 : %d 원\n", getMoney(1));
-                printf("C의 잔고 : %d 원\n", getMoney(2));
-
-        } else if((strcmp(command, "h") == 0) || (strcmp(command, "help") == 0)) { 
-                printf("--------- 도움말 ------------\n");
-                printf("1. g(o) : 고 (자기 turn에 점수가 났고 3점이상");
-                printf("2. s(top) : 스톱(자기 turn에 점수가 났고 3점 이상일 떄, 이번 판을 끝냄\n");
-                printf("3.e(xit) : exit 프로그램 끝내기\n");
-                printf("4. b(alance) : 게이머의 잔고 보기\n");
-                printf("5. h(elp) : 각 키에 대한 설명 보기\n");
-                printf("6. 1~7 : 낼 화투 선택\n");
-                printf("7. 1~2 : 화투를 냈는데 깔린 화투 중 무늬는 같지만 다른 것이 있을 때 선택\n");
-                printf("8. 9 : 9 십을 피로 또는 십으로 이동(토글), 디폴트로는 피로 함, 각 판에서 한번만 할 수 있음\n");
-                printf("9. save : 현재 상태를 파일에 저장(단, 확인 가능하도록 텍스트 형태로 저장해야함\n");
-                printf("10. load : 파일에 저장된 상태를 읽어서 계속 게임 진행\n");
-
-        } else if(strcmp(command, "save") == 0) {
-                printf("게임을 저장합니다.\n");
-                save();
-        } else if(strcmp(command, "load") == 0) {
-            printf("게임을 로드합니다.\n");
-            load();
-            onlydrawScreen();
-            printf("\n\n");
-        } else {
-            printf("유효하지 않은 명령어입니다.\n");
-        }
         printf("명령 : "); 
         scanf("%s", command);
         drawInterface(command);
@@ -535,9 +519,7 @@ void drawInterface(char *command) {
 }
 
 
-void save() { //데이터들을 한 줄씩 쓰는 함수
-    // player 구조체 모든 정보
-    // dummyCard, blanketCard
+void save() { // dummyCard, blanketCard, player 정보 등을 파일에 저장
     FILE *fp;
     card *head = NULL;
     int exist = -1;
@@ -886,4 +868,42 @@ void load() {        // save.txt 파일내용을 한줄씩 읽기
         }
     }
     fclose(fp);
+}
+
+
+void getCommand(char *command) {
+    if((strcmp(command, "e") == 0) || (strcmp(command, "exit") == 0)) {
+            printf("게임을 종료합니다\n");
+            exit(0);
+
+    } else if((strcmp(command, "b") == 0) || (strcmp(command, "balance") == 0)) {
+            printf("-------게이머의 잔고---------\n");
+            printf("A의 잔고 : %d 원\n", getMoney(0));
+            printf("B의 잔고 : %d 원\n", getMoney(1));
+            printf("C의 잔고 : %d 원\n", getMoney(2));
+
+    } else if((strcmp(command, "h") == 0) || (strcmp(command, "help") == 0)) { 
+            printf("--------- 도움말 ------------\n");
+            printf("1. g(o) : 고 (자기 turn에 점수가 났고 3점이상");
+            printf("2. s(top) : 스톱(자기 turn에 점수가 났고 3점 이상일 떄, 이번 판을 끝냄\n");
+            printf("3.e(xit) : exit 프로그램 끝내기\n");
+            printf("4. b(alance) : 게이머의 잔고 보기\n");
+            printf("5. h(elp) : 각 키에 대한 설명 보기\n");
+            printf("6. 1~7 : 낼 화투 선택\n");
+            printf("7. 1~2 : 화투를 냈는데 깔린 화투 중 무늬는 같지만 다른 것이 있을 때 선택\n");
+            printf("8. 9 : 9 십을 피로 또는 십으로 이동(토글), 디폴트로는 피로 함, 각 판에서 한번만 할 수 있음\n");
+            printf("9. save : 현재 상태를 파일에 저장(단, 확인 가능하도록 텍스트 형태로 저장해야함\n");
+            printf("10. load : 파일에 저장된 상태를 읽어서 계속 게임 진행\n");
+
+    } else if(strcmp(command, "save") == 0) {
+            printf("게임을 저장합니다.\n");
+            save();
+    } else if(strcmp(command, "load") == 0) {
+        printf("게임을 로드합니다.\n");
+        load();
+        onlydrawScreen();
+        printf("\n\n");
+    } else {
+        printf("유효하지 않은 명령어입니다.\n");
+    }
 }
