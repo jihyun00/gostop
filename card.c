@@ -445,7 +445,7 @@ void putCard(int num) { // 사용자가 카드를 내고, 카드를 뽑고, 카�
             cardInsert(eating, index);
 
             if(hasPair > 1) {
-                if(hasPair > 2 && (getSulsa() > -1)) { // 싼 거 먹기
+                if(hasPair > 2) { // 싼 거 먹기
                     cardInsert(eating, res[0]); 
                     cardInsert(eating, res[1]); 
                     cardInsert(eating, res[2]);
@@ -458,7 +458,9 @@ void putCard(int num) { // 사용자가 카드를 내고, 카드를 뽑고, 카�
                     printf("싼 거 먹기 성공!\n");
                     sleep(1);
 
-                    players[getSulsa()].rules->sulsa = 0;
+                    if(getSulsa() > -1) {
+                        players[getSulsa()].rules->sulsa = 0;
+                    }
 
                     getPi(turn);
 
