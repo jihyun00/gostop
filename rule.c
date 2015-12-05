@@ -122,36 +122,27 @@ void isNagari() {
 	if((dummyCard->data == -1) && (getCardSize(dummyCard) == 1)) {
         // 아무도 3점 이상 내지 못했을 경우
 		if((getScore(0) < 3) && (getScore(1) < 3) && (getScore(2) < 3)) {
+            printf("아무도 3점 이상 못냈을 경우\n");
             nagari = 1;
             printf("이번 판은 나가리~\n");
-            gameEnd();
-		}
-    
-        // 고를 했으나 추가 점수가 나지 않고 상대도 3점 이상을 획득하지 못한 경우
-        for(i=0; i < MAX_NUMBER_OF_PLAYER; ++i) {
-            cnt = 0;
-            num_of_go = players[i].rules->go;
 
-            if(players[i].score < players[i].additional_score + 1) {
-                for(j=0; j < MAX_NUMBER_OF_PLAYER; ++j) {
-                    if(i == j) {
-                        continue;
-                    }
+		} else { // 고를 했으나 추가 점수가 나지 않은 경우
+            for(i=0; i < MAX_NUMBER_OF_PLAYER; ++i) {
+                cnt = 0;
+                num_of_go = players[i].rules->go;
 
-                    if(getScore(j) < 3) {
-                        cnt++;
-                    }
-                }
-                if(cnt == 2) {
+                if(players[i].score < players[i].additional_score + 1) {
                     nagari = 1;
                     printf("이번 판은 나가리~\n");
-                    gameEnd();
+
+                    break;
                 }
             }
+            players[turn].history=4;
         }
-        players[turn].history=4;
+
         gameEnd();
-	}
+    }
 }
 
 
@@ -210,6 +201,7 @@ int setGo(){
         players[turn].gobak = 1;   // 고박 체크하는 부분.
         players[(turn+1)%3].gobak= 0;  // 나머지 사람들은 고박에 대한 값을 없앰.
         players[(turn+2)%3].gobak= 0;
+
         return players[turn].rules->go;
     } else if((strcmp(status, "stop") == 0) || (strcmp(status, "s") == 0)) {
         setStop();
@@ -272,7 +264,6 @@ void gameEnd() {
 
             } else {
                 before_nagari = 1;
-                setWinnerTurn(MAX_NUMBER_OF_PLAYER-1);
             }
 
             initializedPCS();
