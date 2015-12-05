@@ -18,7 +18,6 @@ typedef enum _game_player_status {
 } game_player_status;
 
 int nagari; // nagari인지 체크해주는 변수
-int before_nagari; // 이전 판이 나가리였는지 체크
 
 typedef struct _game_player_card_status {   // 피박 광박 멍텅구리등을 처리하기 위한 구조체. 
 	int oh;

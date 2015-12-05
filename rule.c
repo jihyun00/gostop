@@ -261,9 +261,6 @@ void gameEnd() {
             setPlayerInfo(); 
             if(nagari != 1) {
                 setWinnerTurn((winner+MAX_NUMBER_OF_PLAYER-1)%MAX_NUMBER_OF_PLAYER); 
-
-            } else {
-                before_nagari = 1;
             }
 
             initializedPCS();

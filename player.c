@@ -49,6 +49,7 @@ int getTurn() {
 }
 
 
+// 이전에 이긴 사람이 먼저 시작하게 설정
 void setWinnerTurn(int turn) {
     players[0].turn = GAME_TURN_NOT_NOW;
     players[turn].turn = GAME_TURN_NOW; 
