@@ -206,8 +206,8 @@ int setGo(){
         players[turn].rules->go += 1;
         players[turn].score += 1;
         players[turn].addtional_score = players[turn].score; 
-        players[turn].gobak = 1;
-        players[(turn+1)%3].gobak= 0;
+        players[turn].gobak = 1;   // 고박 체크하는 부분.
+        players[(turn+1)%3].gobak= 0;  // 나머지 사람들은 고박에 대한 값을 없앰.
         players[(turn+2)%3].gobak= 0;
         return players[turn].rules->go;
     } else if((strcmp(status, "stop") == 0) || (strcmp(status, "s") == 0)) {
@@ -227,7 +227,7 @@ int setGo(){
 void setStop() {
     int turn=getTurn();
     printf("STOP 합니다, 게임을 종료합니다.\n");
-    players[turn].winner=1;
+    players[turn].winner=1;  //승자 표시해두는 부분.
     players[turn].history=0;
     gameEnd(); 
 }

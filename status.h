@@ -19,14 +19,14 @@ typedef enum _game_player_status {
 
 int nagari; // nagari인지 체크해주는 변
 
-typedef struct _game_player_card_status {
+typedef struct _game_player_card_status {   // 피박 광박 멍텅구리등을 처리하기 위한 구조체. 
 	int oh;
 	int sip;
 	int pi;
 	int gwang;
 } P_C_S;
 
-P_C_S PlayerStat[MAX_NUMBER_OF_PLAYER];
+P_C_S PlayerStat[MAX_NUMBER_OF_PLAYER]; // 구조체배열.
 
 
 void setScore(int playerId);// player 구조체에 점수 세팅
