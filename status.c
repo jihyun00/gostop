@@ -11,7 +11,7 @@
 void setScore(int playerId) {
 	int tmp_score = 0;
 	
-	P_C_S return_tmp;
+	P_C_S return_tmp; // P_C_S형 임시변수를 선언해서 나중에, 피와 오와 십과 광 값을, 필요에 의해 리턴 받음. 
 
 	int i = 0;
     int j = 0;
@@ -20,10 +20,10 @@ void setScore(int playerId) {
 		oh = 0, chodan = 0, hongdan = 0, chungdan = 0,
 		sip = 0, gukjin = 0, godori = 0;
 
-    card eating;
+    card eating; //임시로 먹은 패의 초기 값을 가리킬 card형 구조체 선언.
     eating.next = players[playerId].eating_card;
 
-	for(i=0 ; eating.next->next != NULL ; i++) {
+	for(i=0 ; eating.next->next != NULL ; i++) {  //내가 먹은 패가 어떤건지 조건들로 알아봄.
 	    if((((eating.next->next->data)%4 == 2) || ((eating.next->next->data)%4 == 3)) && (((eating.next->next->data) != 46) && ((eating.next->next->data) != 47))) {
 			pi++;
         }
@@ -73,7 +73,7 @@ void setScore(int playerId) {
 	    eating.next = eating.next->next;
     }
 
-	if(ssangpi == 1) {
+	if(ssangpi == 1) { // 쌍피이면 피에 +2
 		pi = pi+2;
     }
     
@@ -81,11 +81,11 @@ void setScore(int playerId) {
 		pi = pi+4;
     }
 
-	if(pi >= 10) {
+	if(pi >= 10) {  // 피가 10장이상이면 +1
 		tmp_score = tmp_score + pi-9;
     }
 
-	if(gwang == 3) {
+	if(gwang == 3) {           // 여기서부터 광점수 컨트롤 부분.
 		tmp_score = tmp_score + 3;
 	}
 
@@ -102,43 +102,45 @@ void setScore(int playerId) {
     }
 
 	if(gwang == 5) {
-		tmp_score = tmp_score + 11;
+		tmp_score = tmp_score + 11;   // 광이 5개이면 15점.
     }
 
 	if(oh >= 5) {
-		tmp_score = tmp_score + oh-4;
+		tmp_score = tmp_score + oh-4; // 오가 5장이상이면 1점씩 추가
     }
 
 	if(hongdan == 3) {
-		tmp_score = tmp_score + 3;
+		tmp_score = tmp_score + 3;  // 홍단의 경우.
     }
 
 	if(chodan == 3) {
-		tmp_score = tmp_score + 3;
+		tmp_score = tmp_score + 3;  // 초단의 경우.
     }
 
 	if(chungdan == 3) {
-		tmp_score = tmp_score + 3;
+		tmp_score = tmp_score + 3;  //청단의 경우
     }
 
 	if(sip >= 5) {
-		tmp_score = tmp_score + sip-4;
+		tmp_score = tmp_score + sip-4; // 십이 5장 이상이면 1점씩 추가
     }
 
 	if(godori == 3) {
-		tmp_score = tmp_score + 5;
+		tmp_score = tmp_score + 5;  //고도리일 경우 5점 추가.
     }
 
-    if((players[playerId].rules->chongtong)==1) {
-        tmp_score = tmp_score+3;
-        tmp_score = tmp_score + (players[playerId].rules->go); 
-    }
+    if((players[playerId].rules->chongtong)==1) { // 총통일 경우 3점 추가.
+        tmp_score = tmp_score+3;}
 
-    if((players[playerId].rules->go)==3) {
+    
+    tmp_score = tmp_score + (players[playerId].rules->go); // go 했을 경우 +1점. (이 부분을 안하면 턴 넘어가면서 -1점이 됨.)
+    
+
+    if((players[playerId].rules->go)==3) { // 3고할경우 점수 *2
         tmp_score = tmp_score*2;
     }
     
-    if((players[playerId].rules->go)==4) {
+    if((players[playerId].rules->go)==4) { 
         tmp_score = tmp_score*4;
     }
 
@@ -146,17 +148,17 @@ void setScore(int playerId) {
         tmp_score = tmp_score*8;
     }
 
-    players[playerId].score = tmp_score;
+    players[playerId].score = tmp_score; // 플레이어 구조체에 점수 셋팅
 
     return_tmp.pi = pi;
     return_tmp.oh = oh;
     return_tmp.sip = sip;
     return_tmp.gwang = gwang;
-    PlayerStat[playerId]=return_tmp; 
+    PlayerStat[playerId]=return_tmp;  //전역 변수 playerStat에 pi, oh, sip, gwang의 개수 리턴. 
 }
 
 
-int getScore(int playerId) {
+int getScore(int playerId) {  //점수 리턴하는 함수
     int score;
 
     score = players[playerId].score;
@@ -165,57 +167,57 @@ int getScore(int playerId) {
 }
 
 
-void setMoney(int playerId ) {
+void setMoney(int playerId ) {  // 잔고계산하는 함수.
 	int i= 0;
 	int j =0;
     int k = 0;
     int g = 0;
-    int other = 0;
+    int other = 0;  // 여러 임시변수들.
 
-	player* tmp=NULL;
+	player* tmp=NULL;  // 이심변수 구조체.
 
-	tmp = (player*)malloc(sizeof(player));
+	tmp = (player*)malloc(sizeof(player)); // 임시변수 동적메모리 할당. 
 
-	tmp = setWinner();
+	tmp = setWinner(); //이긴사람 구조체 임시변수에 받기.
 	
 	int gwang = 0, bigwang = 0, pi = 0, ssangpi = 0, 
 		oh = 0, chodan = 0, hongdan = 0, chungdan = 0,
 		sip = 0, gukjin = 0, godori = 0;
 
 
-    if((tmp->id)!=playerId) {
+    if((tmp->id)!=playerId) { // 플레이어가 승자인지 패자인지 결정.
         j++;
     }
 
     
-    if((PlayerStat[(tmp->id)].pi > 10) && (PlayerStat[playerId].pi < 7)) {
+    if((PlayerStat[(tmp->id)].pi > 10) && (PlayerStat[playerId].pi < 7)) {  //피박인지 확인
         j=j*2;
     }				
 
 
-    if((PlayerStat[(tmp->id)].gwang > 3) && (PlayerStat[playerId].gwang < 1)) {
+    if((PlayerStat[(tmp->id)].gwang > 3) && (PlayerStat[playerId].gwang < 1)) { // 광박인지 확인
        j=j*2;
     }
 
-    if(PlayerStat[(tmp->id)].sip > 7) {
+    if(PlayerStat[(tmp->id)].sip > 7) { // 멍텅구리인지 확인
         j=j*2;
     }
 
     k = nagari;
 
-    if(k == 1) {
+    if(k == 1) { // 나가리 인지 확인.
         j=j*2;
     }
 
-    if((players[(tmp->id)].rules->shake)==1) {
+    if((players[(tmp->id)].rules->shake)==1) { // 흔들었는지 확인
         j=j*2;
     }
     if((players[(tmp->id)].rules->shake)==2) {
         j=j*4;
-    }
+    } // 두번흔들었느지 확인
 
-    if(playerId != (tmp->id)){
-    if((players[playerId].gobak) == 1){
+    if(playerId != (tmp->id)){ // 이긴사람이 고박이면 안되므로, 그 부분 확인.
+    if((players[playerId].gobak) == 1){  // 고박인지 확인. 
         other = 3 - ((tmp->id)+playerId);
 
         g = 1;
@@ -243,18 +245,18 @@ void setMoney(int playerId ) {
             g=g*4;
         }
         
-        players[playerId].money = players[playerId].money - (tmp->score)*100*g;
-        players[other].money = players[other].money + (tmp->score)*100*g;
+        players[playerId].money = players[playerId].money - (tmp->score)*100*g;  // 고박일경우, 돈을 차감.
+        players[other].money = players[other].money + (tmp->score)*100*g;  // 차감한 돈을 제 3자에게 줌.
     }
     }
 
-    tmp->money = (tmp->money) + (tmp->score)*100*j;
-    players[playerId].money = players[playerId].money - (tmp->score)*100*j;
+    tmp->money = (tmp->money) + (tmp->score)*100*j;  // 승자에게 돈을 줌.
+    players[playerId].money = players[playerId].money - (tmp->score)*100*j; // 나의 돈을 차감. 
 }
 
 
-// player 구조체에 돈 세팅 
-int getMoney(int playerId) {
+
+int getMoney(int playerId) { //돈 리턴하는 함수.
     int money;
 
 	money = players[playerId].money;
@@ -263,7 +265,7 @@ int getMoney(int playerId) {
 }
 
 
-player* setWinner(){
+player* setWinner(){  // 이긴사람의 player형 구조체를 리턴하는 함수. 스톱할 때 player[i].winner에 표시해둔 값에 따라 비교를 통해 승자 결정.
     if(players[0].winner== 1)
         return &players[0];
     if(players[1].winner== 1)
