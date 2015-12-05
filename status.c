@@ -567,12 +567,36 @@ void save() { // dummyCard, blanketCard, player 정보 등을 파일에 저장
     fprintf(fp, "gusip : %d\n", gusip);
     // nagari 정보 저장
     fprintf(fp, "nagari : %d\n", nagari);
+    // before_nagari 정보 저장
+    fprintf(fp, "before nagari : %d\n", before_nagari);
+    // P_C_S 구조체 정보 저장
+    fprintf(fp, "Player1 Stat : ");
+    fprintf(fp, "%d %d %d %d\n", PlayerStat[0].oh,
+                                 PlayerStat[0].sip,
+                                 PlayerStat[0].pi,
+                                 PlayerStat[0].gwang);
+
+    fprintf(fp, "Player2 Stat : ");
+    fprintf(fp, "%d %d %d %d\n", PlayerStat[1].oh,
+                                 PlayerStat[1].sip,
+                                 PlayerStat[1].pi,
+                                 PlayerStat[1].gwang);
+
+    fprintf(fp, "Player3 Stat : ");
+    fprintf(fp, "%d %d %d %d\n", PlayerStat[2].oh,
+                                 PlayerStat[2].sip,
+                                 PlayerStat[2].pi,
+                                 PlayerStat[2].gwang);
 
     // player들 정보 저장
     fprintf(fp, "player1 id : %d\n", players[0].id);    
     fprintf(fp, "player1 score : %d\n", players[0].score); 
+    fprintf(fp, "player1 additional score : %d\n", players[0].additional_score); 
     fprintf(fp, "player1 money : %d\n", players[0].money);    
     fprintf(fp, "player1 turn : %d\n", players[0].turn);    
+    fprintf(fp, "player1 history : %d\n", players[0].history);    
+    fprintf(fp, "player1 gobak : %d\n", players[0].gobak);    
+    fprintf(fp, "player1 winner : %d\n", players[0].winner);    
     
     head = players[0].holding_card;
 
@@ -592,17 +616,21 @@ void save() { // dummyCard, blanketCard, player 정보 등을 파일에 저장
     }
     fprintf(fp, "\n");
     fprintf(fp, "player1 rule : ");
-    fprintf(fp, "%d %d %d %d %d %d", players[0].rules->shake,
-                                     players[0].rules->sulsa,
-                                     players[0].rules->clear_board,
-                                     players[0].rules->chongtong,
-                                     players[0].rules->go,
-                                     players[0].rules->nagari);
-    fprintf(fp, "\n");
+    fprintf(fp, "%d %d %d %d %d %d\n", players[0].rules->shake,
+                                       players[0].rules->sulsa,
+                                       players[0].rules->clear_board,
+                                       players[0].rules->chongtong,
+                                       players[0].rules->go,
+                                       players[0].rules->nagari);
     fprintf(fp, "player2 id : %d\n", players[1].id);    
     fprintf(fp, "player2 score : %d\n", players[1].score); 
+    fprintf(fp, "player2 additional score : %d\n", players[1].additional_score); 
     fprintf(fp, "player2 money : %d\n", players[1].money);    
     fprintf(fp, "player2 turn : %d\n", players[1].turn);    
+    fprintf(fp, "player2 history : %d\n", players[1].history);    
+    fprintf(fp, "player2 gobak : %d\n", players[1].gobak);    
+    fprintf(fp, "player2 winner : %d\n", players[1].winner);    
+
     head = players[1].holding_card;
 
     fprintf(fp, "player2 holding card : ");
@@ -619,17 +647,21 @@ void save() { // dummyCard, blanketCard, player 정보 등을 파일에 저장
     }
     fprintf(fp, "\n");
     fprintf(fp, "player2 rule : ");
-    fprintf(fp, "%d %d %d %d %d %d", players[1].rules->shake,
-                                     players[1].rules->sulsa,
-                                     players[1].rules->clear_board,
-                                     players[1].rules->chongtong,
-                                     players[1].rules->go,
-                                     players[1].rules->nagari);
-    fprintf(fp, "\n");
-    fprintf(fp, "player3 id : %d\n", players[2].id);    
+    fprintf(fp, "%d %d %d %d %d %d\n", players[1].rules->shake,
+                                       players[1].rules->sulsa,
+                                       players[1].rules->clear_board,
+                                       players[1].rules->chongtong,
+                                       players[1].rules->go,
+                                       players[1].rules->nagari);
+
+    fprintf(fp, "player3 id : %d\n", players[2].id); 
     fprintf(fp, "player3 score : %d\n", players[2].score); 
+    fprintf(fp, "player3 additional score : %d\n", players[2].additional_score); 
     fprintf(fp, "player3 money : %d\n", players[2].money);    
     fprintf(fp, "player3 turn : %d\n", players[2].turn);    
+    fprintf(fp, "player3 history : %d\n", players[2].history);    
+    fprintf(fp, "player3 gobak : %d\n", players[2].gobak);    
+    fprintf(fp, "player3 winner : %d\n", players[2].winner);    
     
     head = players[2].holding_card;
 
@@ -651,13 +683,12 @@ void save() { // dummyCard, blanketCard, player 정보 등을 파일에 저장
     }
     fprintf(fp, "\n");
     fprintf(fp, "player3 rule : ");
-    fprintf(fp, "%d %d %d %d %d %d", players[2].rules->shake,
-                                     players[2].rules->sulsa,
-                                     players[2].rules->clear_board,
-                                     players[2].rules->chongtong,
-                                     players[2].rules->go,
-                                     players[2].rules->nagari);
-    fprintf(fp, "\n");
+    fprintf(fp, "%d %d %d %d %d %d\n", players[2].rules->shake,
+                                       players[2].rules->sulsa,
+                                       players[2].rules->clear_board,
+                                       players[2].rules->chongtong,
+                                       players[2].rules->go,
+                                       players[2].rules->nagari);
     fclose(fp);
 }
 
@@ -719,19 +750,52 @@ void load() {        // save.txt 파일내용을 한줄씩 읽기
 	    if(strstr(line, "nagari :")) {
             sscanf(line, "nagari : %d", &nagari);
         }
+	    if(strstr(line, "before nagari :")) {
+            sscanf(line, "before nagari : %d", &before_nagari);
+        }
+        if(strstr(line, "Player1 Stat : ")) {
+            sscanf(line, "Player1 Stat : %d %d %d %d", &PlayerStat[0].oh,
+                                                       &PlayerStat[0].sip,
+                                                       &PlayerStat[0].pi,
+                                                       &PlayerStat[0].gwang);
+        }
+        if(strstr(line, "Player2 Stat : ")) {
+            sscanf(line, "Player2 Stat : %d %d %d %d", &PlayerStat[1].oh,
+                                                       &PlayerStat[1].sip,
+                                                       &PlayerStat[1].pi,
+                                                       &PlayerStat[1].gwang);
+        }
+        if(strstr(line, "Player3 Stat : ")) {
+            sscanf(line, "Player3 Stat : %d %d %d %d", &PlayerStat[2].oh,
+                                                       &PlayerStat[2].sip,
+                                                       &PlayerStat[2].pi,
+                                                       &PlayerStat[2].gwang);
+        }
+        // A의 정보 읽기
         if(strstr(line, "player1 id :")) {
             sscanf(line, "player1 id : %d", &players[0].id);
         }
         if(strstr(line, "player1 score :")) {
             sscanf(line, "player1 score : %d", &players[0].score);
         }
+        if(strstr(line, "player1 score :")) {
+            sscanf(line, "player1 additional score : %d", &players[0].additional_score);
+        }
         if(strstr(line, "player1 money :")) {
             sscanf(line, "player1 money : %d", &players[0].money);
         }
         if(strstr(line, "player1 turn :")) {
             sscanf(line, "player1 turn : %d", &players[0].turn);
-
-        }								// A의 info 읽기
+        }
+        if(strstr(line, "player1 history :")) {
+            sscanf(line, "player1 history : %d", &players[0].history);
+        }
+        if(strstr(line, "player1 gobak :")) {
+            sscanf(line, "player1 gobak : %d", &players[0].gobak);
+        }
+        if(strstr(line, "player1 winner :")) {
+            sscanf(line, "player1 winner : %d", &players[0].winner);
+        }
 
         if(strstr(line, "player1 holding card :")) {			// A의 가지고 있는 패읽기
 
@@ -772,18 +836,31 @@ void load() {        // save.txt 파일내용을 한줄씩 읽기
                                                              &players[0].rules->go,
                                                              &players[0].rules->nagari);
         }
+        // B 정보 읽기
         if(strstr(line, "player2 id :")) {
             sscanf(line, "player2 id : %d", &players[1].id);
         }
         if(strstr(line, "player2 score :")) {
             sscanf(line, "player2 score : %d", &players[1].score);
         }
+        if(strstr(line, "player2 additional score :")) {
+            sscanf(line, "player2 additional score : %d", &players[1].additional_score);
+        }
         if(strstr(line, "player2 money :")) {
             sscanf(line, "player2 money : %d", &players[1].money);
         }
         if(strstr(line, "player2 turn :")) {
             sscanf(line, "player2 turn : %d", &players[1].turn);
-        }						 		//B 정보 읽기
+        }
+        if(strstr(line, "player2 history :")) {
+            sscanf(line, "player2 history : %d", &players[1].history);
+        }
+        if(strstr(line, "player2 gobak :")) {
+            sscanf(line, "player2 gobak : %d", &players[1].gobak);
+        }
+        if(strstr(line, "player2 winner :")) {
+            sscanf(line, "player2 winner : %d", &players[1].winner);
+        }
 	
         if(strstr(line, "player2 holding card :")) {			//B 지니고 있는 패읽기
             while(line[23+3*i] != '\n') {
@@ -819,18 +896,31 @@ void load() {        // save.txt 파일내용을 한줄씩 읽기
                                                              &players[1].rules->go,
                                                              &players[1].rules->nagari);
         }
+        // C 정보 읽기
         if(strstr(line, "player3 id :")) {
             sscanf(line, "player3 id : %d", &players[2].id);
         }
         if(strstr(line, "player3 score :")) {
             sscanf(line, "player3 score : %d", &players[2].score);
         }
+        if(strstr(line, "player3 additional score :")) {
+            sscanf(line, "player3 additional score : %d", &players[2].additional_score);
+        }
         if(strstr(line, "player3 money :")) {
             sscanf(line, "player3 money : %d", &players[2].money);
         }
         if(strstr(line, "player3 turn :")) {
             sscanf(line, "player3 turn : %d", &players[2].turn);
-        }								//C 정보 읽기
+        }
+        if(strstr(line, "player3 history :")) {
+            sscanf(line, "player3 history : %d", &players[2].history);
+        }
+        if(strstr(line, "player3 gobak :")) {
+            sscanf(line, "player3 gobak : %d", &players[2].gobak);
+        }
+        if(strstr(line, "player3 winner :")) {
+            sscanf(line, "player3 winner : %d", &players[2].winner);
+        }
 
         if(strstr(line, "player3 holding card :")) {			//C 지니고 있는 패 읽기
             while(line[23+3*i] != '\n'){

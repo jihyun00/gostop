@@ -6,7 +6,7 @@ void setPlayerInfo() {
     for(i=0; i<3; ++i) {
 		players[i].id = i;
         players[i].score = 0;
-        players[i].addtional_score = 0;
+        players[i].additional_score = 0;
         players[i].money = 100000;
         players[i].turn = GAME_TURN_NOT_NOW;
         players[i].history = 0;

@@ -19,7 +19,7 @@ typedef enum _game_turn {
 typedef struct _player {
 	int id;// player number
     int score; // player 점수
-    int addtional_score; // 고했을 경우 추가점수
+    int additional_score; // 고했을 경우 추가점수
     int money; // player가 갖고 있는 돈
     int turn; // turn인지 아닌지 check
     int history; // 그 전 함수 history 

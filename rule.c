@@ -132,7 +132,7 @@ void isNagari() {
             cnt = 0;
             num_of_go = players[i].rules->go;
 
-            if(players[i].score < players[i].addtional_score + 1) {
+            if(players[i].score < players[i].additional_score + 1) {
                 for(j=0; j < MAX_NUMBER_OF_PLAYER; ++j) {
                     if(i == j) {
                         continue;
@@ -194,7 +194,7 @@ int setGo(){
         }
     }
     else { // 고를 한 번 이상했을 때
-        if(players[turn].addtional_score < 2) {  // 2점 이상 추가로 못 냈을 때는 out
+        if(players[turn].additional_score < 2) {  // 2점 이상 추가로 못 냈을 때는 out
             return 0;
         }
     }
@@ -205,7 +205,7 @@ int setGo(){
     if((strcmp(status, "go") == 0) || (strcmp(status, "g") == 0)) {
         players[turn].rules->go += 1;
         players[turn].score += 1;
-        players[turn].addtional_score = players[turn].score; 
+        players[turn].additional_score = players[turn].score; 
         players[turn].gobak = 1;   // 고박 체크하는 부분.
         players[(turn+1)%3].gobak= 0;  // 나머지 사람들은 고박에 대한 값을 없앰.
         players[(turn+2)%3].gobak= 0;
