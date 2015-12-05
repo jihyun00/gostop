@@ -363,6 +363,7 @@ void putCard(int num) { // 사용자가 카드를 내고, 카드를 뽑고, 카�
     int selected;
     int dummySelected;
     char command[256];
+    char id[3] = {'A', 'B', 'C'}; // 숫자에 따른 플레이어 이름 출력을 위한 배
 
     card *holding = NULL;
     card *eating = NULL;
@@ -594,7 +595,7 @@ void putCard(int num) { // 사용자가 카드를 내고, 카드를 뽑고, 카�
 
     // 판 쓰리 체크
     if(isClearBoard() == 1) {
-        printf("%d 유저가 판 쓰리~ \n", turn);
+        printf("%c 유저가 판 쓰리~ \n", id[turn]);
 
         sleep(1);
     }

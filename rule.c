@@ -3,7 +3,7 @@
 #include "status.h"
 
 #include <string.h>
-char id[3] = {'A', 'B', 'C'}; // 숫자에 따른 플레이어 이름 출력을 위한 배
+
 
 //rules 구조체 초기화
 void initializeRule(int index) {
@@ -187,6 +187,7 @@ void getPi(int turn) {
 int setGo(){ 
     int turn = getTurn();
     char status[10];
+    char id[3] = {'A', 'B', 'C'}; // 숫자에 따른 플레이어 이름 출력을 위한 배열
 
     if(players[turn].rules->go == 0) { // 고를 한 번도 한 적이 없을 때
         if(players[turn].score < 3){ // 3점 이하는 out
