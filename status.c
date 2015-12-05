@@ -203,7 +203,7 @@ void setMoney(int playerId ) {  // 잔고계산하는 함수.
         j=j*2;
     }
 
-    k = nagari;
+    k = before_nagari;
 
     if(k == 1) { // 나가리 인지 확인.
         j=j*2;
@@ -567,6 +567,8 @@ void save() { // dummyCard, blanketCard, player 정보 등을 파일에 저장
     fprintf(fp, "gusip : %d\n", gusip);
     // nagari 정보 저장
     fprintf(fp, "nagari : %d\n", nagari);
+    // before_nagari 정보 저장
+    fprintf(fp, "before nagari : %d\n", before_nagari);
     // P_C_S 구조체 정보 저장
     fprintf(fp, "Player1 Stat : ");
     fprintf(fp, "%d %d %d %d\n", PlayerStat[0].oh,
@@ -747,6 +749,9 @@ void load() {        // save.txt 파일내용을 한줄씩 읽기
         }
 	    if(strstr(line, "nagari :")) {
             sscanf(line, "nagari : %d", &nagari);
+        }
+	    if(strstr(line, "before nagari :")) {
+            sscanf(line, "before nagari : %d", &before_nagari);
         }
         if(strstr(line, "Player1 Stat : ")) {
             sscanf(line, "Player1 Stat : %d %d %d %d", &PlayerStat[0].oh,

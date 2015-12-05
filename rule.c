@@ -122,7 +122,6 @@ void isNagari() {
 	if((dummyCard->data == -1) && (getCardSize(dummyCard) == 1)) {
         // 아무도 3점 이상 내지 못했을 경우
 		if((getScore(0) < 3) && (getScore(1) < 3) && (getScore(2) < 3)) {
-            printf("아무도 3점 이상 못냈을 경우\n");
             nagari = 1;
             printf("이번 판은 나가리~\n");
 
@@ -230,7 +229,7 @@ void setStop() {
 void gameEnd() {
     int i;
     int winner;
-    char name[5]={'A','B','C'};
+    char name[3]={'A','B','C'};
     player* tmp= NULL;
     char command[10];
     int playersMoney[3];
@@ -260,11 +259,16 @@ void gameEnd() {
         if(strcmp(command, "y") == 0 || (strcmp(command, "yes") == 0)) {
             setPlayerInfo(); 
             if(nagari != 1) {
+                before_nagari = 0;
                 setWinnerTurn((winner+MAX_NUMBER_OF_PLAYER-1)%MAX_NUMBER_OF_PLAYER); 
+
+            } else {
+                before_nagari = 1;
             }
 
             initializedPCS();
             gusip = 0;
+            nagari = 0;
             
             for(i=0; i < MAX_NUMBER_OF_PLAYER; ++i) {
                 players[i].money = playersMoney[i];
