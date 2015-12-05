@@ -229,20 +229,25 @@ void setStop() {
     printf("STOP 합니다, 게임을 종료합니다.\n");
     players[turn].winner=1;
     players[turn].history=0;
+             
     gameEnd(); 
 }
 
 // 게임이 마무리되고 승자를 가리고, 잔고 등을 출력해주는 함수
 void gameEnd() {
     int i;
+    int winner;
     char name[5]={'A','B','C'};
     player* tmp= NULL;
+    char command[10];
+    int playersMoney[3];
+
     tmp = setWinner();
     if(tmp ==NULL) {
         printf("게임 종료되었습니다.\n");
-        //exit(0);
+
     } else{
-        int winner = tmp->id;
+        winner = tmp->id;
         printf("게임 종료되었습니다. 승자는 %c\n", name[winner]);
         for(i=0;i<3;i++){
             setMoney(i);
@@ -251,6 +256,38 @@ void gameEnd() {
     printf("-------게이머의 잔고---------\n");
     for(i=0;i<3;i++){
         printf("%c의 잔고 : %d 원\n", name[i], getMoney(i));
+        playersMoney[i] = getMoney(i);
     }
-    exit(0);
+
+    printf("게임을 계속하시겠습니까?(y, n)\n");
+    
+    while(1) {
+        scanf("%s", command);
+
+        if(strcmp(command, "y") == 0 || (strcmp(command, "yes") == 0)) {
+            setPlayerInfo(); 
+            if(nagari != 1) {
+                setWinnerTurn((winner+MAX_NUMBER_OF_PLAYER-1)%MAX_NUMBER_OF_PLAYER); 
+
+            } else {
+                before_nagari = 1;
+                setWinnerTurn(MAX_NUMBER_OF_PLAYER-1);
+            }
+
+            initializedPCS();
+            gusip = 0;
+            
+            for(i=0; i < MAX_NUMBER_OF_PLAYER; ++i) {
+                players[i].money = playersMoney[i];
+            }
+
+            break;
+
+        } else if(strcmp(command, "n") == 0 || (strcmp(command, "no") == 0)) {
+            exit(0);
+
+        } else {
+            getCommand(command);
+        }
+    }
 }

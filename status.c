@@ -569,7 +569,6 @@ void save() { // dummyCard, blanketCard, player 정보 등을 파일에 저장
     // player들 정보 저장
     fprintf(fp, "player1 id : %d\n", players[0].id);    
     fprintf(fp, "player1 score : %d\n", players[0].score); 
-    fprintf(fp, "player1 played : %d\n", players[0].played);    
     fprintf(fp, "player1 money : %d\n", players[0].money);    
     fprintf(fp, "player1 turn : %d\n", players[0].turn);    
     
@@ -600,7 +599,6 @@ void save() { // dummyCard, blanketCard, player 정보 등을 파일에 저장
     fprintf(fp, "\n");
     fprintf(fp, "player2 id : %d\n", players[1].id);    
     fprintf(fp, "player2 score : %d\n", players[1].score); 
-    fprintf(fp, "player2 played : %d\n", players[1].played);    
     fprintf(fp, "player2 money : %d\n", players[1].money);    
     fprintf(fp, "player2 turn : %d\n", players[1].turn);    
     head = players[1].holding_card;
@@ -628,7 +626,6 @@ void save() { // dummyCard, blanketCard, player 정보 등을 파일에 저장
     fprintf(fp, "\n");
     fprintf(fp, "player3 id : %d\n", players[2].id);    
     fprintf(fp, "player3 score : %d\n", players[2].score); 
-    fprintf(fp, "player3 played : %d\n", players[2].played);    
     fprintf(fp, "player3 money : %d\n", players[2].money);    
     fprintf(fp, "player3 turn : %d\n", players[2].turn);    
     
@@ -905,5 +902,17 @@ void getCommand(char *command) { // 문자로 입력받은 명령어 정보 리�
         printf("\n\n");
     } else {
         printf("유효하지 않은 명령어입니다.\n");
+    }
+}
+
+
+void initializedPCS() {
+    int i;
+
+    for(i=0; i < MAX_NUMBER_OF_PLAYER; ++i) {
+        PlayerStat[i].oh = 0;
+        PlayerStat[i].sip = 0;
+        PlayerStat[i].pi = 0;
+        PlayerStat[i].gwang = 0;
     }
 }

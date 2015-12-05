@@ -17,7 +17,8 @@ typedef enum _game_player_status {
 
 } game_player_status;
 
-int nagari; // nagari인지 체크해주는 변
+int nagari; // nagari인지 체크해주는 변수
+int before_nagari; // 이전 판이 나가리였는지 체크
 
 typedef struct _game_player_card_status {
 	int oh;
@@ -41,5 +42,6 @@ void drawInterface(char *command); // 사용자 인터페이스 처리
 void save();// dummyCard, blanketCard, player 정보 등을 파일에 저장
 void load(); // save.txt 파일내용을 한줄씩 읽기
 void getCommand(char *command); // 문자로 입력받은 명령어 정보 리턴
+void initializedPCS();
 
 #endif

@@ -20,7 +20,6 @@ typedef struct _player {
 	int id;// player number
     int score; // player 점수
     int addtional_score; // 고했을 경우 추가점수
-    int played;// 이전에 play했는지 체크
     int money; // player가 갖고 있는 돈
     int turn; // turn인지 아닌지 check
     int history; // 그 전 함수 history 
@@ -37,5 +36,6 @@ player players[MAX_NUMBER_OF_PLAYER]; // player 구조체 배열을 player 수 �
 void setPlayerInfo();// 게임 시작하기 전에 player 정보 setting
 int getTurn();//턴 리턴해주는 함수 
 void setTurn();// 턴 설정해주는 함수
+void setWinnerTurn(int turn); // 이전에 이긴 사람이 먼저 시작하게 설정
 
 #endif
