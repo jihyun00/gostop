@@ -48,7 +48,6 @@ void setSulsa() {
     players[turn].rules->sulsa = players[turn].rules->sulsa + 1;
     if(players[turn].rules->sulsa==3){
         players[turn].history=3;
-        gameEnd();
     }
 }
 
@@ -103,7 +102,7 @@ void setChongtong(int index) {
         if(c==4){
             players[index].rules->chongtong += 1;
             players[turn].history=3;
-            gameEnd();
+            players[turn].score += 3;
             break;
         }
         prev = head->next->data/4;
