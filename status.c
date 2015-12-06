@@ -988,10 +988,12 @@ void getCommand(char *command) { // 문자로 입력받은 명령어 정보 리�
             printf("게임을 저장합니다.\n");
             save();
     } else if(strcmp(command, "load") == 0) {
-        printf("게임을 로드합니다.\n");
-        load();
-        onlydrawScreen();
-        printf("\n\n");
+            printf("게임을 로드합니다.\n");
+            fflush(stdin);
+            sleep(1);
+            load();
+            onlydrawScreen();
+            printf("\n\n");
     } else {
         printf("유효하지 않은 명령어입니다.\n");
     }
