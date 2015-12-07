@@ -103,6 +103,7 @@ void setChongtong(int index) {
             players[index].rules->chongtong += 1;
             players[turn].history=3;
             players[turn].score += 3;
+            printf("총통!\n");
             break;
         }
         prev = head->next->data/4;
